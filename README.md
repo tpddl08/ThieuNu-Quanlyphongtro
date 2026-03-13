@@ -1,1 +1,1 @@
-#Thiếu nữ - Quản lý phòng trọ môn Agile
+Thiếu nữ - Quản lý phòng trọ môn Agile
