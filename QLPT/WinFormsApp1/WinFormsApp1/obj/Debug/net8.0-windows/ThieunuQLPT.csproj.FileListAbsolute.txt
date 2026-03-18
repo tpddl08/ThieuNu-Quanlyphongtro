@@ -36,7 +36,6 @@ C:\Users\TRAN PHUOC DAT\Documents\Hoc\AGILE\QLPT\WinFormsApp1\WinFormsApp1\bin\D
 C:\Users\TRAN PHUOC DAT\Documents\Hoc\AGILE\QLPT\WinFormsApp1\WinFormsApp1\bin\Debug\net8.0-windows\Websocket.Client.dll
 C:\Users\TRAN PHUOC DAT\Documents\Hoc\AGILE\QLPT\WinFormsApp1\WinFormsApp1\bin\Debug\net8.0-windows\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
 C:\Users\TRAN PHUOC DAT\Documents\Hoc\AGILE\QLPT\WinFormsApp1\WinFormsApp1\obj\Debug\net8.0-windows\ThieunuQLPT.csproj.AssemblyReference.cache
-C:\Users\TRAN PHUOC DAT\Documents\Hoc\AGILE\QLPT\WinFormsApp1\WinFormsApp1\obj\Debug\net8.0-windows\WinFormsApp1.frm.resources
 C:\Users\TRAN PHUOC DAT\Documents\Hoc\AGILE\QLPT\WinFormsApp1\WinFormsApp1\obj\Debug\net8.0-windows\ThieunuQLPT.csproj.GenerateResource.cache
 C:\Users\TRAN PHUOC DAT\Documents\Hoc\AGILE\QLPT\WinFormsApp1\WinFormsApp1\obj\Debug\net8.0-windows\ThieunuQLPT.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\TRAN PHUOC DAT\Documents\Hoc\AGILE\QLPT\WinFormsApp1\WinFormsApp1\obj\Debug\net8.0-windows\ThieunuQLPT.AssemblyInfoInputs.cache
@@ -48,3 +47,6 @@ C:\Users\TRAN PHUOC DAT\Documents\Hoc\AGILE\QLPT\WinFormsApp1\WinFormsApp1\obj\D
 C:\Users\TRAN PHUOC DAT\Documents\Hoc\AGILE\QLPT\WinFormsApp1\WinFormsApp1\obj\Debug\net8.0-windows\ThieunuQLPT.pdb
 C:\Users\TRAN PHUOC DAT\Documents\Hoc\AGILE\QLPT\WinFormsApp1\WinFormsApp1\obj\Debug\net8.0-windows\ThieunuQLPT.genruntimeconfig.cache
 C:\Users\TRAN PHUOC DAT\Documents\Hoc\AGILE\QLPT\WinFormsApp1\WinFormsApp1\obj\Debug\net8.0-windows\ref\ThieunuQLPT.dll
+C:\Users\TRAN PHUOC DAT\Documents\Hoc\AGILE\QLPT\WinFormsApp1\WinFormsApp1\obj\Debug\net8.0-windows\WinFormsApp1.frmMain.resources
+C:\Users\TRAN PHUOC DAT\Documents\Hoc\AGILE\QLPT\WinFormsApp1\WinFormsApp1\obj\Debug\net8.0-windows\ThieunuQLPT.frmLogin.resources
+C:\Users\TRAN PHUOC DAT\Documents\Hoc\AGILE\QLPT\WinFormsApp1\WinFormsApp1\obj\Debug\net8.0-windows\ThieunuQLPT.frmSignin.resources
