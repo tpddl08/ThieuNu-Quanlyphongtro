@@ -3,24 +3,28 @@
   "WorkspaceRootPath": "C:\\Users\\TRAN PHUOC DAT\\Documents\\Hoc\\AGILE\\QLPT\\WinFormsApp1\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{376839B2-5183-A15B-9243-4D3D25C96D93}|WinFormsApp1\\ThieunuQLPT.csproj|c:\\users\\tran phuoc dat\\documents\\hoc\\agile\\qlpt\\winformsapp1\\winformsapp1\\supabasehelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{376839B2-5183-A15B-9243-4D3D25C96D93}|WinFormsApp1\\ThieunuQLPT.csproj|solutionrelative:winformsapp1\\supabasehelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{376839B2-5183-A15B-9243-4D3D25C96D93}|WinFormsApp1\\ThieunuQLPT.csproj|c:\\users\\tran phuoc dat\\documents\\hoc\\agile\\qlpt\\winformsapp1\\winformsapp1\\frmmember.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{376839B2-5183-A15B-9243-4D3D25C96D93}|WinFormsApp1\\ThieunuQLPT.csproj|solutionrelative:winformsapp1\\frmmember.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{376839B2-5183-A15B-9243-4D3D25C96D93}|WinFormsApp1\\ThieunuQLPT.csproj|C:\\Users\\TRAN PHUOC DAT\\Documents\\Hoc\\AGILE\\QLPT\\WinFormsApp1\\winformsapp1\\frmpassword.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{376839B2-5183-A15B-9243-4D3D25C96D93}|WinFormsApp1\\ThieunuQLPT.csproj|solutionrelative:winformsapp1\\frmpassword.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{376839B2-5183-A15B-9243-4D3D25C96D93}|WinFormsApp1\\ThieunuQLPT.csproj|c:\\users\\tran phuoc dat\\documents\\hoc\\agile\\qlpt\\winformsapp1\\winformsapp1\\frmcreateroom.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{376839B2-5183-A15B-9243-4D3D25C96D93}|WinFormsApp1\\ThieunuQLPT.csproj|solutionrelative:winformsapp1\\frmcreateroom.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{376839B2-5183-A15B-9243-4D3D25C96D93}|WinFormsApp1\\ThieunuQLPT.csproj|C:\\Users\\TRAN PHUOC DAT\\Documents\\Hoc\\AGILE\\QLPT\\WinFormsApp1\\winformsapp1\\frmlogin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{376839B2-5183-A15B-9243-4D3D25C96D93}|WinFormsApp1\\ThieunuQLPT.csproj|solutionrelative:winformsapp1\\frmlogin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
       "AbsoluteMoniker": "D:0:0:{376839B2-5183-A15B-9243-4D3D25C96D93}|WinFormsApp1\\ThieunuQLPT.csproj|c:\\users\\tran phuoc dat\\documents\\hoc\\agile\\qlpt\\winformsapp1\\winformsapp1\\frmsignin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{376839B2-5183-A15B-9243-4D3D25C96D93}|WinFormsApp1\\ThieunuQLPT.csproj|solutionrelative:winformsapp1\\frmsignin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{376839B2-5183-A15B-9243-4D3D25C96D93}|WinFormsApp1\\ThieunuQLPT.csproj|c:\\users\\tran phuoc dat\\documents\\hoc\\agile\\qlpt\\winformsapp1\\winformsapp1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{376839B2-5183-A15B-9243-4D3D25C96D93}|WinFormsApp1\\ThieunuQLPT.csproj|solutionrelative:winformsapp1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{376839B2-5183-A15B-9243-4D3D25C96D93}|WinFormsApp1\\ThieunuQLPT.csproj|C:\\Users\\TRAN PHUOC DAT\\Documents\\Hoc\\AGILE\\QLPT\\WinFormsApp1\\winformsapp1\\frmsignin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{376839B2-5183-A15B-9243-4D3D25C96D93}|WinFormsApp1\\ThieunuQLPT.csproj|solutionrelative:winformsapp1\\frmsignin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{376839B2-5183-A15B-9243-4D3D25C96D93}|WinFormsApp1\\ThieunuQLPT.csproj|c:\\users\\tran phuoc dat\\documents\\hoc\\agile\\qlpt\\winformsapp1\\winformsapp1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{376839B2-5183-A15B-9243-4D3D25C96D93}|WinFormsApp1\\ThieunuQLPT.csproj|solutionrelative:winformsapp1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{376839B2-5183-A15B-9243-4D3D25C96D93}|WinFormsApp1\\ThieunuQLPT.csproj|c:\\users\\tran phuoc dat\\documents\\hoc\\agile\\qlpt\\winformsapp1\\winformsapp1\\frmmain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -29,10 +33,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{376839B2-5183-A15B-9243-4D3D25C96D93}|WinFormsApp1\\ThieunuQLPT.csproj|C:\\Users\\TRAN PHUOC DAT\\Documents\\Hoc\\AGILE\\QLPT\\WinFormsApp1\\winformsapp1\\frmmain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{376839B2-5183-A15B-9243-4D3D25C96D93}|WinFormsApp1\\ThieunuQLPT.csproj|solutionrelative:winformsapp1\\frmmain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{376839B2-5183-A15B-9243-4D3D25C96D93}|WinFormsApp1\\ThieunuQLPT.csproj|C:\\Users\\TRAN PHUOC DAT\\Documents\\Hoc\\AGILE\\QLPT\\WinFormsApp1\\winformsapp1\\frmlogin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{376839B2-5183-A15B-9243-4D3D25C96D93}|WinFormsApp1\\ThieunuQLPT.csproj|solutionrelative:winformsapp1\\frmlogin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
   "DocumentGroupContainers": [
@@ -42,33 +42,20 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\TRAN PHUOC DAT\\Documents\\Hoc\\AGILE\\QLPT\\WinFormsApp1\\WinFormsApp1\\Program.cs",
               "RelativeDocumentMoniker": "WinFormsApp1\\Program.cs",
               "ToolTip": "C:\\Users\\TRAN PHUOC DAT\\Documents\\Hoc\\AGILE\\QLPT\\WinFormsApp1\\WinFormsApp1\\Program.cs",
               "RelativeToolTip": "WinFormsApp1\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAkwBIAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-18T11:11:11.637Z",
               "IsPinned": true,
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "SupabaseHelper.cs",
-              "DocumentMoniker": "C:\\Users\\TRAN PHUOC DAT\\Documents\\Hoc\\AGILE\\QLPT\\WinFormsApp1\\WinFormsApp1\\SupabaseHelper.cs",
-              "RelativeDocumentMoniker": "WinFormsApp1\\SupabaseHelper.cs",
-              "ToolTip": "C:\\Users\\TRAN PHUOC DAT\\Documents\\Hoc\\AGILE\\QLPT\\WinFormsApp1\\WinFormsApp1\\SupabaseHelper.cs",
-              "RelativeToolTip": "WinFormsApp1\\SupabaseHelper.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAAWAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-19T11:34:43.737Z",
               "EditorCaption": ""
             },
             {
@@ -81,27 +68,51 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
+              "Title": "frmMember.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\TRAN PHUOC DAT\\Documents\\Hoc\\AGILE\\QLPT\\WinFormsApp1\\WinFormsApp1\\frmMember.cs",
+              "RelativeDocumentMoniker": "WinFormsApp1\\frmMember.cs",
+              "ToolTip": "C:\\Users\\TRAN PHUOC DAT\\Documents\\Hoc\\AGILE\\QLPT\\WinFormsApp1\\WinFormsApp1\\frmMember.cs [Design]",
+              "RelativeToolTip": "WinFormsApp1\\frmMember.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-19T12:34:14.884Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "frmCreateroom.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\TRAN PHUOC DAT\\Documents\\Hoc\\AGILE\\QLPT\\WinFormsApp1\\WinFormsApp1\\frmCreateroom.cs",
+              "RelativeDocumentMoniker": "WinFormsApp1\\frmCreateroom.cs",
+              "ToolTip": "C:\\Users\\TRAN PHUOC DAT\\Documents\\Hoc\\AGILE\\QLPT\\WinFormsApp1\\WinFormsApp1\\frmCreateroom.cs [Design]",
+              "RelativeToolTip": "WinFormsApp1\\frmCreateroom.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-19T12:09:25.536Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "frmSignin.cs",
               "DocumentMoniker": "C:\\Users\\TRAN PHUOC DAT\\Documents\\Hoc\\AGILE\\QLPT\\WinFormsApp1\\WinFormsApp1\\frmSignin.cs",
               "RelativeDocumentMoniker": "WinFormsApp1\\frmSignin.cs",
               "ToolTip": "C:\\Users\\TRAN PHUOC DAT\\Documents\\Hoc\\AGILE\\QLPT\\WinFormsApp1\\WinFormsApp1\\frmSignin.cs",
               "RelativeToolTip": "WinFormsApp1\\frmSignin.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABIAAAAAAAAAAAAywBUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-19T11:34:15.034Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "frmPassword.cs [Design]",
-              "DocumentMoniker": "C:\\Users\\TRAN PHUOC DAT\\Documents\\Hoc\\AGILE\\QLPT\\WinFormsApp1\\WinFormsApp1\\frmPassword.cs",
-              "RelativeDocumentMoniker": "WinFormsApp1\\frmPassword.cs",
-              "ToolTip": "C:\\Users\\TRAN PHUOC DAT\\Documents\\Hoc\\AGILE\\QLPT\\WinFormsApp1\\WinFormsApp1\\frmPassword.cs [Design]",
-              "RelativeToolTip": "WinFormsApp1\\frmPassword.cs [Design]",
+              "DocumentIndex": 2,
+              "Title": "frmLogin.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\TRAN PHUOC DAT\\Documents\\Hoc\\AGILE\\QLPT\\WinFormsApp1\\WinFormsApp1\\frmLogin.cs",
+              "RelativeDocumentMoniker": "WinFormsApp1\\frmLogin.cs",
+              "ToolTip": "C:\\Users\\TRAN PHUOC DAT\\Documents\\Hoc\\AGILE\\QLPT\\WinFormsApp1\\WinFormsApp1\\frmLogin.cs [Design]",
+              "RelativeToolTip": "WinFormsApp1\\frmLogin.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-18T12:17:45.235Z",
+              "WhenOpened": "2026-03-18T11:09:51.924Z",
               "EditorCaption": " [Design]"
             },
             {
@@ -119,30 +130,17 @@
             {
               "$type": "Document",
               "DocumentIndex": 7,
-              "Title": "frmLogin.cs [Design]",
-              "DocumentMoniker": "C:\\Users\\TRAN PHUOC DAT\\Documents\\Hoc\\AGILE\\QLPT\\WinFormsApp1\\WinFormsApp1\\frmLogin.cs",
-              "RelativeDocumentMoniker": "WinFormsApp1\\frmLogin.cs",
-              "ToolTip": "C:\\Users\\TRAN PHUOC DAT\\Documents\\Hoc\\AGILE\\QLPT\\WinFormsApp1\\WinFormsApp1\\frmLogin.cs [Design]",
-              "RelativeToolTip": "WinFormsApp1\\frmLogin.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-18T11:09:51.924Z",
-              "EditorCaption": " [Design]"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
               "Title": "frmMain.cs [Design]",
               "DocumentMoniker": "C:\\Users\\TRAN PHUOC DAT\\Documents\\Hoc\\AGILE\\QLPT\\WinFormsApp1\\WinFormsApp1\\frmMain.cs",
               "RelativeDocumentMoniker": "WinFormsApp1\\frmMain.cs",
               "ToolTip": "C:\\Users\\TRAN PHUOC DAT\\Documents\\Hoc\\AGILE\\QLPT\\WinFormsApp1\\WinFormsApp1\\frmMain.cs [Design]",
               "RelativeToolTip": "WinFormsApp1\\frmMain.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-15T12:12:55.515Z",
-              "EditorCaption": " [Design]"
+              "WhenOpened": "2026-03-15T12:12:55.515Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "frmMain.cs",
               "DocumentMoniker": "C:\\Users\\TRAN PHUOC DAT\\Documents\\Hoc\\AGILE\\QLPT\\WinFormsApp1\\WinFormsApp1\\frmMain.cs",
               "RelativeDocumentMoniker": "WinFormsApp1\\frmMain.cs",
@@ -150,8 +148,7 @@
               "RelativeToolTip": "WinFormsApp1\\frmMain.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAAAawA0AAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-15T11:23:24.503Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-15T11:23:24.503Z"
             }
           ]
         }

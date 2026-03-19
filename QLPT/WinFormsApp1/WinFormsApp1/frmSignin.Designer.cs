@@ -38,7 +38,6 @@
             label2 = new Label();
             txtPassword = new TextBox();
             txtEmail = new TextBox();
-            btnClose = new Button();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -47,7 +46,7 @@
             label1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 30F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(244, 9);
+            label1.Location = new Point(313, 9);
             label1.Name = "label1";
             label1.Size = new Size(303, 81);
             label1.TabIndex = 4;
@@ -56,7 +55,7 @@
             // panel1
             // 
             panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
-            panel1.BackColor = SystemColors.Info;
+            panel1.BackColor = Color.Gold;
             panel1.Controls.Add(lblSDT);
             panel1.Controls.Add(txtnumberphone);
             panel1.Controls.Add(llbLogin);
@@ -65,9 +64,9 @@
             panel1.Controls.Add(label2);
             panel1.Controls.Add(txtPassword);
             panel1.Controls.Add(txtEmail);
-            panel1.Location = new Point(110, 107);
+            panel1.Location = new Point(179, 107);
             panel1.Name = "panel1";
-            panel1.Size = new Size(571, 320);
+            panel1.Size = new Size(571, 354);
             panel1.TabIndex = 3;
             // 
             // lblSDT
@@ -102,7 +101,7 @@
             // 
             // btnSignin
             // 
-            btnSignin.BackColor = Color.Green;
+            btnSignin.BackColor = Color.ForestGreen;
             btnSignin.FlatStyle = FlatStyle.Flat;
             btnSignin.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnSignin.Location = new Point(191, 230);
@@ -150,27 +149,15 @@
             txtEmail.Size = new Size(305, 47);
             txtEmail.TabIndex = 0;
             // 
-            // btnClose
-            // 
-            btnClose.BackColor = Color.Red;
-            btnClose.FlatStyle = FlatStyle.Flat;
-            btnClose.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnClose.Location = new Point(689, -1);
-            btnClose.Name = "btnClose";
-            btnClose.Size = new Size(112, 51);
-            btnClose.TabIndex = 5;
-            btnClose.Text = "Thoát";
-            btnClose.UseVisualStyleBackColor = false;
-            // 
             // frmSignin
             // 
             AutoScaleDimensions = new SizeF(144F, 144F);
             AutoScaleMode = AutoScaleMode.Dpi;
-            ClientSize = new Size(800, 450);
+            BackColor = SystemColors.GradientInactiveCaption;
+            ClientSize = new Size(938, 484);
             Controls.Add(label1);
             Controls.Add(panel1);
-            Controls.Add(btnClose);
-            FormBorderStyle = FormBorderStyle.None;
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Name = "frmSignin";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "frmSignin";
@@ -193,6 +180,5 @@
         private Label label2;
         private TextBox txtPassword;
         private TextBox txtEmail;
-        private Button btnClose;
     }
 }

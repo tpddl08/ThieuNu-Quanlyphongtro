@@ -7,7 +7,6 @@ C:\Users\TRAN PHUOC DAT\Documents\Hoc\AGILE\QLPT\WinFormsApp1\WinFormsApp1\bin\D
 C:\Users\TRAN PHUOC DAT\Documents\Hoc\AGILE\QLPT\WinFormsApp1\WinFormsApp1\bin\Debug\net8.0-windows\Microsoft.Extensions.Configuration.Abstractions.dll
 C:\Users\TRAN PHUOC DAT\Documents\Hoc\AGILE\QLPT\WinFormsApp1\WinFormsApp1\bin\Debug\net8.0-windows\Microsoft.Extensions.Configuration.FileExtensions.dll
 C:\Users\TRAN PHUOC DAT\Documents\Hoc\AGILE\QLPT\WinFormsApp1\WinFormsApp1\bin\Debug\net8.0-windows\Microsoft.Extensions.Configuration.Json.dll
-C:\Users\TRAN PHUOC DAT\Documents\Hoc\AGILE\QLPT\WinFormsApp1\WinFormsApp1\bin\Debug\net8.0-windows\Microsoft.Extensions.Configuration.UserSecrets.dll
 C:\Users\TRAN PHUOC DAT\Documents\Hoc\AGILE\QLPT\WinFormsApp1\WinFormsApp1\bin\Debug\net8.0-windows\Microsoft.Extensions.DependencyInjection.Abstractions.dll
 C:\Users\TRAN PHUOC DAT\Documents\Hoc\AGILE\QLPT\WinFormsApp1\WinFormsApp1\bin\Debug\net8.0-windows\Microsoft.Extensions.FileProviders.Abstractions.dll
 C:\Users\TRAN PHUOC DAT\Documents\Hoc\AGILE\QLPT\WinFormsApp1\WinFormsApp1\bin\Debug\net8.0-windows\Microsoft.Extensions.FileProviders.Physical.dll
@@ -51,3 +50,5 @@ C:\Users\TRAN PHUOC DAT\Documents\Hoc\AGILE\QLPT\WinFormsApp1\WinFormsApp1\obj\D
 C:\Users\TRAN PHUOC DAT\Documents\Hoc\AGILE\QLPT\WinFormsApp1\WinFormsApp1\obj\Debug\net8.0-windows\ThieunuQLPT.frmLogin.resources
 C:\Users\TRAN PHUOC DAT\Documents\Hoc\AGILE\QLPT\WinFormsApp1\WinFormsApp1\obj\Debug\net8.0-windows\ThieunuQLPT.frmSignin.resources
 C:\Users\TRAN PHUOC DAT\Documents\Hoc\AGILE\QLPT\WinFormsApp1\WinFormsApp1\obj\Debug\net8.0-windows\ThieunuQLPT.frmPassword.resources
+C:\Users\TRAN PHUOC DAT\Documents\Hoc\AGILE\QLPT\WinFormsApp1\WinFormsApp1\obj\Debug\net8.0-windows\ThieunuQLPT.frmCreateroom.resources
+C:\Users\TRAN PHUOC DAT\Documents\Hoc\AGILE\QLPT\WinFormsApp1\WinFormsApp1\obj\Debug\net8.0-windows\ThieunuQLPT.frmMember.resources
