@@ -16,5 +16,10 @@ namespace ThieunuQLPT
         {
             InitializeComponent();
         }
+
+        private void frmSignin_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

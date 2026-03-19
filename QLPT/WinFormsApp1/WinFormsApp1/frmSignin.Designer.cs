@@ -30,6 +30,8 @@
         {
             label1 = new Label();
             panel1 = new Panel();
+            lblSDT = new Label();
+            txtnumberphone = new TextBox();
             llbLogin = new LinkLabel();
             btnSignin = new Button();
             label3 = new Label();
@@ -37,8 +39,6 @@
             txtPassword = new TextBox();
             txtEmail = new TextBox();
             btnClose = new Button();
-            lblSDT = new Label();
-            txtnumberphone = new TextBox();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -69,6 +69,25 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(571, 320);
             panel1.TabIndex = 3;
+            // 
+            // lblSDT
+            // 
+            lblSDT.AutoSize = true;
+            lblSDT.Font = new Font("Segoe UI", 15F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblSDT.Location = new Point(27, 94);
+            lblSDT.Name = "lblSDT";
+            lblSDT.Size = new Size(193, 41);
+            lblSDT.TabIndex = 7;
+            lblSDT.Text = "Số điện thoại";
+            // 
+            // txtnumberphone
+            // 
+            txtnumberphone.BorderStyle = BorderStyle.FixedSingle;
+            txtnumberphone.Font = new Font("Segoe UI", 15F);
+            txtnumberphone.Location = new Point(223, 88);
+            txtnumberphone.Name = "txtnumberphone";
+            txtnumberphone.Size = new Size(305, 47);
+            txtnumberphone.TabIndex = 6;
             // 
             // llbLogin
             // 
@@ -143,25 +162,6 @@
             btnClose.Text = "Thoát";
             btnClose.UseVisualStyleBackColor = false;
             // 
-            // lblSDT
-            // 
-            lblSDT.AutoSize = true;
-            lblSDT.Font = new Font("Segoe UI", 15F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblSDT.Location = new Point(27, 94);
-            lblSDT.Name = "lblSDT";
-            lblSDT.Size = new Size(193, 41);
-            lblSDT.TabIndex = 7;
-            lblSDT.Text = "Số điện thoại";
-            // 
-            // txtnumberphone
-            // 
-            txtnumberphone.BorderStyle = BorderStyle.FixedSingle;
-            txtnumberphone.Font = new Font("Segoe UI", 15F);
-            txtnumberphone.Location = new Point(223, 88);
-            txtnumberphone.Name = "txtnumberphone";
-            txtnumberphone.Size = new Size(305, 47);
-            txtnumberphone.TabIndex = 6;
-            // 
             // frmSignin
             // 
             AutoScaleDimensions = new SizeF(144F, 144F);
@@ -174,6 +174,7 @@
             Name = "frmSignin";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "frmSignin";
+            Load += frmSignin_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ResumeLayout(false);

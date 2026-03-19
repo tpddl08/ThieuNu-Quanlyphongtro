@@ -50,3 +50,4 @@ C:\Users\TRAN PHUOC DAT\Documents\Hoc\AGILE\QLPT\WinFormsApp1\WinFormsApp1\obj\D
 C:\Users\TRAN PHUOC DAT\Documents\Hoc\AGILE\QLPT\WinFormsApp1\WinFormsApp1\obj\Debug\net8.0-windows\WinFormsApp1.frmMain.resources
 C:\Users\TRAN PHUOC DAT\Documents\Hoc\AGILE\QLPT\WinFormsApp1\WinFormsApp1\obj\Debug\net8.0-windows\ThieunuQLPT.frmLogin.resources
 C:\Users\TRAN PHUOC DAT\Documents\Hoc\AGILE\QLPT\WinFormsApp1\WinFormsApp1\obj\Debug\net8.0-windows\ThieunuQLPT.frmSignin.resources
+C:\Users\TRAN PHUOC DAT\Documents\Hoc\AGILE\QLPT\WinFormsApp1\WinFormsApp1\obj\Debug\net8.0-windows\ThieunuQLPT.frmPassword.resources
