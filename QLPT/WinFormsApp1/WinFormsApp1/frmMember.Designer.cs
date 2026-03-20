@@ -29,8 +29,11 @@
         private void InitializeComponent()
         {
             dgvMember = new DataGridView();
-            label1 = new Label();
+            lblNotification = new Label();
             btnSubmit = new Button();
+            btnCreateroom = new Button();
+            btnAdd = new Button();
+            btnDelete = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvMember).BeginInit();
             SuspendLayout();
             // 
@@ -45,21 +48,21 @@
             dgvMember.Size = new Size(699, 298);
             dgvMember.TabIndex = 0;
             // 
-            // label1
+            // lblNotification
             // 
-            label1.Anchor = AnchorStyles.None;
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(47, 59);
-            label1.Name = "label1";
-            label1.Size = new Size(506, 54);
-            label1.TabIndex = 7;
-            label1.Text = "THÔNG TIN THÀNH VIÊN";
+            lblNotification.Anchor = AnchorStyles.None;
+            lblNotification.AutoSize = true;
+            lblNotification.Font = new Font("Segoe UI", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblNotification.Location = new Point(47, 35);
+            lblNotification.Name = "lblNotification";
+            lblNotification.Size = new Size(205, 54);
+            lblNotification.TabIndex = 7;
+            lblNotification.Text = "Thông tin";
             // 
             // btnSubmit
             // 
             btnSubmit.Anchor = AnchorStyles.None;
-            btnSubmit.BackColor = Color.ForestGreen;
+            btnSubmit.BackColor = Color.CornflowerBlue;
             btnSubmit.FlatStyle = FlatStyle.Flat;
             btnSubmit.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnSubmit.Location = new Point(782, 146);
@@ -69,19 +72,59 @@
             btnSubmit.Text = "Lưu";
             btnSubmit.UseVisualStyleBackColor = false;
             // 
+            // btnCreateroom
+            // 
+            btnCreateroom.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnCreateroom.Location = new Point(364, 231);
+            btnCreateroom.Name = "btnCreateroom";
+            btnCreateroom.Size = new Size(205, 48);
+            btnCreateroom.TabIndex = 10;
+            btnCreateroom.Text = "Tạo phòng";
+            btnCreateroom.UseVisualStyleBackColor = true;
+            btnCreateroom.Visible = false;
+            btnCreateroom.Click += btnCreateroom_Click;
+            // 
+            // btnAdd
+            // 
+            btnAdd.Anchor = AnchorStyles.None;
+            btnAdd.BackColor = Color.ForestGreen;
+            btnAdd.FlatStyle = FlatStyle.Flat;
+            btnAdd.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnAdd.Location = new Point(782, 218);
+            btnAdd.Name = "btnAdd";
+            btnAdd.Size = new Size(128, 46);
+            btnAdd.TabIndex = 11;
+            btnAdd.Text = "Thêm";
+            btnAdd.UseVisualStyleBackColor = false;
+            // 
+            // btnDelete
+            // 
+            btnDelete.Anchor = AnchorStyles.None;
+            btnDelete.BackColor = Color.Red;
+            btnDelete.FlatStyle = FlatStyle.Flat;
+            btnDelete.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnDelete.Location = new Point(782, 295);
+            btnDelete.Name = "btnDelete";
+            btnDelete.Size = new Size(128, 46);
+            btnDelete.TabIndex = 12;
+            btnDelete.Text = "Xóa";
+            btnDelete.UseVisualStyleBackColor = false;
+            // 
             // frmMember
             // 
             AutoScaleDimensions = new SizeF(144F, 144F);
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = SystemColors.GradientInactiveCaption;
             ClientSize = new Size(938, 484);
+            Controls.Add(btnDelete);
+            Controls.Add(btnAdd);
+            Controls.Add(btnCreateroom);
             Controls.Add(btnSubmit);
-            Controls.Add(label1);
+            Controls.Add(lblNotification);
             Controls.Add(dgvMember);
             Name = "frmMember";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Danh sách thành viên";
-            WindowState = FormWindowState.Maximized;
             ((System.ComponentModel.ISupportInitialize)dgvMember).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -90,7 +133,10 @@
         #endregion
 
         private DataGridView dgvMember;
-        private Label label1;
+        private Label lblNotification;
         private Button btnSubmit;
+        private Button btnCreateroom;
+        private Button btnAdd;
+        private Button btnDelete;
     }
 }

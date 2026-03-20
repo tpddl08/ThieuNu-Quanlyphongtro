@@ -72,6 +72,7 @@
             btnAccount.TabIndex = 1;
             btnAccount.Text = "Đăng nhập";
             btnAccount.UseVisualStyleBackColor = false;
+            btnAccount.Click += btnAccount_Click;
             // 
             // btnRoom
             // 
@@ -84,6 +85,7 @@
             btnRoom.TabIndex = 2;
             btnRoom.Text = "Phòng";
             btnRoom.UseVisualStyleBackColor = false;
+            btnRoom.Click += btnRoom_Click;
             // 
             // btnBill
             // 
