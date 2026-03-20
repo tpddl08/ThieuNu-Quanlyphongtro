@@ -28,24 +28,26 @@
         /// </summary>
         private void InitializeComponent()
         {
-            dataGridView1 = new DataGridView();
+            dgvMember = new DataGridView();
             label1 = new Label();
-            button2 = new Button();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            btnSubmit = new Button();
+            ((System.ComponentModel.ISupportInitialize)dgvMember).BeginInit();
             SuspendLayout();
             // 
-            // dataGridView1
+            // dgvMember
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(47, 146);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowHeadersWidth = 62;
-            dataGridView1.Size = new Size(699, 298);
-            dataGridView1.TabIndex = 0;
+            dgvMember.Anchor = AnchorStyles.None;
+            dgvMember.BackgroundColor = Color.Navy;
+            dgvMember.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvMember.Location = new Point(47, 146);
+            dgvMember.Name = "dgvMember";
+            dgvMember.RowHeadersWidth = 62;
+            dgvMember.Size = new Size(699, 298);
+            dgvMember.TabIndex = 0;
             // 
             // label1
             // 
-            label1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
+            label1.Anchor = AnchorStyles.None;
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.Location = new Point(47, 59);
@@ -54,40 +56,41 @@
             label1.TabIndex = 7;
             label1.Text = "THÔNG TIN THÀNH VIÊN";
             // 
-            // button2
+            // btnSubmit
             // 
-            button2.BackColor = Color.ForestGreen;
-            button2.FlatStyle = FlatStyle.Flat;
-            button2.Font = new Font("Segoe UI", 12F);
-            button2.Location = new Point(782, 146);
-            button2.Name = "button2";
-            button2.Size = new Size(128, 46);
-            button2.TabIndex = 9;
-            button2.Text = "Lưu";
-            button2.UseVisualStyleBackColor = false;
+            btnSubmit.Anchor = AnchorStyles.None;
+            btnSubmit.BackColor = Color.ForestGreen;
+            btnSubmit.FlatStyle = FlatStyle.Flat;
+            btnSubmit.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnSubmit.Location = new Point(782, 146);
+            btnSubmit.Name = "btnSubmit";
+            btnSubmit.Size = new Size(128, 46);
+            btnSubmit.TabIndex = 9;
+            btnSubmit.Text = "Lưu";
+            btnSubmit.UseVisualStyleBackColor = false;
             // 
             // frmMember
             // 
             AutoScaleDimensions = new SizeF(144F, 144F);
             AutoScaleMode = AutoScaleMode.Dpi;
-            BackColor = SystemColors.GradientActiveCaption;
+            BackColor = SystemColors.GradientInactiveCaption;
             ClientSize = new Size(938, 484);
-            Controls.Add(button2);
+            Controls.Add(btnSubmit);
             Controls.Add(label1);
-            Controls.Add(dataGridView1);
+            Controls.Add(dgvMember);
             Name = "frmMember";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Danh sách thành viên";
             WindowState = FormWindowState.Maximized;
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvMember).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private DataGridView dataGridView1;
+        private DataGridView dgvMember;
         private Label label1;
-        private Button button2;
+        private Button btnSubmit;
     }
 }
