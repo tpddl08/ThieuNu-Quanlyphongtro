@@ -33,8 +33,8 @@
             btnSubmit = new Button();
             label3 = new Label();
             label2 = new Label();
-            textBox1 = new TextBox();
-            txtUsername = new TextBox();
+            txtPassword = new TextBox();
+            txtNumberphone = new TextBox();
             label1 = new Label();
             panel1.SuspendLayout();
             SuspendLayout();
@@ -47,8 +47,8 @@
             panel1.Controls.Add(btnSubmit);
             panel1.Controls.Add(label3);
             panel1.Controls.Add(label2);
-            panel1.Controls.Add(textBox1);
-            panel1.Controls.Add(txtUsername);
+            panel1.Controls.Add(txtPassword);
+            panel1.Controls.Add(txtNumberphone);
             panel1.Location = new Point(82, 125);
             panel1.Name = "panel1";
             panel1.Size = new Size(772, 320);
@@ -66,6 +66,7 @@
             llbSignin.TabIndex = 5;
             llbSignin.TabStop = true;
             llbSignin.Text = "Tạo tài khoản";
+            llbSignin.LinkClicked += llbSignin_LinkClicked;
             // 
             // btnSubmit
             // 
@@ -79,6 +80,7 @@
             btnSubmit.TabIndex = 4;
             btnSubmit.Text = "Đăng nhập";
             btnSubmit.UseVisualStyleBackColor = false;
+            btnSubmit.Click += btnSubmit_Click;
             // 
             // label3
             // 
@@ -98,27 +100,27 @@
             label2.ForeColor = SystemColors.Control;
             label2.Location = new Point(31, 50);
             label2.Name = "label2";
-            label2.Size = new Size(101, 45);
+            label2.Size = new Size(218, 45);
             label2.TabIndex = 2;
-            label2.Text = "Email";
+            label2.Text = "Số điện thoại";
             // 
-            // textBox1
+            // txtPassword
             // 
-            textBox1.BorderStyle = BorderStyle.FixedSingle;
-            textBox1.Font = new Font("Segoe UI", 15F);
-            textBox1.Location = new Point(199, 121);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(532, 47);
-            textBox1.TabIndex = 1;
+            txtPassword.BorderStyle = BorderStyle.FixedSingle;
+            txtPassword.Font = new Font("Segoe UI", 15F);
+            txtPassword.Location = new Point(270, 121);
+            txtPassword.Name = "txtPassword";
+            txtPassword.Size = new Size(461, 47);
+            txtPassword.TabIndex = 1;
             // 
-            // txtUsername
+            // txtNumberphone
             // 
-            txtUsername.BorderStyle = BorderStyle.FixedSingle;
-            txtUsername.Font = new Font("Segoe UI", 15F);
-            txtUsername.Location = new Point(199, 48);
-            txtUsername.Name = "txtUsername";
-            txtUsername.Size = new Size(532, 47);
-            txtUsername.TabIndex = 0;
+            txtNumberphone.BorderStyle = BorderStyle.FixedSingle;
+            txtNumberphone.Font = new Font("Segoe UI", 15F);
+            txtNumberphone.Location = new Point(270, 48);
+            txtNumberphone.Name = "txtNumberphone";
+            txtNumberphone.Size = new Size(461, 47);
+            txtNumberphone.TabIndex = 0;
             // 
             // label1
             // 
@@ -144,6 +146,7 @@
             Name = "frmLogin";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Đăng nhập tài khoản";
+            Load += frmLogin_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ResumeLayout(false);
@@ -153,9 +156,9 @@
         #endregion
 
         private Panel panel1;
-        private TextBox txtUsername;
+        private TextBox txtNumberphone;
         private Label label1;
-        private TextBox textBox1;
+        private TextBox txtPassword;
         private Label label2;
         private Label label3;
         private LinkLabel llbSignin;

@@ -16,5 +16,11 @@ namespace ThieunuQLPT
         {
             InitializeComponent();
         }
+
+        private void btnCreateroom_Click(object sender, EventArgs e)
+        {
+            frmCreateroom frm = new frmCreateroom();
+            frm.ShowDialog();
+        }
     }
 }
