@@ -22,7 +22,7 @@ namespace ThieunuQLPT
 
         private void frmSignin_Load(object sender, EventArgs e)
         {
-
+            
         }
 
         private async void btnSubmit_Click(object sender, EventArgs e)
@@ -64,10 +64,8 @@ namespace ThieunuQLPT
 
         private void llbLogin_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            this.Hide();
-            frmLogin frm=new frmLogin();
+            frmLogin frm = new frmLogin();
             frm.ShowDialog();
-            this.Close();
         }
     }
 }

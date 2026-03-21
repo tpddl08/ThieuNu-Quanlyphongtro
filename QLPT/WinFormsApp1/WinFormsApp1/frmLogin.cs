@@ -80,18 +80,16 @@ namespace ThieunuQLPT
             {
                 MessageBox.Show("Đăng nhập thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 frmMain.isLogin = true;
-                frmMain frm = new frmMain();
-                frm.ShowDialog();
+                DialogResult = DialogResult.OK;
+
                 this.Close();
             }
         }
 
         private void llbSignin_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            this.Hide();
             frmSignin frm = new frmSignin();
             frm.ShowDialog();
-            this.Close();
         }
     }
 }
