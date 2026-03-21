@@ -61,4 +61,29 @@ namespace ThieunuQLPT
         [Column("service_rate")]
         public decimal? ServiceRate { get; set; }
     }
+
+    [Table("house_members")]
+    public class HouseMembersData : BaseModel
+    {
+        [PrimaryKey("id", false)]
+        public Guid Id { get; set; }
+
+        [Column("house_id")]
+        public Guid HouseId { get; set; }
+
+        [Column("user_id")]
+        public Guid UserId { get; set; }
+
+        [Column("role")]
+        public string? Role { get; set; } = "member";
+
+        [Column("joined_at")]
+        public DateTime JoinedAt { get; set; } = DateTime.Now;
+
+        [Column("left_at")]
+        public DateTime? LeftAt { get; set; }
+
+        [Column("is_active")]
+        public bool IsActive { get; set; } = true;
+    }
 }

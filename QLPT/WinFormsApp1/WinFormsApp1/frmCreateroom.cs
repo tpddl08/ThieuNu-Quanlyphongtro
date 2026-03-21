@@ -15,8 +15,10 @@ namespace ThieunuQLPT
     public partial class frmCreateroom : Form
     {
         private string? housename, houseaddress;
-        private int? housemaxmember; 
+        private int? housemaxmember;
         private decimal? houseelectric, housewatter, houseservice;
+        private Guid currentUserId;
+        private string? currentPhone;
         public frmCreateroom()
         {
             InitializeComponent();
@@ -37,6 +39,26 @@ namespace ThieunuQLPT
             }
             else
             {
+                var client = await SupabaseHelper.GetClientAsync();
+
+                if (string.IsNullOrEmpty(frmLogin.loggedPhone))
+                {
+                    MessageBox.Show("Bạn cần đăng nhập trước khi tạo phòng!");
+                    return;
+                }
+                currentPhone = frmLogin.loggedPhone;
+                var profileResponse = await client.From<ProfilesData>()
+                    .Where(p => p.Phone == currentPhone)
+                    .Get();
+
+                if (!profileResponse.Models.Any())
+                {
+                    MessageBox.Show("Không tìm thấy người dùng hiện tại!");
+                    return;
+                }
+
+                var profile = profileResponse.Models.First();
+                currentUserId = profile.Id;
                 var newHouse = new HousesData
                 {
                     Name = housename,
@@ -45,22 +67,41 @@ namespace ThieunuQLPT
                     ElectricityRate = houseelectric,
                     WaterRate = housewatter,
                     ServiceRate = houseservice,
-
-
-                    
                 };
-                var client = await SupabaseHelper.GetClientAsync();
+
                 var response = await client.From<HousesData>().Insert(newHouse);
 
                 if (response.Models.Any())
                 {
+                    var houseId = response.Models.First().Id;
+
+                    var newMember = new HouseMembersData
+                    {
+                        HouseId = houseId,
+                        UserId = currentUserId,
+                        Role = "owner", 
+                        IsActive = true,
+                        JoinedAt = DateTime.Now
+                    };
+
+                    var memberResponse = await client.From<HouseMembersData>().Insert(newMember);
+
+                    if (!memberResponse.Models.Any())
+                    {
+                        MessageBox.Show("Phòng đã tạo nhưng chưa gắn chủ phòng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+
                     MessageBox.Show("Tạo phòng thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.Hide();
+                    frmMember frm = new frmMember();
+                    frm.ShowDialog();
                     this.Close();
                 }
                 else
                 {
                     MessageBox.Show("Không thể tạo phòng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
+
             }
         }
     }

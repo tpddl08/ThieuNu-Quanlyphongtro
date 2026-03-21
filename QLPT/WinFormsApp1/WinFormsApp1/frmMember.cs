@@ -22,5 +22,25 @@ namespace ThieunuQLPT
             frmCreateroom frm = new frmCreateroom();
             frm.ShowDialog();
         }
+
+        private void btnSubmit_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dgvMember_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }
