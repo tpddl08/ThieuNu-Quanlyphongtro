@@ -20,8 +20,9 @@ namespace ThieunuQLPT
     {
         private string? numberphone, password;
         private DateTime? lastOpenTime;
-        private bool isLock=false;
+        private bool isLock= false;
         private int count = 0;
+        public static string? loggedPhone; 
         public frmLogin()
         {
             InitializeComponent();
@@ -80,6 +81,7 @@ namespace ThieunuQLPT
             {
                 MessageBox.Show("Đăng nhập thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 frmMain.isLogin = true;
+                loggedPhone = numberphone;
                 DialogResult = DialogResult.OK;
 
                 this.Close();
