@@ -39,7 +39,7 @@ namespace ThieunuQLPT
             }
             else
             {
-                var newProfile = new clsProfiles
+                var newProfile = new ProfilesData
                 {
                     FullName = name,
                     Phone = numberphone,
@@ -48,7 +48,7 @@ namespace ThieunuQLPT
                     CreatedAt = datecreate.Value
                 };
                 var client = await SupabaseHelper.GetClientAsync();
-                var response = await client.From<clsProfiles>().Insert(newProfile);
+                var response = await client.From<ProfilesData>().Insert(newProfile);
 
                 if (response.Models.Any())
                 {
