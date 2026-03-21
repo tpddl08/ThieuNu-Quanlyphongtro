@@ -21,10 +21,20 @@ namespace WinFormsApp1
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            updateLoginStatus();
+        }
+
+        private void updateLoginStatus()
+        {
             if (isLogin)
             {
                 btnAccount.BackColor = Color.Red;
                 btnAccount.Text = "Đăng xuất";
+            }
+            else
+            {
+                btnAccount.BackColor = Color.ForestGreen;
+                btnAccount.Text = "Đăng nhập";
             }
         }
 
@@ -43,17 +53,25 @@ namespace WinFormsApp1
 
         private void btnAccount_Click(object sender, EventArgs e)
         {
-            if (isLogin)
+            if (isLogin == true)
             {
-                btnAccount.BackColor = default;
-                btnAccount.Text = default;
-                isLogin = false;
+                var result = MessageBox.Show("Bạn có chắc chắn muốn đăng xuất?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
+                {
+                    isLogin = false;
+                }
+                updateLoginStatus();
             }
+
             else
             {
                 frmLogin frm = new frmLogin();
-                frm.ShowDialog();
-                
+                if (frm.ShowDialog() == DialogResult.OK)
+                {
+                    isLogin = true;
+                }
+                updateLoginStatus();
             }
         }
     }
