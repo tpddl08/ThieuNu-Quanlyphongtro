@@ -59,7 +59,7 @@ namespace ThieunuQLPT
 
             var client = await SupabaseHelper.GetClientAsync();
             var response = await client
-                .From<clsProfiles>()
+                .From<ProfilesData>()
                 .Select("*")
                 .Where(p => p.Phone == numberphone && p.Password == password)
                 .Get();
