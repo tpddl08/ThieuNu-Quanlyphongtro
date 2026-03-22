@@ -38,6 +38,7 @@
             colName = new DataGridViewTextBoxColumn();
             colNumberphone = new DataGridViewTextBoxColumn();
             colEmail = new DataGridViewTextBoxColumn();
+            colStatus = new DataGridViewTextBoxColumn();
             colEdit = new DataGridViewButtonColumn();
             lblNoti = new Label();
             btnSubmit = new Button();
@@ -65,7 +66,7 @@
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
             dgvMember.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvMember.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvMember.Columns.AddRange(new DataGridViewColumn[] { colName, colNumberphone, colEmail, colEdit });
+            dgvMember.Columns.AddRange(new DataGridViewColumn[] { colName, colNumberphone, colEmail, colStatus, colEdit });
             dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle4.BackColor = SystemColors.Window;
             dataGridViewCellStyle4.Font = new Font("Segoe UI", 14F);
@@ -114,6 +115,13 @@
             colEmail.HeaderText = "Email";
             colEmail.MinimumWidth = 8;
             colEmail.Name = "colEmail";
+            // 
+            // colStatus
+            // 
+            colStatus.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            colStatus.HeaderText = "Trạng thái";
+            colStatus.MinimumWidth = 8;
+            colStatus.Name = "colStatus";
             // 
             // colEdit
             // 
@@ -173,7 +181,6 @@
             btnAdd.TabIndex = 11;
             btnAdd.Text = "Thêm";
             btnAdd.UseVisualStyleBackColor = false;
-            btnAdd.Visible = false;
             btnAdd.Click += btnAdd_Click;
             // 
             // btnDelete
@@ -182,13 +189,12 @@
             btnDelete.BackColor = Color.Red;
             btnDelete.FlatStyle = FlatStyle.Flat;
             btnDelete.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnDelete.Location = new Point(770, 287);
+            btnDelete.Location = new Point(770, 270);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(128, 46);
             btnDelete.TabIndex = 12;
             btnDelete.Text = "Xóa";
             btnDelete.UseVisualStyleBackColor = false;
-            btnDelete.Visible = false;
             btnDelete.Click += btnDelete_Click;
             // 
             // frmMember
@@ -224,6 +230,7 @@
         private DataGridViewTextBoxColumn colName;
         private DataGridViewTextBoxColumn colNumberphone;
         private DataGridViewTextBoxColumn colEmail;
+        private DataGridViewTextBoxColumn colStatus;
         private DataGridViewButtonColumn colEdit;
     }
 }
