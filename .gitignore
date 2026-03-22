@@ -29,6 +29,8 @@ bld/
 bin\Debug
 [Oo]bj/
 [Ll]og/
+*.dll
+*.pdb
 
 # Visual Studio cache/options directory
 .vs/
