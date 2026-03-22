@@ -13,7 +13,11 @@ namespace WinFormsApp1
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
+<<<<<<< HEAD
             Application.Run(new frmListBills());
+=======
+            Application.Run(new frmMain());
+>>>>>>> origin/Hieu
         }
     }
 }

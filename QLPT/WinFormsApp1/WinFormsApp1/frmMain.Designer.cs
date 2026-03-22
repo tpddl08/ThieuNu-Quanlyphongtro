@@ -30,15 +30,19 @@
         {
             label1 = new Label();
             panel1 = new Panel();
-            button1 = new Button();
+            btnAccount = new Button();
+            btnRoom = new Button();
+            btnBill = new Button();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
             // label1
             // 
             label1.AutoSize = true;
+            label1.BackColor = Color.Transparent;
             label1.Font = new Font("Segoe UI", 30F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(10, 23);
+            label1.ForeColor = SystemColors.Control;
+            label1.Location = new Point(12, 9);
             label1.Name = "label1";
             label1.Size = new Size(664, 81);
             label1.TabIndex = 0;
@@ -46,34 +50,63 @@
             // 
             // panel1
             // 
-            panel1.BackColor = SystemColors.MenuHighlight;
-            panel1.Controls.Add(button1);
+            panel1.BackColor = Color.Navy;
+            panel1.Controls.Add(btnAccount);
             panel1.Controls.Add(label1);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(938, 132);
+            panel1.Size = new Size(938, 111);
             panel1.TabIndex = 1;
             // 
-            // button1
+            // btnAccount
             // 
-            button1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            button1.BackColor = Color.Green;
-            button1.FlatStyle = FlatStyle.Flat;
-            button1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button1.ForeColor = Color.Black;
-            button1.Location = new Point(674, 39);
-            button1.Name = "button1";
-            button1.Size = new Size(211, 65);
-            button1.TabIndex = 1;
-            button1.Text = "Đăng nhập";
-            button1.UseVisualStyleBackColor = false;
+            btnAccount.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnAccount.BackColor = Color.Green;
+            btnAccount.FlatStyle = FlatStyle.Flat;
+            btnAccount.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnAccount.ForeColor = Color.Black;
+            btnAccount.Location = new Point(703, 25);
+            btnAccount.Name = "btnAccount";
+            btnAccount.Size = new Size(211, 65);
+            btnAccount.TabIndex = 1;
+            btnAccount.Text = "Đăng nhập";
+            btnAccount.UseVisualStyleBackColor = false;
+            btnAccount.Click += btnAccount_Click;
+            // 
+            // btnRoom
+            // 
+            btnRoom.BackColor = Color.FromArgb(255, 128, 0);
+            btnRoom.FlatStyle = FlatStyle.Flat;
+            btnRoom.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            btnRoom.Location = new Point(36, 133);
+            btnRoom.Name = "btnRoom";
+            btnRoom.Size = new Size(147, 111);
+            btnRoom.TabIndex = 2;
+            btnRoom.Text = "Phòng";
+            btnRoom.UseVisualStyleBackColor = false;
+            btnRoom.Click += btnRoom_Click;
+            // 
+            // btnBill
+            // 
+            btnBill.BackColor = Color.FromArgb(255, 128, 0);
+            btnBill.FlatStyle = FlatStyle.Flat;
+            btnBill.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            btnBill.Location = new Point(232, 133);
+            btnBill.Name = "btnBill";
+            btnBill.Size = new Size(140, 111);
+            btnBill.TabIndex = 3;
+            btnBill.Text = "Hóa đơn";
+            btnBill.UseVisualStyleBackColor = false;
             // 
             // frmMain
             // 
             AutoScaleDimensions = new SizeF(144F, 144F);
             AutoScaleMode = AutoScaleMode.Dpi;
+            BackColor = SystemColors.GradientInactiveCaption;
             ClientSize = new Size(938, 484);
+            Controls.Add(btnRoom);
+            Controls.Add(btnBill);
             Controls.Add(panel1);
             Name = "frmMain";
             StartPosition = FormStartPosition.CenterScreen;
@@ -89,6 +122,8 @@
 
         private Label label1;
         private Panel panel1;
-        private Button button1;
+        private Button btnAccount;
+        private Button btnRoom;
+        private Button btnBill;
     }
 }

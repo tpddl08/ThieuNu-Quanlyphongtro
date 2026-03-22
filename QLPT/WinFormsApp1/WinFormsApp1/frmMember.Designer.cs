@@ -28,66 +28,200 @@
         /// </summary>
         private void InitializeComponent()
         {
-            dataGridView1 = new DataGridView();
-            label1 = new Label();
-            button2 = new Button();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            dgvMember = new DataGridView();
+            colName = new DataGridViewTextBoxColumn();
+            colNumberphone = new DataGridViewTextBoxColumn();
+            colEmail = new DataGridViewTextBoxColumn();
+            colEdit = new DataGridViewButtonColumn();
+            lblNoti = new Label();
+            btnSubmit = new Button();
+            btnCreateroom = new Button();
+            btnAdd = new Button();
+            btnDelete = new Button();
+            ((System.ComponentModel.ISupportInitialize)dgvMember).BeginInit();
             SuspendLayout();
             // 
-            // dataGridView1
+            // dgvMember
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(47, 146);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowHeadersWidth = 62;
-            dataGridView1.Size = new Size(699, 298);
-            dataGridView1.TabIndex = 0;
+            dataGridViewCellStyle1.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dgvMember.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dgvMember.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dgvMember.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            dgvMember.BackgroundColor = Color.LightGray;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = SystemColors.Control;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
+            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            dgvMember.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dgvMember.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvMember.Columns.AddRange(new DataGridViewColumn[] { colName, colNumberphone, colEmail, colEdit });
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = SystemColors.Window;
+            dataGridViewCellStyle4.Font = new Font("Segoe UI", 14F);
+            dataGridViewCellStyle4.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
+            dgvMember.DefaultCellStyle = dataGridViewCellStyle4;
+            dgvMember.Location = new Point(47, 125);
+            dgvMember.Name = "dgvMember";
+            dgvMember.ReadOnly = true;
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = SystemColors.Control;
+            dataGridViewCellStyle5.Font = new Font("Segoe UI", 12F);
+            dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
+            dgvMember.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dgvMember.RowHeadersWidth = 62;
+            dataGridViewCellStyle6.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dgvMember.RowsDefaultCellStyle = dataGridViewCellStyle6;
+            dgvMember.RowTemplate.Height = 100;
+            dgvMember.Size = new Size(699, 328);
+            dgvMember.TabIndex = 0;
+            dgvMember.CellContentClick += dgvMember_CellContentClick;
             // 
-            // label1
+            // colName
             // 
-            label1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(47, 59);
-            label1.Name = "label1";
-            label1.Size = new Size(506, 54);
-            label1.TabIndex = 7;
-            label1.Text = "THÔNG TIN THÀNH VIÊN";
+            colName.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle3.Font = new Font("Microsoft Sans Serif", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            colName.DefaultCellStyle = dataGridViewCellStyle3;
+            colName.HeaderText = "Tên";
+            colName.MinimumWidth = 8;
+            colName.Name = "colName";
+            colName.ReadOnly = true;
             // 
-            // button2
+            // colNumberphone
             // 
-            button2.BackColor = Color.ForestGreen;
-            button2.FlatStyle = FlatStyle.Flat;
-            button2.Font = new Font("Segoe UI", 12F);
-            button2.Location = new Point(782, 146);
-            button2.Name = "button2";
-            button2.Size = new Size(128, 46);
-            button2.TabIndex = 9;
-            button2.Text = "Lưu";
-            button2.UseVisualStyleBackColor = false;
+            colNumberphone.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            colNumberphone.HeaderText = "Số điện thoại";
+            colNumberphone.MinimumWidth = 8;
+            colNumberphone.Name = "colNumberphone";
+            colNumberphone.ReadOnly = true;
+            // 
+            // colEmail
+            // 
+            colEmail.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            colEmail.HeaderText = "Email";
+            colEmail.MinimumWidth = 8;
+            colEmail.Name = "colEmail";
+            colEmail.ReadOnly = true;
+            // 
+            // colEdit
+            // 
+            colEdit.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            colEdit.HeaderText = "Sửa";
+            colEdit.MinimumWidth = 8;
+            colEdit.Name = "colEdit";
+            colEdit.ReadOnly = true;
+            colEdit.Width = 82;
+            // 
+            // lblNoti
+            // 
+            lblNoti.AutoSize = true;
+            lblNoti.Font = new Font("Segoe UI", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblNoti.Location = new Point(47, 35);
+            lblNoti.Name = "lblNoti";
+            lblNoti.Size = new Size(205, 54);
+            lblNoti.TabIndex = 7;
+            lblNoti.Text = "Thông tin";
+            // 
+            // btnSubmit
+            // 
+            btnSubmit.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnSubmit.BackColor = Color.CornflowerBlue;
+            btnSubmit.FlatStyle = FlatStyle.Flat;
+            btnSubmit.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnSubmit.Location = new Point(770, 125);
+            btnSubmit.Name = "btnSubmit";
+            btnSubmit.Size = new Size(128, 46);
+            btnSubmit.TabIndex = 9;
+            btnSubmit.Text = "Lưu";
+            btnSubmit.UseVisualStyleBackColor = false;
+            btnSubmit.Click += btnSubmit_Click;
+            // 
+            // btnCreateroom
+            // 
+            btnCreateroom.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            btnCreateroom.Font = new Font("Segoe UI", 30F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnCreateroom.Location = new Point(309, 12);
+            btnCreateroom.Name = "btnCreateroom";
+            btnCreateroom.Size = new Size(391, 98);
+            btnCreateroom.TabIndex = 10;
+            btnCreateroom.Text = "Tạo phòng";
+            btnCreateroom.UseVisualStyleBackColor = true;
+            btnCreateroom.Click += btnCreateroom_Click;
+            // 
+            // btnAdd
+            // 
+            btnAdd.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnAdd.BackColor = Color.ForestGreen;
+            btnAdd.FlatStyle = FlatStyle.Flat;
+            btnAdd.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnAdd.Location = new Point(770, 197);
+            btnAdd.Name = "btnAdd";
+            btnAdd.Size = new Size(128, 46);
+            btnAdd.TabIndex = 11;
+            btnAdd.Text = "Thêm";
+            btnAdd.UseVisualStyleBackColor = false;
+            btnAdd.Click += btnAdd_Click;
+            // 
+            // btnDelete
+            // 
+            btnDelete.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnDelete.BackColor = Color.Red;
+            btnDelete.FlatStyle = FlatStyle.Flat;
+            btnDelete.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnDelete.Location = new Point(770, 287);
+            btnDelete.Name = "btnDelete";
+            btnDelete.Size = new Size(128, 46);
+            btnDelete.TabIndex = 12;
+            btnDelete.Text = "Xóa";
+            btnDelete.UseVisualStyleBackColor = false;
+            btnDelete.Click += btnDelete_Click;
             // 
             // frmMember
             // 
             AutoScaleDimensions = new SizeF(144F, 144F);
             AutoScaleMode = AutoScaleMode.Dpi;
-            BackColor = SystemColors.GradientActiveCaption;
+            BackColor = SystemColors.GradientInactiveCaption;
             ClientSize = new Size(938, 484);
-            Controls.Add(button2);
-            Controls.Add(label1);
-            Controls.Add(dataGridView1);
+            Controls.Add(btnDelete);
+            Controls.Add(btnAdd);
+            Controls.Add(btnSubmit);
+            Controls.Add(lblNoti);
+            Controls.Add(dgvMember);
+            Controls.Add(btnCreateroom);
             Name = "frmMember";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Danh sách thành viên";
             WindowState = FormWindowState.Maximized;
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvMember).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private DataGridView dataGridView1;
-        private Label label1;
-        private Button button2;
+        private DataGridView dgvMember;
+        private Label lblNoti;
+        private Button btnSubmit;
+        private Button btnCreateroom;
+        private Button btnAdd;
+        private Button btnDelete;
+        private DataGridViewTextBoxColumn colName;
+        private DataGridViewTextBoxColumn colNumberphone;
+        private DataGridViewTextBoxColumn colEmail;
+        private DataGridViewButtonColumn colEdit;
     }
 }
