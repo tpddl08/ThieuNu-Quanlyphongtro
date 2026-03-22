@@ -74,17 +74,5 @@ namespace WinFormsApp1
                 updateLoginStatus();
             }
         }
-
-        private void btnBill_Click(object sender, EventArgs e)
-        {
-            if (isLogin)
-            {
-                
-            }
-            else
-            {
-                MessageBox.Show("Vui lòng đăng nhập để sử dụng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
     }
 }

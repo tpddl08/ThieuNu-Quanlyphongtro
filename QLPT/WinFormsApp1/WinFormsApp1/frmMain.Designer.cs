@@ -102,7 +102,6 @@
             btnBill.TabIndex = 3;
             btnBill.Text = "Hóa đơn";
             btnBill.UseVisualStyleBackColor = false;
-            btnBill.Click += btnBill_Click;
             // 
             // tableLayoutPanel1
             // 
