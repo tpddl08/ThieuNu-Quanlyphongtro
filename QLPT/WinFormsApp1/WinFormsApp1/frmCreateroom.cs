@@ -18,7 +18,7 @@ namespace ThieunuQLPT
         private int? housemaxmember;
         private decimal? houseelectric, housewatter, houseservice;
         private Guid currentUserId;
-        private string? currentPhone;
+
         public frmCreateroom()
         {
             InitializeComponent();
@@ -40,25 +40,7 @@ namespace ThieunuQLPT
             else
             {
                 var client = await SupabaseHelper.GetClientAsync();
-
-                if (string.IsNullOrEmpty(frmLogin.loggedPhone))
-                {
-                    MessageBox.Show("Bạn cần đăng nhập trước khi tạo phòng!");
-                    return;
-                }
-                currentPhone = frmLogin.loggedPhone;
-                var profileResponse = await client.From<ProfilesData>()
-                    .Where(p => p.Phone == currentPhone)
-                    .Get();
-
-                if (!profileResponse.Models.Any())
-                {
-                    MessageBox.Show("Không tìm thấy người dùng hiện tại!");
-                    return;
-                }
-
-                var profile = profileResponse.Models.First();
-                currentUserId = profile.Id;
+                currentUserId = frmLogin.idLoged;
                 var newHouse = new HousesData
                 {
                     Name = housename,
@@ -85,12 +67,6 @@ namespace ThieunuQLPT
                     };
 
                     var memberResponse = await client.From<HouseMembersData>().Insert(newMember);
-
-                    if (!memberResponse.Models.Any())
-                    {
-                        MessageBox.Show("Phòng đã tạo nhưng chưa gắn chủ phòng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-
                     MessageBox.Show("Tạo phòng thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.Hide();
                     frmMember frm = new frmMember();

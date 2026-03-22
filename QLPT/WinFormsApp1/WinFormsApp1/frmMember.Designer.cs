@@ -49,6 +49,8 @@
             // 
             // dgvMember
             // 
+            dgvMember.AllowUserToAddRows = false;
+            dgvMember.AllowUserToDeleteRows = false;
             dataGridViewCellStyle1.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dgvMember.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             dgvMember.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
@@ -74,7 +76,6 @@
             dgvMember.DefaultCellStyle = dataGridViewCellStyle4;
             dgvMember.Location = new Point(47, 125);
             dgvMember.Name = "dgvMember";
-            dgvMember.ReadOnly = true;
             dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle5.BackColor = SystemColors.Control;
             dataGridViewCellStyle5.Font = new Font("Segoe UI", 12F);
@@ -99,7 +100,6 @@
             colName.HeaderText = "Tên";
             colName.MinimumWidth = 8;
             colName.Name = "colName";
-            colName.ReadOnly = true;
             // 
             // colNumberphone
             // 
@@ -107,7 +107,6 @@
             colNumberphone.HeaderText = "Số điện thoại";
             colNumberphone.MinimumWidth = 8;
             colNumberphone.Name = "colNumberphone";
-            colNumberphone.ReadOnly = true;
             // 
             // colEmail
             // 
@@ -115,7 +114,6 @@
             colEmail.HeaderText = "Email";
             colEmail.MinimumWidth = 8;
             colEmail.Name = "colEmail";
-            colEmail.ReadOnly = true;
             // 
             // colEdit
             // 
@@ -123,14 +121,13 @@
             colEdit.HeaderText = "Sửa";
             colEdit.MinimumWidth = 8;
             colEdit.Name = "colEdit";
-            colEdit.ReadOnly = true;
             colEdit.Width = 82;
             // 
             // lblNoti
             // 
             lblNoti.AutoSize = true;
             lblNoti.Font = new Font("Segoe UI", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblNoti.Location = new Point(47, 35);
+            lblNoti.Location = new Point(47, 38);
             lblNoti.Name = "lblNoti";
             lblNoti.Size = new Size(205, 54);
             lblNoti.TabIndex = 7;
@@ -139,7 +136,7 @@
             // btnSubmit
             // 
             btnSubmit.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnSubmit.BackColor = Color.CornflowerBlue;
+            btnSubmit.BackColor = Color.RoyalBlue;
             btnSubmit.FlatStyle = FlatStyle.Flat;
             btnSubmit.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnSubmit.Location = new Point(770, 125);
@@ -152,14 +149,16 @@
             // 
             // btnCreateroom
             // 
-            btnCreateroom.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            btnCreateroom.Font = new Font("Segoe UI", 30F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnCreateroom.Location = new Point(309, 12);
+            btnCreateroom.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnCreateroom.BackColor = Color.ForestGreen;
+            btnCreateroom.FlatStyle = FlatStyle.Flat;
+            btnCreateroom.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnCreateroom.Location = new Point(511, 35);
             btnCreateroom.Name = "btnCreateroom";
-            btnCreateroom.Size = new Size(391, 98);
+            btnCreateroom.Size = new Size(235, 64);
             btnCreateroom.TabIndex = 10;
             btnCreateroom.Text = "Tạo phòng";
-            btnCreateroom.UseVisualStyleBackColor = true;
+            btnCreateroom.UseVisualStyleBackColor = false;
             btnCreateroom.Click += btnCreateroom_Click;
             // 
             // btnAdd
@@ -174,6 +173,7 @@
             btnAdd.TabIndex = 11;
             btnAdd.Text = "Thêm";
             btnAdd.UseVisualStyleBackColor = false;
+            btnAdd.Visible = false;
             btnAdd.Click += btnAdd_Click;
             // 
             // btnDelete
@@ -188,6 +188,7 @@
             btnDelete.TabIndex = 12;
             btnDelete.Text = "Xóa";
             btnDelete.UseVisualStyleBackColor = false;
+            btnDelete.Visible = false;
             btnDelete.Click += btnDelete_Click;
             // 
             // frmMember
@@ -206,6 +207,7 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Danh sách thành viên";
             WindowState = FormWindowState.Maximized;
+            Load += frmMember_Load;
             ((System.ComponentModel.ISupportInitialize)dgvMember).EndInit();
             ResumeLayout(false);
             PerformLayout();

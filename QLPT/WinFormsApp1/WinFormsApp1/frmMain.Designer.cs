@@ -33,7 +33,9 @@
             btnAccount = new Button();
             btnRoom = new Button();
             btnBill = new Button();
+            tableLayoutPanel1 = new TableLayoutPanel();
             panel1.SuspendLayout();
+            tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
             // label1
@@ -77,11 +79,12 @@
             // btnRoom
             // 
             btnRoom.BackColor = Color.FromArgb(255, 128, 0);
+            btnRoom.Dock = DockStyle.Fill;
             btnRoom.FlatStyle = FlatStyle.Flat;
-            btnRoom.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            btnRoom.Location = new Point(36, 133);
+            btnRoom.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
+            btnRoom.Location = new Point(40, 39);
             btnRoom.Name = "btnRoom";
-            btnRoom.Size = new Size(147, 111);
+            btnRoom.Size = new Size(181, 122);
             btnRoom.TabIndex = 2;
             btnRoom.Text = "Phòng";
             btnRoom.UseVisualStyleBackColor = false;
@@ -90,14 +93,41 @@
             // btnBill
             // 
             btnBill.BackColor = Color.FromArgb(255, 128, 0);
+            btnBill.Dock = DockStyle.Fill;
             btnBill.FlatStyle = FlatStyle.Flat;
-            btnBill.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            btnBill.Location = new Point(232, 133);
+            btnBill.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
+            btnBill.Location = new Point(264, 39);
             btnBill.Name = "btnBill";
-            btnBill.Size = new Size(140, 111);
+            btnBill.Size = new Size(181, 122);
             btnBill.TabIndex = 3;
             btnBill.Text = "Hóa đơn";
             btnBill.UseVisualStyleBackColor = false;
+            // 
+            // tableLayoutPanel1
+            // 
+            tableLayoutPanel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            tableLayoutPanel1.ColumnCount = 9;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 4F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 4F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 4F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 4F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 4F));
+            tableLayoutPanel1.Controls.Add(btnBill, 3, 1);
+            tableLayoutPanel1.Controls.Add(btnRoom, 1, 1);
+            tableLayoutPanel1.Location = new Point(0, 117);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 5;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 35F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 35F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            tableLayoutPanel1.Size = new Size(938, 366);
+            tableLayoutPanel1.TabIndex = 4;
             // 
             // frmMain
             // 
@@ -105,8 +135,7 @@
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = SystemColors.GradientInactiveCaption;
             ClientSize = new Size(938, 484);
-            Controls.Add(btnRoom);
-            Controls.Add(btnBill);
+            Controls.Add(tableLayoutPanel1);
             Controls.Add(panel1);
             Name = "frmMain";
             StartPosition = FormStartPosition.CenterScreen;
@@ -115,6 +144,7 @@
             Load += Form1_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
+            tableLayoutPanel1.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -125,5 +155,6 @@
         private Button btnAccount;
         private Button btnRoom;
         private Button btnBill;
+        private TableLayoutPanel tableLayoutPanel1;
     }
 }

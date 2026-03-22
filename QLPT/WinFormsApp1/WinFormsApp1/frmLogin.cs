@@ -22,8 +22,8 @@ namespace ThieunuQLPT
         private DateTime? lastOpenTime;
         private bool isLock= false;
         private int count = 0;
-        public static string? loggedPhone; 
-        public frmLogin()
+        public static Guid idLoged;
+         public frmLogin()
         {
             InitializeComponent();
         }
@@ -81,7 +81,8 @@ namespace ThieunuQLPT
             {
                 MessageBox.Show("Đăng nhập thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 frmMain.isLogin = true;
-                loggedPhone = numberphone;
+                var profile = response.Models.First();
+                idLoged = profile.Id;
                 DialogResult = DialogResult.OK;
 
                 this.Close();
