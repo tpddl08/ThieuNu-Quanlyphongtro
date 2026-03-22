@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\TRAN PHUOC DAT\\Documents\\Hoc\\AGILE\\QLPT\\WinFormsApp1\\WinFormsApp1\\ThieunuQLPT.csproj": {}
+    "D:\\ThieuNu-Quanlyphongtro\\QLPT\\WinFormsApp1\\WinFormsApp1\\ThieunuQLPT.csproj": {}
   },
   "projects": {
-    "C:\\Users\\TRAN PHUOC DAT\\Documents\\Hoc\\AGILE\\QLPT\\WinFormsApp1\\WinFormsApp1\\ThieunuQLPT.csproj": {
+    "D:\\ThieuNu-Quanlyphongtro\\QLPT\\WinFormsApp1\\WinFormsApp1\\ThieunuQLPT.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\TRAN PHUOC DAT\\Documents\\Hoc\\AGILE\\QLPT\\WinFormsApp1\\WinFormsApp1\\ThieunuQLPT.csproj",
+        "projectUniqueName": "D:\\ThieuNu-Quanlyphongtro\\QLPT\\WinFormsApp1\\WinFormsApp1\\ThieunuQLPT.csproj",
         "projectName": "ThieunuQLPT",
-        "projectPath": "C:\\Users\\TRAN PHUOC DAT\\Documents\\Hoc\\AGILE\\QLPT\\WinFormsApp1\\WinFormsApp1\\ThieunuQLPT.csproj",
-        "packagesPath": "C:\\Users\\TRAN PHUOC DAT\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\TRAN PHUOC DAT\\Documents\\Hoc\\AGILE\\QLPT\\WinFormsApp1\\WinFormsApp1\\obj\\",
+        "projectPath": "D:\\ThieuNu-Quanlyphongtro\\QLPT\\WinFormsApp1\\WinFormsApp1\\ThieunuQLPT.csproj",
+        "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
+        "outputPath": "D:\\ThieuNu-Quanlyphongtro\\QLPT\\WinFormsApp1\\WinFormsApp1\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\TRAN PHUOC DAT\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],

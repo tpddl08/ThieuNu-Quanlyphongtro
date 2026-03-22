@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ThieunuQLPT")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a96356ca2c3e7e825b6a9c575fb8293fb6bbb589")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6f42a84825ef9417942af1131970d872a8ae4283")]
 [assembly: System.Reflection.AssemblyProductAttribute("ThieunuQLPT")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ThieunuQLPT")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
