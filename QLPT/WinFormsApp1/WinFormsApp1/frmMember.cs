@@ -100,7 +100,7 @@ namespace ThieunuQLPT
             currentHouse = houseResponse.Models.First();
 
             btnCreateroom.Visible = false;
-            lblNoti.Text = $"PHÒNG: {currentHouse.Name}, ĐỊA CHỈ: {currentHouse.Address}";
+            lblNoti.Text = $"PHÒNG: {currentHouse.Name}";
 
             await LoadMembersToDGV(currentHouse.Id);
         }
