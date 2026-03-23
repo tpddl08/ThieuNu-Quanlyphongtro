@@ -40,9 +40,6 @@ namespace ThieunuQLPT
         [Column("name")]
         public string? Name { get; set; }
 
-        [Column("address")]
-        public string? Address { get; set; }
-
         [Column("total_rent")]
         public decimal? TotalRent { get; set; }
 
@@ -57,6 +54,9 @@ namespace ThieunuQLPT
 
         [Column("created_at")]
         public DateTime CreatedAt { get; set; } = DateTime.Now;
+
+        [Column("month_year")]
+        public string? MonthYear { get; set; }
 
         [Column("service_rate")]
         public decimal? ServiceRate { get; set; }

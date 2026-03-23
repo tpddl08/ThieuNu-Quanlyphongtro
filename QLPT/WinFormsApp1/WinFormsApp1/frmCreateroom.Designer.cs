@@ -31,10 +31,8 @@
             label1 = new Label();
             panel1 = new Panel();
             label4 = new Label();
-            label3 = new Label();
             label2 = new Label();
             txtNumbermember = new TextBox();
-            txtAddress = new TextBox();
             txtNameroom = new TextBox();
             txtService = new TextBox();
             txtWatter = new TextBox();
@@ -66,12 +64,12 @@
             // panel1
             // 
             panel1.BackColor = SystemColors.GradientActiveCaption;
+            panel1.Controls.Add(txtService);
             panel1.Controls.Add(label4);
-            panel1.Controls.Add(label3);
             panel1.Controls.Add(label2);
             panel1.Controls.Add(txtNumbermember);
-            panel1.Controls.Add(txtAddress);
             panel1.Controls.Add(txtNameroom);
+            panel1.Controls.Add(label5);
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(96, 99);
             panel1.Name = "panel1";
@@ -84,23 +82,11 @@
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
             label4.ForeColor = Color.Black;
-            label4.Location = new Point(14, 164);
+            label4.Location = new Point(14, 92);
             label4.Name = "label4";
             label4.Size = new Size(224, 45);
             label4.TabIndex = 10;
             label4.Text = "Số thành viên";
-            // 
-            // label3
-            // 
-            label3.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
-            label3.ForeColor = Color.Black;
-            label3.Location = new Point(14, 92);
-            label3.Name = "label3";
-            label3.Size = new Size(122, 45);
-            label3.TabIndex = 9;
-            label3.Text = "Địa chỉ";
             // 
             // label2
             // 
@@ -118,19 +104,10 @@
             // 
             txtNumbermember.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtNumbermember.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtNumbermember.Location = new Point(244, 164);
+            txtNumbermember.Location = new Point(244, 92);
             txtNumbermember.Name = "txtNumbermember";
             txtNumbermember.Size = new Size(107, 50);
             txtNumbermember.TabIndex = 7;
-            // 
-            // txtAddress
-            // 
-            txtAddress.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtAddress.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtAddress.Location = new Point(219, 92);
-            txtAddress.Name = "txtAddress";
-            txtAddress.Size = new Size(132, 50);
-            txtAddress.TabIndex = 6;
             // 
             // txtNameroom
             // 
@@ -145,7 +122,7 @@
             // 
             txtService.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtService.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtService.Location = new Point(201, 168);
+            txtService.Location = new Point(209, 170);
             txtService.Name = "txtService";
             txtService.Size = new Size(142, 50);
             txtService.TabIndex = 16;
@@ -174,7 +151,7 @@
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
             label5.ForeColor = Color.Black;
-            label5.Location = new Point(14, 164);
+            label5.Location = new Point(14, 170);
             label5.Name = "label5";
             label5.Size = new Size(161, 45);
             label5.TabIndex = 13;
@@ -211,7 +188,7 @@
             btnSubmit.FlatStyle = FlatStyle.Flat;
             btnSubmit.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnSubmit.ForeColor = SystemColors.ActiveCaptionText;
-            btnSubmit.Location = new Point(233, 224);
+            btnSubmit.Location = new Point(233, 176);
             btnSubmit.Name = "btnSubmit";
             btnSubmit.Size = new Size(110, 44);
             btnSubmit.TabIndex = 4;
@@ -251,13 +228,11 @@
             // panel3
             // 
             panel3.BackColor = SystemColors.GradientActiveCaption;
-            panel3.Controls.Add(txtService);
             panel3.Controls.Add(lb7);
             panel3.Controls.Add(txtWatter);
             panel3.Controls.Add(btnSubmit);
             panel3.Controls.Add(txtElectric);
             panel3.Controls.Add(label6);
-            panel3.Controls.Add(label5);
             panel3.Dock = DockStyle.Fill;
             panel3.Location = new Point(471, 99);
             panel3.Name = "panel3";
@@ -290,10 +265,8 @@
         private Label label1;
         private Panel panel1;
         private Label label4;
-        private Label label3;
         private Label label2;
         private TextBox txtNumbermember;
-        private TextBox txtAddress;
         private TextBox txtNameroom;
         private Button btnSubmit;
         private Label label5;
