@@ -24,6 +24,7 @@ namespace ThieunuQLPT
             InitializeComponent();
         }
 
+        //Tạo phòng
         private async void btnSubmit_Click(object sender, EventArgs e)
         {
             housename = txtNameroom.Text;
@@ -40,7 +41,8 @@ namespace ThieunuQLPT
             else
             {
                 var client = await SupabaseHelper.GetClientAsync();
-                currentUserId = frmLogin.idLoged;
+                currentUserId = frmLogin.idLoged; //Lấy id của người dùng đã đăng nhập
+                //Tạo phòng mới
                 var newHouse = new HousesData
                 {
                     Name = housename,
@@ -57,6 +59,7 @@ namespace ThieunuQLPT
                 {
                     var houseId = response.Models.First().Id;
 
+                    //Gán người tạo là trưởng phòng
                     var newMember = new HouseMembersData
                     {
                         HouseId = houseId,
