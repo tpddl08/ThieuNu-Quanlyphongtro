@@ -24,6 +24,7 @@ namespace WinFormsApp1
             updateLoginStatus();
         }
 
+        //Cập nhật giao diện
         private void updateLoginStatus()
         {
             if (isLogin)
@@ -38,6 +39,7 @@ namespace WinFormsApp1
             }
         }
 
+        //Phòng
         private void btnRoom_Click(object sender, EventArgs e)
         {
             if (isLogin)
@@ -51,6 +53,7 @@ namespace WinFormsApp1
             }
         }
 
+        //Mở đăng nhập/đăng xuất
         private void btnAccount_Click(object sender, EventArgs e)
         {
             if (isLogin == true)
