@@ -22,4 +22,5 @@ public class ListBills : BaseModel
 
     [Column("created_at")]
     public DateTime created_at { get; set; }
+
 }

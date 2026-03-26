@@ -10,8 +10,8 @@ namespace ThieunuQLPT.Models.Invoices
 
         [Browsable(false)]
         public Guid invoice_id {  get; set; }
-        public string name { get; set; }
-        public string type { get; set; }
+        public string name { get; set; } = "";
+        public string type { get; set; } = "";
         public decimal amount { get; set; }
 
         [JsonIgnore]

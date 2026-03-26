@@ -1,4 +1,6 @@
 D:\ThieuNu-Quanlyphongtro\QLPT\WinFormsApp1\WinFormsApp1\bin\Debug\net8.0-windows\ThieunuQLPT.exe
+D:\ThieuNu-Quanlyphongtro\QLPT\WinFormsApp1\WinFormsApp1\bin\Debug\net8.0-windows\SupabaseHelper.cs
+D:\ThieuNu-Quanlyphongtro\QLPT\WinFormsApp1\WinFormsApp1\bin\Debug\net8.0-windows\appsettings.json
 D:\ThieuNu-Quanlyphongtro\QLPT\WinFormsApp1\WinFormsApp1\bin\Debug\net8.0-windows\ThieunuQLPT.deps.json
 D:\ThieuNu-Quanlyphongtro\QLPT\WinFormsApp1\WinFormsApp1\bin\Debug\net8.0-windows\ThieunuQLPT.runtimeconfig.json
 D:\ThieuNu-Quanlyphongtro\QLPT\WinFormsApp1\WinFormsApp1\bin\Debug\net8.0-windows\ThieunuQLPT.dll
@@ -35,13 +37,16 @@ D:\ThieuNu-Quanlyphongtro\QLPT\WinFormsApp1\WinFormsApp1\bin\Debug\net8.0-window
 D:\ThieuNu-Quanlyphongtro\QLPT\WinFormsApp1\WinFormsApp1\bin\Debug\net8.0-windows\Websocket.Client.dll
 D:\ThieuNu-Quanlyphongtro\QLPT\WinFormsApp1\WinFormsApp1\bin\Debug\net8.0-windows\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
 D:\ThieuNu-Quanlyphongtro\QLPT\WinFormsApp1\WinFormsApp1\obj\Debug\net8.0-windows\ThieunuQLPT.csproj.AssemblyReference.cache
+D:\ThieuNu-Quanlyphongtro\QLPT\WinFormsApp1\WinFormsApp1\obj\Debug\net8.0-windows\ThieunuQLPT.frmBill.resources
 D:\ThieuNu-Quanlyphongtro\QLPT\WinFormsApp1\WinFormsApp1\obj\Debug\net8.0-windows\ThieunuQLPT.frmCreateroom.resources
+D:\ThieuNu-Quanlyphongtro\QLPT\WinFormsApp1\WinFormsApp1\obj\Debug\net8.0-windows\ThieunuQLPT.frmEditBill.resources
 D:\ThieuNu-Quanlyphongtro\QLPT\WinFormsApp1\WinFormsApp1\obj\Debug\net8.0-windows\ThieunuQLPT.frmListBills.resources
 D:\ThieuNu-Quanlyphongtro\QLPT\WinFormsApp1\WinFormsApp1\obj\Debug\net8.0-windows\ThieunuQLPT.frmLogin.resources
 D:\ThieuNu-Quanlyphongtro\QLPT\WinFormsApp1\WinFormsApp1\obj\Debug\net8.0-windows\WinFormsApp1.frmMain.resources
 D:\ThieuNu-Quanlyphongtro\QLPT\WinFormsApp1\WinFormsApp1\obj\Debug\net8.0-windows\ThieunuQLPT.frmMember.resources
 D:\ThieuNu-Quanlyphongtro\QLPT\WinFormsApp1\WinFormsApp1\obj\Debug\net8.0-windows\ThieunuQLPT.frmPassword.resources
 D:\ThieuNu-Quanlyphongtro\QLPT\WinFormsApp1\WinFormsApp1\obj\Debug\net8.0-windows\ThieunuQLPT.frmSignin.resources
+D:\ThieuNu-Quanlyphongtro\QLPT\WinFormsApp1\WinFormsApp1\obj\Debug\net8.0-windows\ThieunuQLPT.Properties.Resources.resources
 D:\ThieuNu-Quanlyphongtro\QLPT\WinFormsApp1\WinFormsApp1\obj\Debug\net8.0-windows\ThieunuQLPT.csproj.GenerateResource.cache
 D:\ThieuNu-Quanlyphongtro\QLPT\WinFormsApp1\WinFormsApp1\obj\Debug\net8.0-windows\ThieunuQLPT.GeneratedMSBuildEditorConfig.editorconfig
 D:\ThieuNu-Quanlyphongtro\QLPT\WinFormsApp1\WinFormsApp1\obj\Debug\net8.0-windows\ThieunuQLPT.AssemblyInfoInputs.cache

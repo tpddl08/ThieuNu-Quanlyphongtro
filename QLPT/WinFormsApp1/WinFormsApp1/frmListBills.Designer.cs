@@ -30,6 +30,7 @@
         {
             dataGridView1 = new DataGridView();
             btnAll = new Button();
+            btnAdd = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -41,6 +42,7 @@
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.Size = new Size(686, 369);
             dataGridView1.TabIndex = 0;
+            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             // 
             // btnAll
             // 
@@ -52,11 +54,22 @@
             btnAll.UseVisualStyleBackColor = true;
             btnAll.Click += btnAll_Click;
             // 
+            // btnAdd
+            // 
+            btnAdd.Location = new Point(694, 374);
+            btnAdd.Name = "btnAdd";
+            btnAdd.Size = new Size(94, 29);
+            btnAdd.TabIndex = 2;
+            btnAdd.Text = "Thêm";
+            btnAdd.UseVisualStyleBackColor = true;
+            btnAdd.Click += btnAdd_Click;
+            // 
             // frmListBills
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(btnAdd);
             Controls.Add(btnAll);
             Controls.Add(dataGridView1);
             Name = "frmListBills";
@@ -69,5 +82,6 @@
 
         private DataGridView dataGridView1;
         private Button btnAll;
+        private Button btnAdd;
     }
 }
