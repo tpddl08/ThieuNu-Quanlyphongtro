@@ -35,16 +35,16 @@
             DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             dgvMember = new DataGridView();
-            colName = new DataGridViewTextBoxColumn();
-            colNumberphone = new DataGridViewTextBoxColumn();
-            colEmail = new DataGridViewTextBoxColumn();
-            colStatus = new DataGridViewTextBoxColumn();
-            colEdit = new DataGridViewButtonColumn();
             lblNoti = new Label();
             btnSubmit = new Button();
             btnCreateroom = new Button();
             btnAdd = new Button();
             btnDelete = new Button();
+            colName = new DataGridViewTextBoxColumn();
+            colNumberphone = new DataGridViewTextBoxColumn();
+            colEmail = new DataGridViewTextBoxColumn();
+            colStatus = new DataGridViewTextBoxColumn();
+            colEdit = new DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)dgvMember).BeginInit();
             SuspendLayout();
             // 
@@ -92,44 +92,6 @@
             dgvMember.Size = new Size(699, 328);
             dgvMember.TabIndex = 0;
             dgvMember.CellContentClick += dgvMember_CellContentClick;
-            // 
-            // colName
-            // 
-            colName.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle3.Font = new Font("Microsoft Sans Serif", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            colName.DefaultCellStyle = dataGridViewCellStyle3;
-            colName.HeaderText = "Tên";
-            colName.MinimumWidth = 8;
-            colName.Name = "colName";
-            // 
-            // colNumberphone
-            // 
-            colNumberphone.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            colNumberphone.HeaderText = "Số điện thoại";
-            colNumberphone.MinimumWidth = 8;
-            colNumberphone.Name = "colNumberphone";
-            // 
-            // colEmail
-            // 
-            colEmail.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            colEmail.HeaderText = "Email";
-            colEmail.MinimumWidth = 8;
-            colEmail.Name = "colEmail";
-            // 
-            // colStatus
-            // 
-            colStatus.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            colStatus.HeaderText = "Trạng thái";
-            colStatus.MinimumWidth = 8;
-            colStatus.Name = "colStatus";
-            // 
-            // colEdit
-            // 
-            colEdit.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            colEdit.HeaderText = "Sửa";
-            colEdit.MinimumWidth = 8;
-            colEdit.Name = "colEdit";
-            colEdit.Width = 82;
             // 
             // lblNoti
             // 
@@ -196,6 +158,44 @@
             btnDelete.Text = "Xóa";
             btnDelete.UseVisualStyleBackColor = false;
             btnDelete.Click += btnDelete_Click;
+            // 
+            // colName
+            // 
+            colName.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle3.Font = new Font("Microsoft Sans Serif", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            colName.DefaultCellStyle = dataGridViewCellStyle3;
+            colName.HeaderText = "Tên";
+            colName.MinimumWidth = 8;
+            colName.Name = "colName";
+            // 
+            // colNumberphone
+            // 
+            colNumberphone.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            colNumberphone.HeaderText = "Số điện thoại";
+            colNumberphone.MinimumWidth = 8;
+            colNumberphone.Name = "colNumberphone";
+            // 
+            // colEmail
+            // 
+            colEmail.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            colEmail.HeaderText = "Email";
+            colEmail.MinimumWidth = 8;
+            colEmail.Name = "colEmail";
+            // 
+            // colStatus
+            // 
+            colStatus.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            colStatus.HeaderText = "Trạng thái";
+            colStatus.MinimumWidth = 8;
+            colStatus.Name = "colStatus";
+            // 
+            // colEdit
+            // 
+            colEdit.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            colEdit.HeaderText = "Chỉnh sửa";
+            colEdit.MinimumWidth = 8;
+            colEdit.Name = "colEdit";
+            colEdit.Width = 156;
             // 
             // frmMember
             // 

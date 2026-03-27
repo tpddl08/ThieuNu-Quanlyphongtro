@@ -180,6 +180,15 @@ namespace ThieunuQLPT
                 row.Cells["colHouseMemberId"].Value = hm.Id.ToString();
                 row.Cells["colUserId"].Value = hm.UserId.ToString();
 
+                if (hm.UserId == currentUserId)
+                {
+                    row.Cells["colEdit"].Value = "Sửa";
+                }
+                else
+                {
+                    row.Cells["colEdit"].Value = ""; // để trống cho người khác
+                }
+
                 row.Tag = null;
 
                 if (!hm.IsActive) row.DefaultCellStyle.BackColor = Color.LightGray;
