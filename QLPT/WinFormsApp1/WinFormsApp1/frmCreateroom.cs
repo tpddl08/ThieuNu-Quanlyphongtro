@@ -50,7 +50,7 @@ namespace ThieunuQLPT
                     ElectricityRate = houseelectric,
                     WaterRate = housewatter,
                     ServiceRate = houseservice,
-                    MonthYear = monthyear
+                   
                 };
 
                 var response = await client.From<HousesData>().Insert(newHouse);

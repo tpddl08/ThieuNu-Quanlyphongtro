@@ -22,6 +22,8 @@ namespace ThieunuQLPT
 
         private async void frmMember_Load(object sender, EventArgs e)
         {
+
+
             //Tạo cột id của phòng ẩn
             if (!dgvMember.Columns.Contains("colHouseMemberId"))
             {
@@ -40,6 +42,16 @@ namespace ThieunuQLPT
                 {
                     Name = "colUserId",
                     Visible = false
+                };
+                dgvMember.Columns.Add(c);
+            }
+
+            if (!dgvMember.Columns.Contains("colPaidStatus"))
+            {
+                var c = new DataGridViewCheckBoxColumn
+                {
+                    Name = "colPaidStatus",
+                    HeaderText = "Đã đóng tiền"
                 };
                 dgvMember.Columns.Add(c);
             }
@@ -93,6 +105,7 @@ namespace ThieunuQLPT
             lblNoti.Text = $"PHÒNG: {currentHouse.Name}";
 
             await LoadMembersToDGV(currentHouse.Id); //Hiển thị thành viên nếu có phòng
+
         }
 
         //Tạo phòng
@@ -132,6 +145,7 @@ namespace ThieunuQLPT
             r.Cells["colStatus"].Value = "Đang ở";
             r.Cells["colHouseMemberId"].Value = "";
             r.Cells["colUserId"].Value = prof.Id.ToString();
+            r.Cells["colPaidStatus"].Value = false; 
         }
 
         //Tải thành viên của phòng
@@ -172,6 +186,7 @@ namespace ThieunuQLPT
 
                 int idx = dgvMember.Rows.Add();
                 var row = dgvMember.Rows[idx];
+                bool isPaid = hm.IsPaid ?? false;
 
                 row.Cells["colName"].Value = prof?.FullName ?? "";
                 row.Cells["colNumberphone"].Value = prof?.Phone ?? "";
@@ -179,6 +194,7 @@ namespace ThieunuQLPT
                 row.Cells["colStatus"].Value = hm.IsActive ? "Đang ở" : "Rời đi";
                 row.Cells["colHouseMemberId"].Value = hm.Id.ToString();
                 row.Cells["colUserId"].Value = hm.UserId.ToString();
+                row.Cells["colPaidStatus"].Value = isPaid;
 
                 row.Tag = null;
 
@@ -317,7 +333,7 @@ namespace ThieunuQLPT
             //Chỉ được phép tự chỉnh sửa thông tin cá nhân
             if (currentHouse == null)
             {
-                if (rowUserId == currentUserId)
+                if (rowUserId == currentUserId) 
                 {
                     EditProfileRow(row);
                 }

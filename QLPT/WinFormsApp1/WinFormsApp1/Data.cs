@@ -55,8 +55,7 @@ namespace ThieunuQLPT
         [Column("created_at")]
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
-        [Column("month_year")]
-        public string? MonthYear { get; set; }
+       
 
         [Column("service_rate")]
         public decimal? ServiceRate { get; set; }
@@ -65,6 +64,9 @@ namespace ThieunuQLPT
     [Table("house_members")]
     public class HouseMembersData : BaseModel
     {
+        [Column("is_paid")]
+        public bool? IsPaid { get; set; }
+
         [PrimaryKey("id", false)]
         public Guid Id { get; set; }
 

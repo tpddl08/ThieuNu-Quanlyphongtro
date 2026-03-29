@@ -13,7 +13,7 @@
             InitializeComponent();
             _ = client.InitializeAsync();
         }
-        public frmEditBill(string houseId): this()
+        public frmEditBill(string houseId) : this()
         {
             this._houseId = houseId;
             this.Load += frmEditBill_Load;
@@ -21,7 +21,7 @@
 
         private async void frmEditBill_Load(object? sender, EventArgs e)
         {
-           //đảm bảo client đã sẵn sàng
+            //đảm bảo client đã sẵn sàng
             await client.InitializeAsync();
 
             if (!string.IsNullOrEmpty(_houseId))
@@ -42,7 +42,9 @@
                 txtServiceRate.Text = result.serviceRate.ToString();
             }
         }
-         //sửa
+            
+
+        //sửa
         private async void btnSua_Click(object sender, EventArgs e)
         {
 
@@ -70,14 +72,14 @@
                    + ((update.newNums - update.oldNums) * 4000)
                    + (update.maxMembers * 100000)
                    + update.serviceRate;
-
+               
                 detailBill.newNums = update.newNums;
                 detailBill.oldNums = update.oldNums;
                 detailBill.Name = update.Name;
                 lblWaterRate.Text = water_rate.ToString();
                 lblElectricRate.Text = electric_rate.ToString();
                 lblConsume.Text = $"{update.newNums - update.oldNums} kWh x 4000đ";
-                
+
                 detailBill.totalRent = update.totalRent;
                 detailBill.serviceRate = update.serviceRate;
                 detailBill.maxMembers = update.maxMembers;
@@ -100,7 +102,7 @@
                     .Where(x => x.house_id == _houseId)
                     .Update(lisBill);
 
-               
+
 
                 MessageBox.Show("Cập nhật thành công!");
                 this.DialogResult = DialogResult.OK;
@@ -108,7 +110,7 @@
             }
             catch (Exception ex) { MessageBox.Show("Lỗi: " + ex.Message); }
         }
-        
+
         /*thêm*/
         private async void btnInsert_Click(object sender, EventArgs e)
         {
@@ -137,7 +139,7 @@
                     decimal electricTotal = (createdHouse.newNums - createdHouse.oldNums) * createdHouse.electricRate;
                     decimal waterTotal = createdHouse.maxMembers * createdHouse.waterRate;
                     decimal totalAmount = createdHouse.totalRent + electricTotal + waterTotal + (decimal)createdHouse.serviceRate;
-
+                    
                     //tạo hóa đơn tương ứng bên bảng ListBills (invoices)
                     var newInvoice = new ListBills
                     {
@@ -152,7 +154,7 @@
 
                 MessageBox.Show("Thêm phòng và hóa đơn thành công!");
 
-             //trả về DialogResult.OK để Form List tự Load lại
+                //trả về DialogResult.OK để Form List tự Load lại
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
@@ -176,8 +178,18 @@
                     this.DialogResult = DialogResult.OK;
                     this.Close();
                 }
-                catch (Exception ) { MessageBox.Show("Lỗi: " + "Hóa đơn chưa tồn tại để xóa"); }
+                catch (Exception) { MessageBox.Show("Lỗi: " + "Hóa đơn chưa tồn tại để xóa"); }
             }
+        }
+
+        private void label10_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblTotal_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
