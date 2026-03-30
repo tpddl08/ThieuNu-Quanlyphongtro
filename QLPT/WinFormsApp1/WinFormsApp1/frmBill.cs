@@ -84,5 +84,11 @@ namespace ThieunuQLPT
                 this.DialogResult = DialogResult.OK;
             }
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            frmDetail frm = new frmDetail(_houseId);
+            frm.ShowDialog();
+        }
     }
 }

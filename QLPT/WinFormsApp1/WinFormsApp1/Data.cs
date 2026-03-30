@@ -62,6 +62,9 @@ namespace ThieunuQLPT
     [Table("house_members")]
     public class HouseMembersData : BaseModel
     {
+        [Column("is_paid")]
+        public bool? IsPaid { get; set; }
+
         [PrimaryKey("id", false)]
         public Guid Id { get; set; }
 

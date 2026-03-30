@@ -1,4 +1,4 @@
-﻿namespace ThieunuQLPT
+namespace ThieunuQLPT
 {
     partial class frmMember
     {
@@ -42,6 +42,7 @@
             btnDelete = new Button();
             colName = new DataGridViewTextBoxColumn();
             colNumberphone = new DataGridViewTextBoxColumn();
+            colPaidStatus = new DataGridViewCheckBoxColumn();
             colEmail = new DataGridViewTextBoxColumn();
             colStatus = new DataGridViewTextBoxColumn();
             colEdit = new DataGridViewButtonColumn();
@@ -66,7 +67,7 @@
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
             dgvMember.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvMember.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvMember.Columns.AddRange(new DataGridViewColumn[] { colName, colNumberphone, colEmail, colStatus, colEdit });
+            dgvMember.Columns.AddRange(new DataGridViewColumn[] { colName, colNumberphone, colPaidStatus, colEmail, colStatus, colEdit });
             dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle4.BackColor = SystemColors.Window;
             dataGridViewCellStyle4.Font = new Font("Segoe UI", 14F);
@@ -75,7 +76,8 @@
             dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
             dgvMember.DefaultCellStyle = dataGridViewCellStyle4;
-            dgvMember.Location = new Point(47, 125);
+            dgvMember.Location = new Point(31, 83);
+            dgvMember.Margin = new Padding(2, 2, 2, 2);
             dgvMember.Name = "dgvMember";
             dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle5.BackColor = SystemColors.Control;
@@ -89,7 +91,7 @@
             dataGridViewCellStyle6.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dgvMember.RowsDefaultCellStyle = dataGridViewCellStyle6;
             dgvMember.RowTemplate.Height = 100;
-            dgvMember.Size = new Size(699, 328);
+            dgvMember.Size = new Size(466, 219);
             dgvMember.TabIndex = 0;
             dgvMember.CellContentClick += dgvMember_CellContentClick;
             // 
@@ -97,9 +99,10 @@
             // 
             lblNoti.AutoSize = true;
             lblNoti.Font = new Font("Segoe UI", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblNoti.Location = new Point(47, 38);
+            lblNoti.Location = new Point(31, 25);
+            lblNoti.Margin = new Padding(2, 0, 2, 0);
             lblNoti.Name = "lblNoti";
-            lblNoti.Size = new Size(205, 54);
+            lblNoti.Size = new Size(141, 37);
             lblNoti.TabIndex = 7;
             lblNoti.Text = "Thông tin";
             // 
@@ -109,9 +112,10 @@
             btnSubmit.BackColor = Color.RoyalBlue;
             btnSubmit.FlatStyle = FlatStyle.Flat;
             btnSubmit.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnSubmit.Location = new Point(770, 125);
+            btnSubmit.Location = new Point(513, 83);
+            btnSubmit.Margin = new Padding(2, 2, 2, 2);
             btnSubmit.Name = "btnSubmit";
-            btnSubmit.Size = new Size(128, 46);
+            btnSubmit.Size = new Size(85, 31);
             btnSubmit.TabIndex = 9;
             btnSubmit.Text = "Lưu";
             btnSubmit.UseVisualStyleBackColor = false;
@@ -123,9 +127,10 @@
             btnCreateroom.BackColor = Color.ForestGreen;
             btnCreateroom.FlatStyle = FlatStyle.Flat;
             btnCreateroom.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnCreateroom.Location = new Point(511, 35);
+            btnCreateroom.Location = new Point(341, 23);
+            btnCreateroom.Margin = new Padding(2, 2, 2, 2);
             btnCreateroom.Name = "btnCreateroom";
-            btnCreateroom.Size = new Size(235, 64);
+            btnCreateroom.Size = new Size(157, 43);
             btnCreateroom.TabIndex = 10;
             btnCreateroom.Text = "Tạo phòng";
             btnCreateroom.UseVisualStyleBackColor = false;
@@ -137,9 +142,10 @@
             btnAdd.BackColor = Color.ForestGreen;
             btnAdd.FlatStyle = FlatStyle.Flat;
             btnAdd.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnAdd.Location = new Point(770, 197);
+            btnAdd.Location = new Point(513, 131);
+            btnAdd.Margin = new Padding(2, 2, 2, 2);
             btnAdd.Name = "btnAdd";
-            btnAdd.Size = new Size(128, 46);
+            btnAdd.Size = new Size(85, 31);
             btnAdd.TabIndex = 11;
             btnAdd.Text = "Thêm";
             btnAdd.UseVisualStyleBackColor = false;
@@ -151,9 +157,10 @@
             btnDelete.BackColor = Color.Red;
             btnDelete.FlatStyle = FlatStyle.Flat;
             btnDelete.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnDelete.Location = new Point(770, 270);
+            btnDelete.Location = new Point(513, 180);
+            btnDelete.Margin = new Padding(2, 2, 2, 2);
             btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(128, 46);
+            btnDelete.Size = new Size(85, 31);
             btnDelete.TabIndex = 12;
             btnDelete.Text = "Xóa";
             btnDelete.UseVisualStyleBackColor = false;
@@ -199,16 +206,17 @@
             // 
             // frmMember
             // 
-            AutoScaleDimensions = new SizeF(144F, 144F);
+            AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = SystemColors.GradientInactiveCaption;
-            ClientSize = new Size(938, 484);
+            ClientSize = new Size(625, 323);
             Controls.Add(btnDelete);
             Controls.Add(btnAdd);
             Controls.Add(btnSubmit);
             Controls.Add(lblNoti);
             Controls.Add(dgvMember);
             Controls.Add(btnCreateroom);
+            Margin = new Padding(2, 2, 2, 2);
             Name = "frmMember";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Danh sách thành viên";
@@ -229,6 +237,7 @@
         private Button btnDelete;
         private DataGridViewTextBoxColumn colName;
         private DataGridViewTextBoxColumn colNumberphone;
+        private DataGridViewCheckBoxColumn colPaidStatus;
         private DataGridViewTextBoxColumn colEmail;
         private DataGridViewTextBoxColumn colStatus;
         private DataGridViewButtonColumn colEdit;

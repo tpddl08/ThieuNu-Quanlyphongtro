@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -46,7 +46,7 @@ namespace ThieunuQLPT
                     MaxMembers = housemaxmember,
                     ElectricityRate = 4000,
                     WaterRate = 100000,
-                    ServiceRate = houseservice,
+                    ServiceRate = houseservice,                   
                 };
 
                 var response = await client.From<HousesData>().Insert(newHouse);
