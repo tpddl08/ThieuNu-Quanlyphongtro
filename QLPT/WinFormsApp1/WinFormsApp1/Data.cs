@@ -55,8 +55,6 @@ namespace ThieunuQLPT
         [Column("created_at")]
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
-       
-
         [Column("service_rate")]
         public decimal? ServiceRate { get; set; }
     }

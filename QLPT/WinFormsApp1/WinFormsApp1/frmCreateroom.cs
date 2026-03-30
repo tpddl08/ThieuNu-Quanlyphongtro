@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,7 +14,7 @@ namespace ThieunuQLPT
 {
     public partial class frmCreateroom : Form
     {
-        private string? housename, monthyear;
+        private string? housename;
         private int? housemaxmember;
         private decimal? houseelectric, housewatter, houseservice;
         private Guid currentUserId;
@@ -29,12 +29,9 @@ namespace ThieunuQLPT
         {
             housename = txtNameroom.Text;
             housemaxmember = int.TryParse(txtNumbermember.Text, out var max) ? max : null;
-            houseelectric = decimal.TryParse(txtElectric.Text, out var elec) ? elec : null;
-            housewatter = decimal.TryParse(txtWatter.Text, out var wat) ? wat : null;
             houseservice = decimal.TryParse(txtService.Text, out var serv) ? serv : null;
-            monthyear = DateTime.Now.ToString("MM/yyyy");
 
-            if (housename == null || housemaxmember == null || houseelectric==null || housewatter==null || houseservice==null)
+            if (housename == null || housemaxmember == null || houseservice==null)
             {
                 MessageBox.Show("Vui lòng điền đầy đủ thông tin!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -47,10 +44,9 @@ namespace ThieunuQLPT
                 {
                     Name = housename,
                     MaxMembers = housemaxmember,
-                    ElectricityRate = houseelectric,
-                    WaterRate = housewatter,
-                    ServiceRate = houseservice,
-                   
+                    ElectricityRate = 4000,
+                    WaterRate = 100000,
+                    ServiceRate = houseservice,                   
                 };
 
                 var response = await client.From<HousesData>().Insert(newHouse);

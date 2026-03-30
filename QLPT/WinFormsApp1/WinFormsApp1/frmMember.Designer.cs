@@ -1,4 +1,4 @@
-﻿namespace ThieunuQLPT
+namespace ThieunuQLPT
 {
     partial class frmMember
     {
@@ -182,11 +182,6 @@
             colNumberphone.MinimumWidth = 8;
             colNumberphone.Name = "colNumberphone";
             // 
-            // colPaidStatus
-            // 
-            colPaidStatus.HeaderText = "Đã đóng tiền";
-            colPaidStatus.Name = "colPaidStatus";
-            // 
             // colEmail
             // 
             colEmail.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
@@ -204,10 +199,10 @@
             // colEdit
             // 
             colEdit.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            colEdit.HeaderText = "Sửa";
+            colEdit.HeaderText = "Chỉnh sửa";
             colEdit.MinimumWidth = 8;
             colEdit.Name = "colEdit";
-            colEdit.Width = 42;
+            colEdit.Width = 156;
             // 
             // frmMember
             // 

@@ -196,6 +196,15 @@ namespace ThieunuQLPT
                 row.Cells["colUserId"].Value = hm.UserId.ToString();
                 row.Cells["colPaidStatus"].Value = isPaid;
 
+                if (hm.UserId == currentUserId)
+                {
+                    row.Cells["colEdit"].Value = "Sửa";
+                }
+                else
+                {
+                    row.Cells["colEdit"].Value = ""; // để trống cho người khác
+                }
+
                 row.Tag = null;
 
                 if (!hm.IsActive) row.DefaultCellStyle.BackColor = Color.LightGray;
