@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Supabase;
 using ThieunuQLPT.Models;
-
+using Supabase;
 namespace ThieunuQLPT
 {
     public partial class frmListBills : Form
     {
-        private Client client = null!;
-
         public frmListBills()
         {
             InitializeComponent();
@@ -18,25 +15,20 @@ namespace ThieunuQLPT
 
         private async void frmListBills_Load(object? sender, EventArgs e)
         {
-            client = new Client(
-                 "https://unkegkyxftsxkusheabr.supabase.co",
-                 "sb_publishable_KNYJJ23Wts1x0zkc-ifPbg_f04atwSl"
-             );
-            await client.InitializeAsync();
-            await LoadData(); // load dữ liệu
+            await LoadData();
         }
 
         private async Task LoadData()
         {
             try
             {
-                var result = await client.From<ListBills>()
-                              
-                                 .Get();
+                var client = await SupabaseHelper.GetClientAsync();
+                if (client == null) return;
+
+                var result = await client.From<ListBills>().Get();
                 dataGridView1.DataSource = result.Models;
 
-                // Ẩn cột thừa an toàn
-                string[] hideCols = { "id", "BaseUrl", "RequestClientOptions", "TableName", "PrimaryKey", "House"};
+                string[] hideCols = { "id", "BaseUrl", "RequestClientOptions", "TableName", "PrimaryKey", "House" };
                 foreach (var col in hideCols)
                 {
                     if (dataGridView1.Columns.Contains(col)) dataGridView1.Columns[col].Visible = false;
@@ -48,12 +40,10 @@ namespace ThieunuQLPT
                     }
                     dataGridView1.Columns["month_year"].HeaderText = "Tháng";
                     dataGridView1.Columns["status"].HeaderText = "Trạng thái";
-
                 }
             }
             catch (Exception ex)
             {
-               
                 MessageBox.Show("Lỗi LoadData: " + ex.Message);
             }
         }
@@ -71,7 +61,6 @@ namespace ThieunuQLPT
                 if (!string.IsNullOrEmpty(id))
                 {
                     frmBill viewForm = new frmBill(id);
-                    // nếu ở các Form con có thay đổi (Sửa/Xóa), load lại danh sách
                     if (viewForm.ShowDialog() == DialogResult.OK)
                     {
                         await LoadData();
@@ -82,8 +71,7 @@ namespace ThieunuQLPT
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            frmEditBill frm = new frmEditBill(); //ko có ID → thêm mới
-
+            frmEditBill frm = new frmEditBill();
             if (frm.ShowDialog() == DialogResult.OK)
             {
                 _ = LoadData();

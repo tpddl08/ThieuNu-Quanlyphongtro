@@ -82,7 +82,8 @@ namespace WinFormsApp1
         {
             if (isLogin)
             {
-
+                frmBill frm = new frmBill();
+                frm.ShowDialog();
             }
             else
             {

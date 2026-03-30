@@ -38,11 +38,14 @@
             // 
             // dgvSplitBill
             // 
+            dgvSplitBill.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvSplitBill.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvSplitBill.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvSplitBill.Location = new Point(73, 99);
+            dgvSplitBill.Location = new Point(-1, 164);
+            dgvSplitBill.Margin = new Padding(4, 5, 4, 5);
             dgvSplitBill.Name = "dgvSplitBill";
-            dgvSplitBill.Size = new Size(641, 218);
+            dgvSplitBill.RowHeadersWidth = 62;
+            dgvSplitBill.Size = new Size(937, 328);
             dgvSplitBill.TabIndex = 0;
             dgvSplitBill.CellContentClick += dataGridView1_CellContentClick;
             // 
@@ -53,20 +56,22 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(326, 47);
+            label1.Font = new Font("Segoe UI", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Location = new Point(274, 37);
+            label1.Margin = new Padding(4, 0, 4, 0);
             label1.Name = "label1";
-            label1.Size = new Size(113, 15);
+            label1.Size = new Size(386, 54);
             label1.TabIndex = 1;
             label1.Text = "CHI TIẾT HÓA ĐƠN";
             // 
             // frmDetail
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 348);
+            AutoScaleDimensions = new SizeF(144F, 144F);
+            AutoScaleMode = AutoScaleMode.Dpi;
+            ClientSize = new Size(938, 484);
             Controls.Add(label1);
             Controls.Add(dgvSplitBill);
+            Margin = new Padding(4, 5, 4, 5);
             Name = "frmDetail";
             Text = "FormDongTien";
             Load += FormDongTien_Load;

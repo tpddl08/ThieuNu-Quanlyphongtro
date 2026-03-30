@@ -1,19 +1,20 @@
-﻿namespace ThieunuQLPT
+﻿using System;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using ThieunuQLPT.Models;
+using Supabase;
+namespace ThieunuQLPT
 {
     public partial class frmEditBill : Form
     {
-        private Supabase.Client client = new Supabase.Client(
-        "https://unkegkyxftsxkusheabr.supabase.co",
-        "sb_publishable_KNYJJ23Wts1x0zkc-ifPbg_f04atwSl"
-    );
         private string _houseId = "";
 
         public frmEditBill()
         {
             InitializeComponent();
-            _ = client.InitializeAsync();
         }
-        public frmEditBill(string houseId): this()
+
+        public frmEditBill(string houseId) : this()
         {
             this._houseId = houseId;
             this.Load += frmEditBill_Load;
@@ -21,16 +22,17 @@
 
         private async void frmEditBill_Load(object? sender, EventArgs e)
         {
-           //đảm bảo client đã sẵn sàng
-            await client.InitializeAsync();
-
             if (!string.IsNullOrEmpty(_houseId))
             {
                 await FetchDataToFields();
             }
         }
+
         private async Task FetchDataToFields()
         {
+            var client = await SupabaseHelper.GetClientAsync();
+            if (client == null) return;
+
             var result = await client.From<DetailBill>().Where(x => x.id == _houseId).Single();
             if (result != null)
             {
@@ -42,12 +44,14 @@
                 txtServiceRate.Text = result.serviceRate.ToString();
             }
         }
-         //sửa
+
         private async void btnSua_Click(object sender, EventArgs e)
         {
-
             try
             {
+                var client = await SupabaseHelper.GetClientAsync();
+                if (client == null) return;
+
                 var update = new DetailBill
                 {
                     id = _houseId,
@@ -60,16 +64,16 @@
                 };
 
                 var detailBill = await client.From<DetailBill>()
-                   .Where(x => x.id == _houseId)
-                   .Single();
+                    .Where(x => x.id == _houseId)
+                    .Single();
 
                 decimal water_rate = update.maxMembers * 100000;
                 decimal electric_rate = (update.newNums - update.oldNums) * 4000;
 
                 decimal totalAmount = update.totalRent
-                   + ((update.newNums - update.oldNums) * 4000)
-                   + (update.maxMembers * 100000)
-                   + update.serviceRate;
+                    + ((update.newNums - update.oldNums) * 4000)
+                    + (update.maxMembers * 100000)
+                    + update.serviceRate;
 
                 detailBill.newNums = update.newNums;
                 detailBill.oldNums = update.oldNums;
@@ -77,19 +81,14 @@
                 lblWaterRate.Text = water_rate.ToString();
                 lblElectricRate.Text = electric_rate.ToString();
                 lblConsume.Text = $"{update.newNums - update.oldNums} kWh x 4000đ";
-                
                 detailBill.totalRent = update.totalRent;
                 detailBill.serviceRate = update.serviceRate;
                 detailBill.maxMembers = update.maxMembers;
                 lblTotal.Text = totalAmount.ToString();
 
-
                 await client.From<DetailBill>()
                     .Where(x => x.id == _houseId)
                     .Update(detailBill);
-
-                // Đồng bộ sang bảng Invoices (Danh sách tổng)
-
 
                 var lisBill = await client.From<ListBills>()
                     .Where(x => x.house_id == _houseId)
@@ -100,21 +99,20 @@
                     .Where(x => x.house_id == _houseId)
                     .Update(lisBill);
 
-               
-
                 MessageBox.Show("Cập nhật thành công!");
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
             catch (Exception ex) { MessageBox.Show("Lỗi: " + ex.Message); }
         }
-        
-        /*thêm*/
+
         private async void btnInsert_Click(object sender, EventArgs e)
         {
             try
             {
-                //tạo đối tượng House mới
+                var client = await SupabaseHelper.GetClientAsync();
+                if (client == null) return;
+
                 var newHouse = new DetailBill
                 {
                     Name = txtRoom.Text,
@@ -127,21 +125,18 @@
                     serviceRate = decimal.Parse(txtServiceRate.Text)
                 };
 
-                // chèn vào bảng houses và lấy kết quả trả về (để lấy ID mới sinh)
                 var response = await client.From<DetailBill>().Insert(newHouse);
                 var createdHouse = response.Model;
 
                 if (createdHouse != null)
                 {
-                    // tính tổng tiền ban đầu cho hóa đơn
                     decimal electricTotal = (createdHouse.newNums - createdHouse.oldNums) * createdHouse.electricRate;
                     decimal waterTotal = createdHouse.maxMembers * createdHouse.waterRate;
                     decimal totalAmount = createdHouse.totalRent + electricTotal + waterTotal + (decimal)createdHouse.serviceRate;
 
-                    //tạo hóa đơn tương ứng bên bảng ListBills (invoices)
                     var newInvoice = new ListBills
                     {
-                        house_id = createdHouse.id, // Lấy ID vừa sinh ra từ DB
+                        house_id = createdHouse.id,
                         month_year = txtMonth.Text,
                         total_amount = totalAmount,
                         status = "Unpaid",
@@ -151,8 +146,6 @@
                 }
 
                 MessageBox.Show("Thêm phòng và hóa đơn thành công!");
-
-             //trả về DialogResult.OK để Form List tự Load lại
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
@@ -162,13 +155,15 @@
             }
         }
 
-        // xóa
         private async void btnDelete_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Bạn có chắc chắn muốn xóa?", "Xác nhận", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 try
                 {
+                    var client = await SupabaseHelper.GetClientAsync();
+                    if (client == null) return;
+
                     await client.From<DetailBill>().Where(x => x.id == _houseId).Delete();
                     await client.From<ListBills>().Where(x => x.house_id == _houseId).Delete();
 
@@ -176,7 +171,7 @@
                     this.DialogResult = DialogResult.OK;
                     this.Close();
                 }
-                catch (Exception ) { MessageBox.Show("Lỗi: " + "Hóa đơn chưa tồn tại để xóa"); }
+                catch (Exception) { MessageBox.Show("Lỗi: " + "Hóa đơn chưa tồn tại để xóa"); }
             }
         }
     }

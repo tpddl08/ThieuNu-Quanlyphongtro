@@ -139,7 +139,7 @@ namespace ThieunuQLPT
                 row.Cells["colAssignedToId"].Value = chore.AssignedTo?.ToString() ?? "";
                 row.Cells["colNamework"].Value = chore.TaskName ?? "";
                 row.Cells["colName"].Value = prof?.FullName ?? "";
-                row.Cells["colTime"].Value = chore.DueDate.HasValue ? chore.DueDate.Value.ToString("dd/MM/yyyy") : "";
+                row.Cells["colTime"].Value = chore.DueDate.HasValue? chore.DueDate.Value.ToString("dd/MM/yyyy HH:mm"): "";
                 row.Cells["colStatus"].Value = chore.IsCompleted ? "Hoàn thành" : "Chưa xong";
 
                 row.Tag = null;
@@ -166,12 +166,12 @@ namespace ThieunuQLPT
             string phone = Interaction.InputBox("Nhập số điện thoại người được giao (để trống = giao cho bạn):", "Thêm công việc", "");
             DateTime dueDate = DateTime.Now.Date;
 
-            string dueText = Interaction.InputBox("Nhập hạn làm (dd/MM/yyyy):", "Thêm công việc", DateTime.Now.Date.ToString("dd/MM/yyyy"));
+            string dueText = Interaction.InputBox("Nhập hạn làm (dd/MM/yyyy HH:mm):", "Thêm công việc", DateTime.Now.ToString("dd/MM/yyyy HH:mm"));
             if (!string.IsNullOrWhiteSpace(dueText))
             {
-                if (!DateTime.TryParseExact(dueText.Trim(), "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out dueDate))
+                if (!DateTime.TryParseExact(dueText.Trim(), "dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out dueDate))
                 {
-                    MessageBox.Show("Ngày không hợp lệ. Ví dụ đúng: 29/03/2026", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Ngày không hợp lệ. Ví dụ đúng: 29/03/2026 08:30", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
             }
@@ -233,7 +233,7 @@ namespace ThieunuQLPT
             row.Cells["colAssignedToId"].Value = assignedToId.ToString();
             row.Cells["colNamework"].Value = taskName.Trim();
             row.Cells["colName"].Value = assignedName;
-            row.Cells["colTime"].Value = dueDate.ToString("dd/MM/yyyy");
+            row.Cells["colTime"].Value = dueDate.ToString("dd/MM/yyyy HH:mm");
             row.Cells["colStatus"].Value = "Chưa xong";
 
             row.Tag = "add";
@@ -297,6 +297,7 @@ namespace ThieunuQLPT
                     if (row.IsNewRow) continue;
 
                     string tag = row.Tag as string ?? "";
+                    if (string.IsNullOrEmpty(tag)) continue;
                     string choreIdStr = row.Cells["colChoreId"].Value?.ToString() ?? "";
                     string taskName = row.Cells["colNamework"].Value?.ToString() ?? "";
                     string assignedToIdStr = row.Cells["colAssignedToId"].Value?.ToString() ?? "";
@@ -316,10 +317,9 @@ namespace ThieunuQLPT
                         continue;
                     }
 
-                    if (!DateTime.TryParseExact(dueText.Trim(), "dd/MM/yyyy", CultureInfo.InvariantCulture,
-                        DateTimeStyles.None, out DateTime dueDate))
+                    if (!DateTime.TryParseExact(dueText.Trim(), "dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dueDate))
                     {
-                        dueDate = DateTime.Now.Date;
+                        dueDate = DateTime.Now;
                     }
 
                     Guid? assignedTo = null;
