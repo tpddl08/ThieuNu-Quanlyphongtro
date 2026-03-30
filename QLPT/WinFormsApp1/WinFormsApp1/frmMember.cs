@@ -179,6 +179,18 @@ namespace ThieunuQLPT
                 row.Cells["colStatus"].Value = hm.IsActive ? "Đang ở" : "Rời đi";
                 row.Cells["colHouseMemberId"].Value = hm.Id.ToString();
                 row.Cells["colUserId"].Value = hm.UserId.ToString();
+<<<<<<< Updated upstream
+=======
+
+                if (hm.UserId == currentUserId)
+                {
+                    row.Cells["colEdit"].Value = "Sửa";
+                }
+                else
+                {
+                    row.Cells["colEdit"].Value = ""; // để trống cho người khác
+                }
+>>>>>>> Stashed changes
 
                 row.Tag = null;
 

@@ -86,4 +86,29 @@ namespace ThieunuQLPT
         [Column("is_active")]
         public bool IsActive { get; set; } = true;
     }
+
+    [Table("chores")]
+    public class ChoresData : BaseModel
+    {
+        [PrimaryKey("id", false)]
+        public Guid Id { get; set; }
+
+        [Column("house_id")]
+        public Guid? HouseId { get; set; }
+
+        [Column("task_name")]
+        public string? TaskName { get; set; }
+
+        [Column("assigned_to")]
+        public Guid? AssignedTo { get; set; }
+
+        [Column("due_date")]
+        public DateTime? DueDate { get; set; }
+
+        [Column("is_completed")]
+        public bool IsCompleted { get; set; } = false;
+
+        [Column("completed_at")]
+        public DateTime? CompletedAt { get; set; }
+    }
 }

@@ -48,7 +48,10 @@ namespace ThieunuQLPT
                     ElectricityRate = 4000,
                     WaterRate = 100000,
                     ServiceRate = houseservice,
+<<<<<<< Updated upstream
                     MonthYear = monthyear
+=======
+>>>>>>> Stashed changes
                 };
 
                 var response = await client.From<HousesData>().Insert(newHouse);

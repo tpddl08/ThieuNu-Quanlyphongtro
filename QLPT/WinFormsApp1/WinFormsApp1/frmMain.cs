@@ -82,7 +82,24 @@ namespace WinFormsApp1
         {
             if (isLogin)
             {
+<<<<<<< Updated upstream
                 
+=======
+
+            }
+            else
+            {
+                MessageBox.Show("Vui lòng đăng nhập để sử dụng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void btnChores_Click(object sender, EventArgs e)
+        {
+            if (isLogin)
+            {
+                frmChores frm = new frmChores();
+                frm.ShowDialog();
+>>>>>>> Stashed changes
             }
             else
             {
