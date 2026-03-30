@@ -37,19 +37,19 @@ namespace ThieunuQLPT
         {
             try
             {
-                //lấy chi tiết chỉ số (điện, nước) từ DetailBill
+                // 1. Lấy chi tiết chỉ số (điện, nước) từ DetailBill
                 var result = await client.From<DetailBill>().Where(x => x.id == houseId).Single();
 
-                //lấy Tổng tiền và Tháng từ ListBills (Cái này mới là cái đã cập nhật đúng)
+                // 2. Lấy Tổng tiền và Tháng từ ListBills (Cái này mới là cái đã cập nhật đúng)
                 var invoice = await client.From<ListBills>().Where(x => x.house_id == houseId).Single();
 
                 if (result != null && invoice != null)
                 {
                     // Các chỉ số phụ vẫn tính để hiện thị cho người dùng xem
-                    decimal electricTotal = (result.newNums - result.oldNums) * 4000; // fix cứng 4000  giống bên Edit
+                    decimal electricTotal = (result.newNums - result.oldNums) * 4000; // Fix cứng 4000 cho giống bên Edit
                     decimal waterTotal = result.maxMembers * 100000;
 
-                    // gán dữ liệu lên form
+                    // GÁN DỮ LIỆU
                     lblRoom.Text = result.Name;
                     lblRent.Text = result.totalRent.ToString("N0") + " đ";
                     lblOldNums.Text = result.oldNums.ToString();
@@ -60,7 +60,8 @@ namespace ThieunuQLPT
                     lblServiceRate.Text = result.serviceRate.ToString("N0") + " đ";
                     lblMembers.Text = result.maxMembers.ToString() + " người";
 
-                  
+                    // --- ĐÂY LÀ CHỖ QUAN TRỌNG NHẤT ---
+                    // Không tự tính nữa, lấy thẳng từ bảng đã lưu đúng
                     lblMonthYear.Text = invoice.month_year;
                     lblTotal.Text = invoice.total_amount.ToString("N0") + " đ";
                 }
@@ -78,17 +79,12 @@ namespace ThieunuQLPT
 
             if (editForm.ShowDialog() == DialogResult.OK)
             {
-                
+                // Nếu sửa xong bấm Save, Form xem tự load lại số liệu mới
                 await LoadHouseData(_houseId);
 
+                // Đánh dấu OK để khi đóng Form Xem, Form Danh Sách cũng biết mà load lại
                 this.DialogResult = DialogResult.OK;
             }
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            frmDetail frm = new frmDetail(_houseId);
-            frm.ShowDialog();
         }
     }
 }

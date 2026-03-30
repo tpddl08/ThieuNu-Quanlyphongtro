@@ -30,13 +30,13 @@ namespace ThieunuQLPT
         {
             try
             {
-                var result = await client.From<invoices_with_room>()
+                var result = await client.From<ListBills>()
                               
                                  .Get();
                 dataGridView1.DataSource = result.Models;
 
                 // Ẩn cột thừa an toàn
-                string[] hideCols = { "house_id", "id", "BaseUrl", "RequestClientOptions", "TableName", "PrimaryKey", "House"};
+                string[] hideCols = { "id", "BaseUrl", "RequestClientOptions", "TableName", "PrimaryKey", "House"};
                 foreach (var col in hideCols)
                 {
                     if (dataGridView1.Columns.Contains(col)) dataGridView1.Columns[col].Visible = false;
