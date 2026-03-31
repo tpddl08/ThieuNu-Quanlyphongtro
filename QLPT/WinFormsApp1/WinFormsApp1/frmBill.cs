@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using ThieunuQLPT.Models;
-using Supabase;
+
 namespace ThieunuQLPT
 {
     public partial class frmBill : Form
     {
+        private Guid currentUserId = frmLogin.idLoged;
+        private HousesData? currentHouse;
         private string _houseId = "";
 
         public frmBill()
@@ -33,27 +34,45 @@ namespace ThieunuQLPT
                 var client = await SupabaseHelper.GetClientAsync();
                 if (client == null) return;
 
-                var result = await client.From<DetailBill>().Where(x => x.id == houseId).Single();
-                var invoice = await client.From<ListBills>().Where(x => x.house_id == houseId).Single();
+                if (!Guid.TryParse(houseId, out Guid houseGuid)) return;
 
-                if (result != null && invoice != null)
-                {
-                    decimal electricTotal = (result.newNums - result.oldNums) * 4000;
-                    decimal waterTotal = result.maxMembers * 100000;
+                // Lấy thông tin phòng từ HousesData
+                var houseResp = await client
+                    .From<HousesData>()
+                    .Select("*")
+                    .Where(h => h.Id == houseGuid)
+                    .Get();
 
-                    lblRoom.Text = result.Name;
-                    lblRent.Text = result.totalRent.ToString("N0") + " đ";
-                    lblOldNums.Text = result.oldNums.ToString();
-                    lblNewNums.Text = result.newNums.ToString();
-                    lblConsume.Text = $"{result.newNums - result.oldNums} kWh x 4,000đ";
-                    lblElectricRate.Text = electricTotal.ToString("N0") + " đ";
-                    lblWaterRate.Text = waterTotal.ToString("N0") + " đ";
-                    lblServiceRate.Text = result.serviceRate.ToString("N0") + " đ";
-                    lblMembers.Text = result.maxMembers.ToString() + " người";
+                currentHouse = houseResp.Models.FirstOrDefault();
+                if (currentHouse == null) return;
 
-                    lblMonthYear.Text = invoice.month_year;
-                    lblTotal.Text = invoice.total_amount.ToString("N0") + " đ";
-                }
+                // Lấy số thành viên đang ở
+                var memberResp = await client
+                    .From<HouseMembersData>()
+                    .Select("*")
+                    .Where(m => m.HouseId == houseGuid && m.IsActive == true)
+                    .Get();
+
+                int totalMembers = memberResp.Models.Count;
+
+                // Tính tiền
+                int oldNums = currentHouse.OldNumber ?? 0;
+                int newNums = currentHouse.NewNumber ?? 0;
+                decimal electricTotal = (newNums - oldNums) * (currentHouse.ElectricityRate ?? 4000);
+                decimal waterTotal = totalMembers * (currentHouse.WaterRate ?? 100000);
+                decimal total = (currentHouse.TotalRent ?? 0) + electricTotal + waterTotal + (currentHouse.ServiceRate ?? 0);
+
+                // Hiển thị
+                lblRoom.Text = currentHouse.Name;
+                lblRent.Text = (currentHouse.TotalRent ?? 0).ToString("N0") + " đ";
+                lblOldNums.Text = oldNums.ToString();
+                lblNewNums.Text = newNums.ToString();
+                lblConsume.Text = $"{newNums - oldNums} kWh x {(currentHouse.ElectricityRate ?? 4000):N0}đ";
+                lblElectricRate.Text = electricTotal.ToString("N0") + " đ";
+                lblWaterRate.Text = waterTotal.ToString("N0") + " đ";
+                lblServiceRate.Text = (currentHouse.ServiceRate ?? 0).ToString("N0") + " đ";
+                lblMembers.Text = totalMembers.ToString() + " người";
+                lblTotal.Text = total.ToString("N0") + " đ";
             }
             catch (Exception ex)
             {

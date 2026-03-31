@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using ThieunuQLPT.Models;
 using Supabase;
 namespace ThieunuQLPT
 {
     public partial class frmEditBill : Form
     {
+        private Guid currentUserId = frmLogin.idLoged;
         private string _houseId = "";
 
         public frmEditBill()
@@ -33,18 +33,33 @@ namespace ThieunuQLPT
             var client = await SupabaseHelper.GetClientAsync();
             if (client == null) return;
 
-            var result = await client.From<DetailBill>().Where(x => x.id == _houseId).Single();
+            if (!Guid.TryParse(_houseId, out Guid houseGuid)) return;
+
+            var houseResp = await client
+                .From<HousesData>()
+                .Select("*")
+                .Where(h => h.Id == houseGuid)
+                .Get();
+
+            var result = houseResp.Models.FirstOrDefault();
             if (result != null)
             {
+                var memberResp = await client
+                    .From<HouseMembersData>()
+                    .Select("*")
+                    .Where(m => m.HouseId == houseGuid && m.IsActive == true)
+                    .Get();
+
                 txtRoom.Text = result.Name;
-                txtRent.Text = result.totalRent.ToString();
-                txtOldNums.Text = result.oldNums.ToString();
-                txtNewNums.Text = result.newNums.ToString();
-                txtMaxMembers.Text = result.maxMembers.ToString();
-                txtServiceRate.Text = result.serviceRate.ToString();
+                txtRent.Text = (result.TotalRent ?? 0).ToString();
+                txtOldNums.Text = (result.OldNumber ?? 0).ToString();
+                txtNewNums.Text = (result.NewNumber ?? 0).ToString();
+                txtMaxMembers.Text = memberResp.Models.Count.ToString();
+                txtServiceRate.Text = (result.ServiceRate ?? 0).ToString();
             }
         }
 
+        //sửa
         private async void btnSua_Click(object sender, EventArgs e)
         {
             try
@@ -52,52 +67,58 @@ namespace ThieunuQLPT
                 var client = await SupabaseHelper.GetClientAsync();
                 if (client == null) return;
 
-                var update = new DetailBill
-                {
-                    id = _houseId,
-                    newNums = int.Parse(txtNewNums.Text),
-                    oldNums = int.Parse(txtOldNums.Text),
-                    totalRent = decimal.Parse(txtRent.Text),
-                    Name = txtRoom.Text,
-                    serviceRate = decimal.Parse(txtServiceRate.Text),
-                    maxMembers = int.Parse(txtMaxMembers.Text),
-                };
+                if (!Guid.TryParse(_houseId, out Guid houseGuid)) return;
 
-                var detailBill = await client.From<DetailBill>()
-                    .Where(x => x.id == _houseId)
-                    .Single();
+                var houseResp = await client
+                    .From<HousesData>()
+                    .Select("*")
+                    .Where(h => h.Id == houseGuid)
+                    .Get();
 
-                decimal water_rate = update.maxMembers * 100000;
-                decimal electric_rate = (update.newNums - update.oldNums) * 4000;
+                var house = houseResp.Models.FirstOrDefault();
+                if (house == null) return;
 
-                decimal totalAmount = update.totalRent
-                    + ((update.newNums - update.oldNums) * 4000)
-                    + (update.maxMembers * 100000)
-                    + update.serviceRate;
+                int newNums = int.Parse(txtNewNums.Text);
+                int oldNums = int.Parse(txtOldNums.Text);
+                int maxMembers = int.Parse(txtMaxMembers.Text);
+                decimal totalRent = decimal.Parse(txtRent.Text);
+                decimal serviceRate = decimal.Parse(txtServiceRate.Text);
 
-                detailBill.newNums = update.newNums;
-                detailBill.oldNums = update.oldNums;
-                detailBill.Name = update.Name;
+                decimal water_rate = maxMembers * 100000;
+                decimal electric_rate = (newNums - oldNums) * 4000;
+
+                decimal totalAmount = totalRent
+                    + electric_rate
+                    + water_rate
+                    + serviceRate;
+
+                house.Name = txtRoom.Text;
+                house.TotalRent = totalRent;
+                house.OldNumber = oldNums;
+                house.NewNumber = newNums;
+                house.ServiceRate = serviceRate;
+
                 lblWaterRate.Text = water_rate.ToString();
                 lblElectricRate.Text = electric_rate.ToString();
-                lblConsume.Text = $"{update.newNums - update.oldNums} kWh x 4000đ";
-                detailBill.totalRent = update.totalRent;
-                detailBill.serviceRate = update.serviceRate;
-                detailBill.maxMembers = update.maxMembers;
+                lblConsume.Text = $"{newNums - oldNums} kWh x 4000đ";
                 lblTotal.Text = totalAmount.ToString();
 
-                await client.From<DetailBill>()
-                    .Where(x => x.id == _houseId)
-                    .Update(detailBill);
+                await client.From<HousesData>().Update(house);
 
-                var lisBill = await client.From<ListBills>()
-                    .Where(x => x.house_id == _houseId)
-                    .Single();
-                lisBill.total_amount = totalAmount;
-                lisBill.month_year = txtMonth.Text;
-                await client.From<ListBills>()
-                    .Where(x => x.house_id == _houseId)
-                    .Update(lisBill);
+                // Đồng bộ sang bảng Invoices (Danh sách tổng)
+                var invoiceResp = await client
+                    .From<InvoicesData>()
+                    .Select("*")
+                    .Where(x => x.HouseId == houseGuid)
+                    .Get();
+
+                var invoice = invoiceResp.Models.FirstOrDefault();
+                if (invoice != null)
+                {
+                    invoice.TotalAmount = totalAmount;
+                    invoice.MonthYear = txtMonth.Text;
+                    await client.From<InvoicesData>().Update(invoice);
+                }
 
                 MessageBox.Show("Cập nhật thành công!");
                 this.DialogResult = DialogResult.OK;
@@ -106,6 +127,7 @@ namespace ThieunuQLPT
             catch (Exception ex) { MessageBox.Show("Lỗi: " + ex.Message); }
         }
 
+        /*thêm*/
         private async void btnInsert_Click(object sender, EventArgs e)
         {
             try
@@ -113,39 +135,64 @@ namespace ThieunuQLPT
                 var client = await SupabaseHelper.GetClientAsync();
                 if (client == null) return;
 
-                var newHouse = new DetailBill
+                int oldNums = int.Parse(txtOldNums.Text);
+                int newNums = int.Parse(txtNewNums.Text);
+                decimal totalRent = decimal.Parse(txtRent.Text);
+                decimal serviceRate = decimal.Parse(txtServiceRate.Text);
+                decimal electricRate = 4000;
+                decimal waterRate = 100000;
+                int maxMembers = int.Parse(txtMaxMembers.Text);
+
+                //tạo đối tượng House mới
+                var newHouse = new HousesData
                 {
                     Name = txtRoom.Text,
-                    totalRent = decimal.Parse(txtRent.Text),
-                    oldNums = int.Parse(txtOldNums.Text),
-                    newNums = int.Parse(txtNewNums.Text),
-                    electricRate = 4000,
-                    waterRate = 100000,
-                    maxMembers = int.Parse(txtMaxMembers.Text),
-                    serviceRate = decimal.Parse(txtServiceRate.Text)
+                    TotalRent = totalRent,
+                    OldNumber = oldNums,
+                    NewNumber = newNums,
+                    ElectricityRate = electricRate,
+                    WaterRate = waterRate,
+                    MaxMembers = maxMembers,
+                    ServiceRate = serviceRate
                 };
 
-                var response = await client.From<DetailBill>().Insert(newHouse);
-                var createdHouse = response.Model;
+                // chèn vào bảng houses và lấy kết quả trả về (để lấy ID mới sinh)
+                var response = await client.From<HousesData>().Insert(newHouse);
+                var createdHouse = response.Models.FirstOrDefault();
 
                 if (createdHouse != null)
                 {
-                    decimal electricTotal = (createdHouse.newNums - createdHouse.oldNums) * createdHouse.electricRate;
-                    decimal waterTotal = createdHouse.maxMembers * createdHouse.waterRate;
-                    decimal totalAmount = createdHouse.totalRent + electricTotal + waterTotal + (decimal)createdHouse.serviceRate;
-
-                    var newInvoice = new ListBills
+                    // Gán người tạo vào phòng
+                    var newMember = new HouseMembersData
                     {
-                        house_id = createdHouse.id,
-                        month_year = txtMonth.Text,
-                        total_amount = totalAmount,
-                        status = "Unpaid",
-                        created_at = DateTime.Now
+                        HouseId = createdHouse.Id,
+                        UserId = currentUserId,
+                        Role = "owner",
+                        IsActive = true,
+                        JoinedAt = DateTime.Now
                     };
-                    await client.From<ListBills>().Insert(newInvoice);
+                    await client.From<HouseMembersData>().Insert(newMember);
+
+                    // tính tổng tiền ban đầu cho hóa đơn
+                    decimal electricTotal = (newNums - oldNums) * electricRate;
+                    decimal waterTotal = maxMembers * waterRate;
+                    decimal totalAmount = totalRent + electricTotal + waterTotal + serviceRate;
+
+                    //tạo hóa đơn tương ứng bên bảng invoices
+                    var newInvoice = new InvoicesData
+                    {
+                        HouseId = createdHouse.Id, // Lấy ID vừa sinh ra từ DB
+                        MonthYear = txtMonth.Text,
+                        TotalAmount = totalAmount,
+                        Status = "Unpaid",
+                        CreatedAt = DateTime.Now
+                    };
+                    await client.From<InvoicesData>().Insert(newInvoice);
                 }
 
                 MessageBox.Show("Thêm phòng và hóa đơn thành công!");
+
+                //trả về DialogResult.OK để Form List tự Load lại
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
@@ -155,6 +202,7 @@ namespace ThieunuQLPT
             }
         }
 
+        // xóa
         private async void btnDelete_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Bạn có chắc chắn muốn xóa?", "Xác nhận", MessageBoxButtons.YesNo) == DialogResult.Yes)
@@ -164,8 +212,20 @@ namespace ThieunuQLPT
                     var client = await SupabaseHelper.GetClientAsync();
                     if (client == null) return;
 
-                    await client.From<DetailBill>().Where(x => x.id == _houseId).Delete();
-                    await client.From<ListBills>().Where(x => x.house_id == _houseId).Delete();
+                    if (!Guid.TryParse(_houseId, out Guid houseGuid)) return;
+
+                    // Xóa invoice trước rồi mới xóa members và phòng
+                    await client.From<InvoicesData>()
+                        .Where(x => x.HouseId == houseGuid)
+                        .Delete();
+
+                    await client.From<HouseMembersData>()
+                        .Where(m => m.HouseId == houseGuid)
+                        .Delete();
+
+                    await client.From<HousesData>()
+                        .Where(h => h.Id == houseGuid)
+                        .Delete();
 
                     MessageBox.Show("Đã xóa!");
                     this.DialogResult = DialogResult.OK;

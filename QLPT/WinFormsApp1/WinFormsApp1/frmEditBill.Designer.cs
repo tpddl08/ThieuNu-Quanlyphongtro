@@ -488,6 +488,7 @@
             // 
             AutoScaleDimensions = new SizeF(144F, 144F);
             AutoScaleMode = AutoScaleMode.Dpi;
+            BackColor = SystemColors.GradientInactiveCaption;
             ClientSize = new Size(938, 484);
             Controls.Add(btnSua);
             Controls.Add(btnDelete);

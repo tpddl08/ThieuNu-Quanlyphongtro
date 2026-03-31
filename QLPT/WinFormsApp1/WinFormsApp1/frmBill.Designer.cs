@@ -109,6 +109,8 @@
             // btnEdit
             // 
             btnEdit.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnEdit.BackColor = Color.Orange;
+            btnEdit.FlatStyle = FlatStyle.Flat;
             btnEdit.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btnEdit.Location = new Point(760, 33);
             btnEdit.Margin = new Padding(4);
@@ -116,7 +118,7 @@
             btnEdit.Size = new Size(165, 46);
             btnEdit.TabIndex = 8;
             btnEdit.Text = "Chỉnh sửa";
-            btnEdit.UseVisualStyleBackColor = true;
+            btnEdit.UseVisualStyleBackColor = false;
             btnEdit.Click += btnEdit_Click;
             // 
             // tlpContent
@@ -358,7 +360,6 @@
             // 
             // tableLayoutPanel2
             // 
-            tableLayoutPanel2.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             tableLayoutPanel2.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
             tableLayoutPanel2.ColumnCount = 2;
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
@@ -462,6 +463,7 @@
             // 
             AutoScaleDimensions = new SizeF(144F, 144F);
             AutoScaleMode = AutoScaleMode.Dpi;
+            BackColor = SystemColors.GradientInactiveCaption;
             ClientSize = new Size(938, 484);
             Controls.Add(btnEdit);
             Controls.Add(label7);
@@ -473,6 +475,7 @@
             Name = "frmBill";
             Text = "Chi tiết hóa đơn";
             Load += frmBill_Load;
+            Click += frmBill_Load;
             tableLayoutPanel1.ResumeLayout(false);
             tlpContent.ResumeLayout(false);
             tableLayoutPanel4.ResumeLayout(false);

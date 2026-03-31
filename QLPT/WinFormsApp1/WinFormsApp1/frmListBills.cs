@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using ThieunuQLPT.Models;
-using Supabase;
+
 namespace ThieunuQLPT
 {
     public partial class frmListBills : Form
     {
+        private Guid currentUserId = frmLogin.idLoged;
+        private string _houseId = "";
+
         public frmListBills()
         {
             InitializeComponent();
@@ -15,7 +17,36 @@ namespace ThieunuQLPT
 
         private async void frmListBills_Load(object? sender, EventArgs e)
         {
+            await LoadCurrentHouseAsync();
+
+            if (string.IsNullOrEmpty(_houseId))
+            {
+                MessageBox.Show("Bạn chưa có phòng nên không thể xem hóa đơn.", "Thông báo",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
             await LoadData();
+        }
+
+        private async Task LoadCurrentHouseAsync()
+        {
+            var client = await SupabaseHelper.GetClientAsync();
+            if (client == null) return;
+
+            var memberResp = await client
+                .From<HouseMembersData>()
+                .Select("*")
+                .Where(m => m.UserId == currentUserId && m.IsActive == true)
+                .Get();
+
+            if (!memberResp.Models.Any()) return;
+
+            var currentMember = memberResp.Models
+                .OrderByDescending(m => m.JoinedAt)
+                .First();
+
+            _houseId = currentMember.HouseId.ToString();
         }
 
         private async Task LoadData()
@@ -25,21 +56,39 @@ namespace ThieunuQLPT
                 var client = await SupabaseHelper.GetClientAsync();
                 if (client == null) return;
 
-                var result = await client.From<ListBills>().Get();
-                dataGridView1.DataSource = result.Models;
+                if (!Guid.TryParse(_houseId, out Guid houseGuid)) return;
 
-                string[] hideCols = { "id", "BaseUrl", "RequestClientOptions", "TableName", "PrimaryKey", "House" };
-                foreach (var col in hideCols)
+                // Lấy thông tin phòng
+                var houseResp = await client
+                    .From<HousesData>()
+                    .Select("*")
+                    .Where(h => h.Id == houseGuid)
+                    .Get();
+
+                var house = houseResp.Models.FirstOrDefault();
+
+                // Lấy hóa đơn của phòng
+                var invoiceResp = await client
+                    .From<InvoicesData>()
+                    .Select("*")
+                    .Where(x => x.HouseId == houseGuid)
+                    .Get();
+
+                dgvListinvoices.Rows.Clear();
+
+                foreach (var invoice in invoiceResp.Models)
                 {
-                    if (dataGridView1.Columns.Contains(col)) dataGridView1.Columns[col].Visible = false;
-                    if (dataGridView1.Columns.Contains("total_amount"))
-                    {
-                        dataGridView1.Columns["total_amount"].HeaderText = "Tổng Tiền";
-                        dataGridView1.Columns["total_amount"].DefaultCellStyle.Format = "N0";
-                        dataGridView1.Columns["total_amount"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-                    }
-                    dataGridView1.Columns["month_year"].HeaderText = "Tháng";
-                    dataGridView1.Columns["status"].HeaderText = "Trạng thái";
+                    int idx = dgvListinvoices.Rows.Add();
+                    var row = dgvListinvoices.Rows[idx];
+
+                    row.Cells["colName"].Value = house?.Name ?? "";
+                    row.Cells["colTimeAt"].Value = invoice.MonthYear ?? "";
+                    row.Cells["colMoney"].Value = (invoice.TotalAmount ?? 0).ToString("N0") + " đ";
+                    row.Cells["colStatus"].Value = invoice.Status ?? "";
+                    row.Cells["colDateCreate"].Value = invoice.CreatedAt.ToString("dd/MM/yyyy");
+                    row.Cells["colDetail"].Value = "Xem";
+
+                    row.Tag = invoice.HouseId?.ToString() ?? "";
                 }
             }
             catch (Exception ex)
@@ -53,18 +102,21 @@ namespace ThieunuQLPT
             await LoadData();
         }
 
-        private async void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private async void dgvListinvoices_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0)
+            if (e.RowIndex < 0) return;
+            if (dgvListinvoices.Columns[e.ColumnIndex].Name != "colDetail") return;
+
+            // Lấy houseId từ Tag của dòng
+            var row = dgvListinvoices.Rows[e.RowIndex];
+            string houseId = row.Tag?.ToString() ?? "";
+
+            if (!string.IsNullOrEmpty(houseId))
             {
-                var id = dataGridView1.Rows[e.RowIndex].Cells["house_id"].Value?.ToString();
-                if (!string.IsNullOrEmpty(id))
+                frmBill viewForm = new frmBill(houseId);
+                if (viewForm.ShowDialog() == DialogResult.OK)
                 {
-                    frmBill viewForm = new frmBill(id);
-                    if (viewForm.ShowDialog() == DialogResult.OK)
-                    {
-                        await LoadData();
-                    }
+                    await LoadData();
                 }
             }
         }

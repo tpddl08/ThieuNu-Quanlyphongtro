@@ -78,11 +78,12 @@ namespace WinFormsApp1
             }
         }
 
+        //Hóa đơn
         private void btnBill_Click(object sender, EventArgs e)
         {
             if (isLogin)
             {
-                frmBill frm = new frmBill();
+                frmListBills frm = new frmListBills();
                 frm.ShowDialog();
             }
             else
@@ -91,6 +92,7 @@ namespace WinFormsApp1
             }
         }
 
+        //Trực nhật
         private void btnChores_Click(object sender, EventArgs e)
         {
             if (isLogin)

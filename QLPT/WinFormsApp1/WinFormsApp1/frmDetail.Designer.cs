@@ -41,11 +41,11 @@
             dgvSplitBill.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvSplitBill.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvSplitBill.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvSplitBill.Location = new Point(-1, 164);
+            dgvSplitBill.Location = new Point(1, 156);
             dgvSplitBill.Margin = new Padding(4, 5, 4, 5);
             dgvSplitBill.Name = "dgvSplitBill";
             dgvSplitBill.RowHeadersWidth = 62;
-            dgvSplitBill.Size = new Size(937, 328);
+            dgvSplitBill.Size = new Size(936, 328);
             dgvSplitBill.TabIndex = 0;
             dgvSplitBill.CellContentClick += dataGridView1_CellContentClick;
             // 
@@ -68,6 +68,7 @@
             // 
             AutoScaleDimensions = new SizeF(144F, 144F);
             AutoScaleMode = AutoScaleMode.Dpi;
+            BackColor = SystemColors.GradientInactiveCaption;
             ClientSize = new Size(938, 484);
             Controls.Add(label1);
             Controls.Add(dgvSplitBill);
