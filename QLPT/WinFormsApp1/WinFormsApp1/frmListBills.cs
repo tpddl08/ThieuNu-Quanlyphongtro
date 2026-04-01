@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Supabase;
 
 namespace ThieunuQLPT
 {
@@ -84,11 +85,10 @@ namespace ThieunuQLPT
                     row.Cells["colName"].Value = house?.Name ?? "";
                     row.Cells["colTimeAt"].Value = invoice.MonthYear ?? "";
                     row.Cells["colMoney"].Value = (invoice.TotalAmount ?? 0).ToString("N0") + " đ";
-                    row.Cells["colStatus"].Value = invoice.Status ?? "";
                     row.Cells["colDateCreate"].Value = invoice.CreatedAt.ToString("dd/MM/yyyy");
                     row.Cells["colDetail"].Value = "Xem";
 
-                    row.Tag = invoice.HouseId?.ToString() ?? "";
+                    row.Tag = (invoice.HouseId?.ToString() ?? "", invoice.Id.ToString());
                 }
             }
             catch (Exception ex)
@@ -97,23 +97,16 @@ namespace ThieunuQLPT
             }
         }
 
-        private async void btnAll_Click(object sender, EventArgs e)
-        {
-            await LoadData();
-        }
-
-        private async void dgvListinvoices_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private async void dgvListinvoices_CellContentClick(object? sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
             if (dgvListinvoices.Columns[e.ColumnIndex].Name != "colDetail") return;
 
-            // Lấy houseId từ Tag của dòng
-            var row = dgvListinvoices.Rows[e.RowIndex];
-            string houseId = row.Tag?.ToString() ?? "";
+            if (dgvListinvoices.Rows[e.RowIndex].Tag is not (string houseId, string invoiceId)) return;
 
             if (!string.IsNullOrEmpty(houseId))
             {
-                frmBill viewForm = new frmBill(houseId);
+                frmDetail viewForm = new frmDetail(houseId, invoiceId);
                 if (viewForm.ShowDialog() == DialogResult.OK)
                 {
                     await LoadData();
@@ -121,13 +114,19 @@ namespace ThieunuQLPT
             }
         }
 
-        private void btnAdd_Click(object sender, EventArgs e)
+        private void btnEdit_Click(object sender, EventArgs e)
         {
-            frmEditBill frm = new frmEditBill();
+            // Truyền _houseId để sửa phòng hiện tại
+            frmEditBill frm = new frmEditBill(_houseId);
             if (frm.ShowDialog() == DialogResult.OK)
             {
                 _ = LoadData();
             }
+        }
+
+        private async void btnReload_Click(object sender, EventArgs e)
+        {
+            await LoadData();
         }
     }
 }

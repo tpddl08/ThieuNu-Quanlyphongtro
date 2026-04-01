@@ -35,12 +35,11 @@
             colName = new DataGridViewTextBoxColumn();
             colTimeAt = new DataGridViewTextBoxColumn();
             colMoney = new DataGridViewTextBoxColumn();
-            colStatus = new DataGridViewTextBoxColumn();
             colDateCreate = new DataGridViewTextBoxColumn();
             colDetail = new DataGridViewButtonColumn();
-            btnAll = new Button();
-            btnAdd = new Button();
+            btnEdit = new Button();
             label1 = new Label();
+            btnReload = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvListinvoices).BeginInit();
             SuspendLayout();
             // 
@@ -56,7 +55,7 @@
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             dgvListinvoices.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dgvListinvoices.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvListinvoices.Columns.AddRange(new DataGridViewColumn[] { colName, colTimeAt, colMoney, colStatus, colDateCreate, colDetail });
+            dgvListinvoices.Columns.AddRange(new DataGridViewColumn[] { colName, colTimeAt, colMoney, colDateCreate, colDetail });
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = SystemColors.Window;
             dataGridViewCellStyle2.Font = new Font("Segoe UI", 14F);
@@ -65,7 +64,7 @@
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
             dgvListinvoices.DefaultCellStyle = dataGridViewCellStyle2;
-            dgvListinvoices.Location = new Point(4, 101);
+            dgvListinvoices.Location = new Point(13, 101);
             dgvListinvoices.Margin = new Padding(4);
             dgvListinvoices.Name = "dgvListinvoices";
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
@@ -77,7 +76,7 @@
             dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
             dgvListinvoices.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             dgvListinvoices.RowHeadersWidth = 51;
-            dgvListinvoices.Size = new Size(742, 386);
+            dgvListinvoices.Size = new Size(733, 386);
             dgvListinvoices.TabIndex = 0;
             dgvListinvoices.CellContentClick += dgvListinvoices_CellContentClick;
             // 
@@ -98,16 +97,9 @@
             // colMoney
             // 
             colMoney.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            colMoney.HeaderText = "Số tiền";
+            colMoney.HeaderText = "Tổng tiền";
             colMoney.MinimumWidth = 8;
             colMoney.Name = "colMoney";
-            // 
-            // colStatus
-            // 
-            colStatus.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            colStatus.HeaderText = "Trạng thái";
-            colStatus.MinimumWidth = 8;
-            colStatus.Name = "colStatus";
             // 
             // colDateCreate
             // 
@@ -124,45 +116,44 @@
             colDetail.Name = "colDetail";
             colDetail.Width = 133;
             // 
-            // btnAll
+            // btnEdit
             // 
-            btnAll.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnAll.BackColor = Color.SteelBlue;
-            btnAll.FlatStyle = FlatStyle.Flat;
-            btnAll.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            btnAll.Location = new Point(770, 181);
-            btnAll.Margin = new Padding(4);
-            btnAll.Name = "btnAll";
-            btnAll.Size = new Size(154, 54);
-            btnAll.TabIndex = 1;
-            btnAll.Text = "Tất cả";
-            btnAll.UseVisualStyleBackColor = false;
-            btnAll.Click += btnAll_Click;
-            // 
-            // btnAdd
-            // 
-            btnAdd.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnAdd.BackColor = Color.ForestGreen;
-            btnAdd.FlatStyle = FlatStyle.Flat;
-            btnAdd.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            btnAdd.Location = new Point(771, 101);
-            btnAdd.Margin = new Padding(4);
-            btnAdd.Name = "btnAdd";
-            btnAdd.Size = new Size(154, 57);
-            btnAdd.TabIndex = 2;
-            btnAdd.Text = "Thêm";
-            btnAdd.UseVisualStyleBackColor = false;
-            btnAdd.Click += btnAdd_Click;
+            btnEdit.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnEdit.BackColor = Color.Gold;
+            btnEdit.FlatStyle = FlatStyle.Flat;
+            btnEdit.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnEdit.Location = new Point(771, 101);
+            btnEdit.Margin = new Padding(4);
+            btnEdit.Name = "btnEdit";
+            btnEdit.Size = new Size(154, 57);
+            btnEdit.TabIndex = 2;
+            btnEdit.Text = "Chỉnh sửa";
+            btnEdit.UseVisualStyleBackColor = false;
+            btnEdit.Click += btnEdit_Click;
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(4, 21);
+            label1.Location = new Point(12, 21);
             label1.Name = "label1";
-            label1.Size = new Size(383, 54);
+            label1.Size = new Size(463, 54);
             label1.TabIndex = 3;
-            label1.Text = "Danh sách hóa đơn";
+            label1.Text = "DANH SÁCH HÓA ĐƠN";
+            // 
+            // btnReload
+            // 
+            btnReload.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnReload.BackColor = Color.LightSeaGreen;
+            btnReload.FlatStyle = FlatStyle.Flat;
+            btnReload.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnReload.Location = new Point(771, 193);
+            btnReload.Name = "btnReload";
+            btnReload.Size = new Size(155, 56);
+            btnReload.TabIndex = 4;
+            btnReload.Text = "Tải lại";
+            btnReload.UseVisualStyleBackColor = false;
+            btnReload.Click += btnReload_Click;
             // 
             // frmListBills
             // 
@@ -170,14 +161,16 @@
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = SystemColors.GradientInactiveCaption;
             ClientSize = new Size(938, 484);
+            Controls.Add(btnReload);
             Controls.Add(label1);
-            Controls.Add(btnAdd);
-            Controls.Add(btnAll);
+            Controls.Add(btnEdit);
             Controls.Add(dgvListinvoices);
             Margin = new Padding(4);
             Name = "frmListBills";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Danh sách hóa đơn";
             WindowState = FormWindowState.Maximized;
+            Click += frmListBills_Load;
             ((System.ComponentModel.ISupportInitialize)dgvListinvoices).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -186,13 +179,12 @@
         #endregion
 
         private DataGridView dgvListinvoices;
-        private Button btnAll;
-        private Button btnAdd;
+        private Button btnEdit;
         private Label label1;
+        private Button btnReload;
         private DataGridViewTextBoxColumn colName;
         private DataGridViewTextBoxColumn colTimeAt;
         private DataGridViewTextBoxColumn colMoney;
-        private DataGridViewTextBoxColumn colStatus;
         private DataGridViewTextBoxColumn colDateCreate;
         private DataGridViewButtonColumn colDetail;
     }

@@ -36,7 +36,7 @@ namespace ThieunuQLPT
 
                 if (!Guid.TryParse(houseId, out Guid houseGuid)) return;
 
-                // Lấy thông tin phòng từ HousesData
+                // Lấy thông tin phòng
                 var houseResp = await client
                     .From<HousesData>()
                     .Select("*")
@@ -55,16 +55,24 @@ namespace ThieunuQLPT
 
                 int totalMembers = memberResp.Models.Count;
 
-                // Tính tiền
+                // Lấy hóa đơn
+                var invoiceResp = await client
+                    .From<InvoicesData>()
+                    .Select("*")
+                    .Where(x => x.HouseId == houseGuid)
+                    .Get();
+
+                var invoice = invoiceResp.Models.FirstOrDefault();
+
+                // Tính tiền để hiển thị chi tiết
                 int oldNums = currentHouse.OldNumber ?? 0;
                 int newNums = currentHouse.NewNumber ?? 0;
                 decimal electricTotal = (newNums - oldNums) * (currentHouse.ElectricityRate ?? 4000);
                 decimal waterTotal = totalMembers * (currentHouse.WaterRate ?? 100000);
-                decimal total = (currentHouse.TotalRent ?? 0) + electricTotal + waterTotal + (currentHouse.ServiceRate ?? 0);
 
                 // Hiển thị
                 lblRoom.Text = currentHouse.Name;
-                lblRent.Text = (currentHouse.TotalRent ?? 0).ToString("N0") + " đ";
+                lblRent.Text = (currentHouse.PriceRent ?? 0).ToString("N0") + " đ";
                 lblOldNums.Text = oldNums.ToString();
                 lblNewNums.Text = newNums.ToString();
                 lblConsume.Text = $"{newNums - oldNums} kWh x {(currentHouse.ElectricityRate ?? 4000):N0}đ";
@@ -72,7 +80,9 @@ namespace ThieunuQLPT
                 lblWaterRate.Text = waterTotal.ToString("N0") + " đ";
                 lblServiceRate.Text = (currentHouse.ServiceRate ?? 0).ToString("N0") + " đ";
                 lblMembers.Text = totalMembers.ToString() + " người";
-                lblTotal.Text = total.ToString("N0") + " đ";
+
+                // Lấy tổng từ invoices thay vì tự tính
+                lblTotal.Text = (invoice?.TotalAmount ?? 0).ToString("N0") + " đ";
             }
             catch (Exception ex)
             {

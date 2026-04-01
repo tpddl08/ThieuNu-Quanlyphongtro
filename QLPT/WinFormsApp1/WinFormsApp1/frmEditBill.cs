@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Supabase;
+
 namespace ThieunuQLPT
 {
     public partial class frmEditBill : Form
@@ -22,10 +23,15 @@ namespace ThieunuQLPT
 
         private async void frmEditBill_Load(object? sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(_houseId))
+            if (string.IsNullOrEmpty(_houseId))
             {
-                await FetchDataToFields();
+                MessageBox.Show("Bạn chưa có phòng nên không thể chỉnh sửa hóa đơn.", "Thông báo",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.Close();
+                return;
             }
+
+            await FetchDataToFields();
         }
 
         private async Task FetchDataToFields()
@@ -51,7 +57,7 @@ namespace ThieunuQLPT
                     .Get();
 
                 txtRoom.Text = result.Name;
-                txtRent.Text = (result.TotalRent ?? 0).ToString();
+                txtRent.Text = (result.PriceRent ?? 0).ToString();
                 txtOldNums.Text = (result.OldNumber ?? 0).ToString();
                 txtNewNums.Text = (result.NewNumber ?? 0).ToString();
                 txtMaxMembers.Text = memberResp.Models.Count.ToString();
@@ -81,31 +87,31 @@ namespace ThieunuQLPT
                 int newNums = int.Parse(txtNewNums.Text);
                 int oldNums = int.Parse(txtOldNums.Text);
                 int maxMembers = int.Parse(txtMaxMembers.Text);
-                decimal totalRent = decimal.Parse(txtRent.Text);
+                decimal priceRent = decimal.Parse(txtRent.Text);
                 decimal serviceRate = decimal.Parse(txtServiceRate.Text);
 
-                decimal water_rate = maxMembers * 100000;
-                decimal electric_rate = (newNums - oldNums) * 4000;
+                decimal electricRate = house.ElectricityRate ?? 4000;
+                decimal waterRate = house.WaterRate ?? 100000;
 
-                decimal totalAmount = totalRent
-                    + electric_rate
-                    + water_rate
-                    + serviceRate;
+                decimal water_rate = maxMembers * waterRate;
+                decimal electric_rate = (newNums - oldNums) * electricRate;
+
+                decimal totalAmount = priceRent + electric_rate + water_rate + serviceRate;
 
                 house.Name = txtRoom.Text;
-                house.TotalRent = totalRent;
+                house.PriceRent = priceRent;
                 house.OldNumber = oldNums;
                 house.NewNumber = newNums;
                 house.ServiceRate = serviceRate;
 
-                lblWaterRate.Text = water_rate.ToString();
-                lblElectricRate.Text = electric_rate.ToString();
-                lblConsume.Text = $"{newNums - oldNums} kWh x 4000đ";
-                lblTotal.Text = totalAmount.ToString();
+                lblWaterRate.Text = water_rate.ToString("N0") + " đ";
+                lblElectricRate.Text = electric_rate.ToString("N0") + " đ";
+                lblConsume.Text = $"{newNums - oldNums} kWh x {electricRate:N0}đ";
+                lblTotal.Text = totalAmount.ToString("N0") + " đ";
 
                 await client.From<HousesData>().Update(house);
 
-                // Đồng bộ sang bảng Invoices (Danh sách tổng)
+                // Đồng bộ sang bảng Invoices
                 var invoiceResp = await client
                     .From<InvoicesData>()
                     .Select("*")
@@ -125,81 +131,6 @@ namespace ThieunuQLPT
                 this.Close();
             }
             catch (Exception ex) { MessageBox.Show("Lỗi: " + ex.Message); }
-        }
-
-        /*thêm*/
-        private async void btnInsert_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                var client = await SupabaseHelper.GetClientAsync();
-                if (client == null) return;
-
-                int oldNums = int.Parse(txtOldNums.Text);
-                int newNums = int.Parse(txtNewNums.Text);
-                decimal totalRent = decimal.Parse(txtRent.Text);
-                decimal serviceRate = decimal.Parse(txtServiceRate.Text);
-                decimal electricRate = 4000;
-                decimal waterRate = 100000;
-                int maxMembers = int.Parse(txtMaxMembers.Text);
-
-                //tạo đối tượng House mới
-                var newHouse = new HousesData
-                {
-                    Name = txtRoom.Text,
-                    TotalRent = totalRent,
-                    OldNumber = oldNums,
-                    NewNumber = newNums,
-                    ElectricityRate = electricRate,
-                    WaterRate = waterRate,
-                    MaxMembers = maxMembers,
-                    ServiceRate = serviceRate
-                };
-
-                // chèn vào bảng houses và lấy kết quả trả về (để lấy ID mới sinh)
-                var response = await client.From<HousesData>().Insert(newHouse);
-                var createdHouse = response.Models.FirstOrDefault();
-
-                if (createdHouse != null)
-                {
-                    // Gán người tạo vào phòng
-                    var newMember = new HouseMembersData
-                    {
-                        HouseId = createdHouse.Id,
-                        UserId = currentUserId,
-                        Role = "owner",
-                        IsActive = true,
-                        JoinedAt = DateTime.Now
-                    };
-                    await client.From<HouseMembersData>().Insert(newMember);
-
-                    // tính tổng tiền ban đầu cho hóa đơn
-                    decimal electricTotal = (newNums - oldNums) * electricRate;
-                    decimal waterTotal = maxMembers * waterRate;
-                    decimal totalAmount = totalRent + electricTotal + waterTotal + serviceRate;
-
-                    //tạo hóa đơn tương ứng bên bảng invoices
-                    var newInvoice = new InvoicesData
-                    {
-                        HouseId = createdHouse.Id, // Lấy ID vừa sinh ra từ DB
-                        MonthYear = txtMonth.Text,
-                        TotalAmount = totalAmount,
-                        Status = "Unpaid",
-                        CreatedAt = DateTime.Now
-                    };
-                    await client.From<InvoicesData>().Insert(newInvoice);
-                }
-
-                MessageBox.Show("Thêm phòng và hóa đơn thành công!");
-
-                //trả về DialogResult.OK để Form List tự Load lại
-                this.DialogResult = DialogResult.OK;
-                this.Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Lỗi khi thêm: " + ex.Message);
-            }
         }
 
         // xóa
@@ -231,7 +162,84 @@ namespace ThieunuQLPT
                     this.DialogResult = DialogResult.OK;
                     this.Close();
                 }
-                catch (Exception) { MessageBox.Show("Lỗi: " + "Hóa đơn chưa tồn tại để xóa"); }
+                catch (Exception ex) { MessageBox.Show("Lỗi: " + ex.Message); }
+            }
+        }
+
+        /*thêm hóa đơn mới*/
+        private async void btnInsert_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var client = await SupabaseHelper.GetClientAsync();
+                if (client == null) return;
+
+                if (!Guid.TryParse(_houseId, out Guid houseGuid)) return;
+
+                // Kiểm tra tháng nhập vào
+                if (string.IsNullOrWhiteSpace(txtMonth.Text))
+                {
+                    MessageBox.Show("Vui lòng nhập tháng/năm cho hóa đơn!", "Thông báo",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Kiểm tra hóa đơn tháng này đã tồn tại chưa
+                var existResp = await client
+                    .From<InvoicesData>()
+                    .Select("*")
+                    .Where(x => x.HouseId == houseGuid && x.MonthYear == txtMonth.Text)
+                    .Get();
+
+                if (existResp.Models.Any())
+                {
+                    MessageBox.Show($"Hóa đơn tháng {txtMonth.Text} đã tồn tại!", "Thông báo",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Lấy thông tin phòng
+                var houseResp = await client
+                    .From<HousesData>()
+                    .Select("*")
+                    .Where(h => h.Id == houseGuid)
+                    .Get();
+
+                var house = houseResp.Models.FirstOrDefault();
+                if (house == null) return;
+
+                int oldNums = int.Parse(txtOldNums.Text);
+                int newNums = int.Parse(txtNewNums.Text);
+                decimal priceRent = decimal.Parse(txtRent.Text);
+                decimal serviceRate = decimal.Parse(txtServiceRate.Text);
+                int maxMembers = int.Parse(txtMaxMembers.Text);
+
+                decimal electricRate = house.ElectricityRate ?? 4000;
+                decimal waterRate = house.WaterRate ?? 100000;
+
+                decimal electricTotal = (newNums - oldNums) * electricRate;
+                decimal waterTotal = maxMembers * waterRate;
+                decimal totalAmount = priceRent + electricTotal + waterTotal + serviceRate;
+
+                // Tạo hóa đơn mới
+                var newInvoice = new InvoicesData
+                {
+                    HouseId = houseGuid,
+                    MonthYear = txtMonth.Text,
+                    TotalAmount = totalAmount,
+                    CreatedAt = DateTime.Now
+                };
+                await client.From<InvoicesData>().Insert(newInvoice);
+
+                MessageBox.Show($"Đã tạo hóa đơn tháng {txtMonth.Text} thành công!", "Thành công",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi tạo hóa đơn: " + ex.Message);
             }
         }
     }

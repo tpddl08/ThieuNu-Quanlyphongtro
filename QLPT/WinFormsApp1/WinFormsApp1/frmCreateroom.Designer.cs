@@ -40,6 +40,8 @@
             tableLayoutPanel1 = new TableLayoutPanel();
             panel2 = new Panel();
             panel3 = new Panel();
+            label3 = new Label();
+            txtPriceRent = new TextBox();
             panel1.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
@@ -59,6 +61,8 @@
             // panel1
             // 
             panel1.BackColor = SystemColors.GradientActiveCaption;
+            panel1.Controls.Add(txtPriceRent);
+            panel1.Controls.Add(label3);
             panel1.Controls.Add(btnSubmit);
             panel1.Controls.Add(txtService);
             panel1.Controls.Add(label4);
@@ -91,7 +95,7 @@
             // 
             txtService.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtService.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtService.Location = new Point(209, 170);
+            txtService.Location = new Point(209, 181);
             txtService.Name = "txtService";
             txtService.Size = new Size(517, 50);
             txtService.TabIndex = 16;
@@ -102,7 +106,7 @@
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
             label4.ForeColor = Color.Black;
-            label4.Location = new Point(14, 92);
+            label4.Location = new Point(14, 69);
             label4.Name = "label4";
             label4.Size = new Size(224, 45);
             label4.TabIndex = 10;
@@ -124,7 +128,7 @@
             // 
             txtNumbermember.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtNumbermember.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtNumbermember.Location = new Point(244, 92);
+            txtNumbermember.Location = new Point(244, 72);
             txtNumbermember.Name = "txtNumbermember";
             txtNumbermember.Size = new Size(482, 50);
             txtNumbermember.TabIndex = 7;
@@ -144,11 +148,11 @@
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
             label5.ForeColor = Color.Black;
-            label5.Location = new Point(14, 170);
+            label5.Location = new Point(14, 122);
             label5.Name = "label5";
-            label5.Size = new Size(161, 45);
+            label5.Size = new Size(208, 45);
             label5.TabIndex = 13;
-            label5.Text = "Phí nhà ở";
+            label5.Text = "Phí thuê nhà";
             // 
             // tableLayoutPanel1
             // 
@@ -188,6 +192,27 @@
             panel3.Size = new Size(1, 284);
             panel3.TabIndex = 7;
             // 
+            // label3
+            // 
+            label3.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
+            label3.ForeColor = Color.Black;
+            label3.Location = new Point(14, 181);
+            label3.Name = "label3";
+            label3.Size = new Size(185, 45);
+            label3.TabIndex = 17;
+            label3.Text = "Phí dịch vụ";
+            // 
+            // txtPriceRent
+            // 
+            txtPriceRent.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtPriceRent.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtPriceRent.Location = new Point(244, 125);
+            txtPriceRent.Name = "txtPriceRent";
+            txtPriceRent.Size = new Size(482, 50);
+            txtPriceRent.TabIndex = 18;
+            // 
             // frmCreateroom
             // 
             AutoScaleDimensions = new SizeF(144F, 144F);
@@ -221,5 +246,7 @@
         private TableLayoutPanel tableLayoutPanel1;
         private Panel panel2;
         private Panel panel3;
+        private TextBox txtPriceRent;
+        private Label label3;
     }
 }

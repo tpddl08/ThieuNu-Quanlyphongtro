@@ -40,8 +40,8 @@ namespace ThieunuQLPT
         [Column("name")]
         public string? Name { get; set; }
 
-        [Column("total_rent")]
-        public decimal? TotalRent { get; set; }
+        [Column("price_rent")]
+        public decimal? PriceRent { get; set; }
 
         [Column("electricity_rate")]
         public decimal? ElectricityRate { get; set; }
@@ -89,6 +89,8 @@ namespace ThieunuQLPT
         public bool IsActive { get; set; } = true;
         [Column("is_paid")]
         public bool IsPaid { get; set; } = false;
+        [Column("num_absent")]
+        public int? NumAbsent { get; set; }
     }
 
     [Table("chores")]

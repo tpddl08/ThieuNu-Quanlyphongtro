@@ -473,6 +473,7 @@
             Controls.Add(tableLayoutPanel1);
             Margin = new Padding(4);
             Name = "frmBill";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Chi tiết hóa đơn";
             Load += frmBill_Load;
             Click += frmBill_Load;

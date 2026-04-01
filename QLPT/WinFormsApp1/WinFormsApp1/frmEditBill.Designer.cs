@@ -501,7 +501,8 @@
             Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             Margin = new Padding(4);
             Name = "frmEditBill";
-            Text = "frmEditBill";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Chỉnh sửa";
             Load += frmEditBill_Load;
             tableLayoutPanel3.ResumeLayout(false);
             tableLayoutPanel3.PerformLayout();
