@@ -78,14 +78,13 @@ namespace WinFormsApp1
             }
         }
 
+        //Hóa đơn
         private void btnBill_Click(object sender, EventArgs e)
         {
             if (isLogin)
             {
-<<<<<<< Updated upstream
-                
-=======
-
+                frmListBills frm = new frmListBills();
+                frm.ShowDialog();
             }
             else
             {
@@ -93,13 +92,13 @@ namespace WinFormsApp1
             }
         }
 
+        //Trực nhật
         private void btnChores_Click(object sender, EventArgs e)
         {
             if (isLogin)
             {
                 frmChores frm = new frmChores();
                 frm.ShowDialog();
->>>>>>> Stashed changes
             }
             else
             {

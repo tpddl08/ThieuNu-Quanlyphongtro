@@ -35,24 +35,16 @@
             DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             dgvMember = new DataGridView();
-            colName = new DataGridViewTextBoxColumn();
-            colNumberphone = new DataGridViewTextBoxColumn();
-            colEmail = new DataGridViewTextBoxColumn();
-            colStatus = new DataGridViewTextBoxColumn();
-            colEdit = new DataGridViewButtonColumn();
             lblNoti = new Label();
             btnSubmit = new Button();
             btnCreateroom = new Button();
             btnAdd = new Button();
             btnDelete = new Button();
-<<<<<<< Updated upstream
-=======
             colName = new DataGridViewTextBoxColumn();
             colNumberphone = new DataGridViewTextBoxColumn();
             colEmail = new DataGridViewTextBoxColumn();
             colStatus = new DataGridViewTextBoxColumn();
             colEdit = new DataGridViewButtonColumn();
->>>>>>> Stashed changes
             ((System.ComponentModel.ISupportInitialize)dgvMember).BeginInit();
             SuspendLayout();
             // 
@@ -101,8 +93,6 @@
             dgvMember.TabIndex = 0;
             dgvMember.CellContentClick += dgvMember_CellContentClick;
             // 
-<<<<<<< Updated upstream
-=======
             // lblNoti
             // 
             lblNoti.AutoSize = true;
@@ -169,7 +159,6 @@
             btnDelete.UseVisualStyleBackColor = false;
             btnDelete.Click += btnDelete_Click;
             // 
->>>>>>> Stashed changes
             // colName
             // 
             colName.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
@@ -203,76 +192,10 @@
             // colEdit
             // 
             colEdit.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            colEdit.HeaderText = "Sửa";
+            colEdit.HeaderText = "Chỉnh sửa";
             colEdit.MinimumWidth = 8;
             colEdit.Name = "colEdit";
-            colEdit.Width = 82;
-            // 
-            // lblNoti
-            // 
-            lblNoti.AutoSize = true;
-            lblNoti.Font = new Font("Segoe UI", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblNoti.Location = new Point(47, 38);
-            lblNoti.Name = "lblNoti";
-            lblNoti.Size = new Size(205, 54);
-            lblNoti.TabIndex = 7;
-            lblNoti.Text = "Thông tin";
-            // 
-            // btnSubmit
-            // 
-            btnSubmit.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnSubmit.BackColor = Color.RoyalBlue;
-            btnSubmit.FlatStyle = FlatStyle.Flat;
-            btnSubmit.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnSubmit.Location = new Point(770, 125);
-            btnSubmit.Name = "btnSubmit";
-            btnSubmit.Size = new Size(128, 46);
-            btnSubmit.TabIndex = 9;
-            btnSubmit.Text = "Lưu";
-            btnSubmit.UseVisualStyleBackColor = false;
-            btnSubmit.Click += btnSubmit_Click;
-            // 
-            // btnCreateroom
-            // 
-            btnCreateroom.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnCreateroom.BackColor = Color.ForestGreen;
-            btnCreateroom.FlatStyle = FlatStyle.Flat;
-            btnCreateroom.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnCreateroom.Location = new Point(511, 35);
-            btnCreateroom.Name = "btnCreateroom";
-            btnCreateroom.Size = new Size(235, 64);
-            btnCreateroom.TabIndex = 10;
-            btnCreateroom.Text = "Tạo phòng";
-            btnCreateroom.UseVisualStyleBackColor = false;
-            btnCreateroom.Click += btnCreateroom_Click;
-            // 
-            // btnAdd
-            // 
-            btnAdd.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnAdd.BackColor = Color.ForestGreen;
-            btnAdd.FlatStyle = FlatStyle.Flat;
-            btnAdd.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnAdd.Location = new Point(770, 197);
-            btnAdd.Name = "btnAdd";
-            btnAdd.Size = new Size(128, 46);
-            btnAdd.TabIndex = 11;
-            btnAdd.Text = "Thêm";
-            btnAdd.UseVisualStyleBackColor = false;
-            btnAdd.Click += btnAdd_Click;
-            // 
-            // btnDelete
-            // 
-            btnDelete.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnDelete.BackColor = Color.Red;
-            btnDelete.FlatStyle = FlatStyle.Flat;
-            btnDelete.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnDelete.Location = new Point(770, 270);
-            btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(128, 46);
-            btnDelete.TabIndex = 12;
-            btnDelete.Text = "Xóa";
-            btnDelete.UseVisualStyleBackColor = false;
-            btnDelete.Click += btnDelete_Click;
+            colEdit.Width = 156;
             // 
             // frmMember
             // 
