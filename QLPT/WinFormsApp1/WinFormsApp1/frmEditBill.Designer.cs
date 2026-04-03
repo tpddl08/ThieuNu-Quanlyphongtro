@@ -30,7 +30,7 @@
         {
             btnInsert = new Button();
             btnDelete = new Button();
-            btnSua = new Button();
+            btnLuu = new Button();
             tableLayoutPanel3 = new TableLayoutPanel();
             txtMaxMembers = new TextBox();
             label11 = new Label();
@@ -69,6 +69,7 @@
             // 
             // btnInsert
             // 
+            btnInsert.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnInsert.BackColor = Color.ForestGreen;
             btnInsert.FlatStyle = FlatStyle.Flat;
             btnInsert.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
@@ -83,6 +84,7 @@
             // 
             // btnDelete
             // 
+            btnDelete.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnDelete.BackColor = Color.Red;
             btnDelete.FlatStyle = FlatStyle.Flat;
             btnDelete.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
@@ -95,22 +97,24 @@
             btnDelete.UseVisualStyleBackColor = false;
             btnDelete.Click += btnDelete_Click;
             // 
-            // btnSua
+            // btnLuu
             // 
-            btnSua.BackColor = Color.MediumTurquoise;
-            btnSua.FlatStyle = FlatStyle.Flat;
-            btnSua.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            btnSua.Location = new Point(825, 27);
-            btnSua.Margin = new Padding(4);
-            btnSua.Name = "btnSua";
-            btnSua.Size = new Size(106, 36);
-            btnSua.TabIndex = 15;
-            btnSua.Text = "Sửa";
-            btnSua.UseVisualStyleBackColor = false;
-            btnSua.Click += btnSua_Click;
+            btnLuu.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnLuu.BackColor = Color.MediumTurquoise;
+            btnLuu.FlatStyle = FlatStyle.Flat;
+            btnLuu.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnLuu.Location = new Point(825, 27);
+            btnLuu.Margin = new Padding(4);
+            btnLuu.Name = "btnLuu";
+            btnLuu.Size = new Size(106, 36);
+            btnLuu.TabIndex = 15;
+            btnLuu.Text = "Sửa";
+            btnLuu.UseVisualStyleBackColor = false;
+            btnLuu.Click += btnLuu_Click;
             // 
             // tableLayoutPanel3
             // 
+            tableLayoutPanel3.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             tableLayoutPanel3.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
             tableLayoutPanel3.ColumnCount = 2;
             tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
@@ -174,6 +178,7 @@
             // 
             // tableLayoutPanel1
             // 
+            tableLayoutPanel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             tableLayoutPanel1.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
             tableLayoutPanel1.ColumnCount = 2;
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
@@ -383,6 +388,7 @@
             // 
             // tlpContent
             // 
+            tlpContent.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             tlpContent.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
             tlpContent.ColumnCount = 2;
             tlpContent.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
@@ -475,6 +481,7 @@
             // 
             // label7
             // 
+            label7.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             label7.Font = new Font("Segoe UI", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label7.Location = new Point(1, 9);
             label7.Margin = new Padding(4, 0, 4, 0);
@@ -490,7 +497,7 @@
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = SystemColors.GradientInactiveCaption;
             ClientSize = new Size(938, 484);
-            Controls.Add(btnSua);
+            Controls.Add(btnLuu);
             Controls.Add(btnDelete);
             Controls.Add(btnInsert);
             Controls.Add(tableLayoutPanel3);
@@ -519,7 +526,7 @@
         #endregion
         private Button btnInsert;
         private Button btnDelete;
-        private Button btnSua;
+        private Button btnLuu;
         private TableLayoutPanel tableLayoutPanel3;
         private TextBox txtMaxMembers;
         private Label label11;
