@@ -65,74 +65,6 @@ namespace ThieunuQLPT
             }
         }
 
-        //sửa
-        private async void btnSua_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                var client = await SupabaseHelper.GetClientAsync();
-                if (client == null) return;
-
-                if (!Guid.TryParse(_houseId, out Guid houseGuid)) return;
-
-                var houseResp = await client
-                    .From<HousesData>()
-                    .Select("*")
-                    .Where(h => h.Id == houseGuid)
-                    .Get();
-
-                var house = houseResp.Models.FirstOrDefault();
-                if (house == null) return;
-
-                int newNums = int.Parse(txtNewNums.Text);
-                int oldNums = int.Parse(txtOldNums.Text);
-                int maxMembers = int.Parse(txtMaxMembers.Text);
-                decimal priceRent = decimal.Parse(txtRent.Text);
-                decimal serviceRate = decimal.Parse(txtServiceRate.Text);
-
-                decimal electricRate = house.ElectricityRate ?? 4000;
-                decimal waterRate = house.WaterRate ?? 100000;
-
-                decimal water_rate = maxMembers * waterRate;
-                decimal electric_rate = (newNums - oldNums) * electricRate;
-
-                decimal totalAmount = priceRent + electric_rate + water_rate + serviceRate;
-
-                house.Name = txtRoom.Text;
-                house.PriceRent = priceRent;
-                house.OldNumber = oldNums;
-                house.NewNumber = newNums;
-                house.ServiceRate = serviceRate;
-
-                lblWaterRate.Text = water_rate.ToString("N0") + " đ";
-                lblElectricRate.Text = electric_rate.ToString("N0") + " đ";
-                lblConsume.Text = $"{newNums - oldNums} kWh x {electricRate:N0}đ";
-                lblTotal.Text = totalAmount.ToString("N0") + " đ";
-
-                await client.From<HousesData>().Update(house);
-
-                // Đồng bộ sang bảng Invoices
-                var invoiceResp = await client
-                    .From<InvoicesData>()
-                    .Select("*")
-                    .Where(x => x.HouseId == houseGuid)
-                    .Get();
-
-                var invoice = invoiceResp.Models.FirstOrDefault();
-                if (invoice != null)
-                {
-                    invoice.TotalAmount = totalAmount;
-                    invoice.MonthYear = txtMonth.Text;
-                    await client.From<InvoicesData>().Update(invoice);
-                }
-
-                MessageBox.Show("Cập nhật thành công!");
-                this.DialogResult = DialogResult.OK;
-                this.Close();
-            }
-            catch (Exception ex) { MessageBox.Show("Lỗi: " + ex.Message); }
-        }
-
         // xóa
         private async void btnDelete_Click(object sender, EventArgs e)
         {
@@ -241,6 +173,74 @@ namespace ThieunuQLPT
             {
                 MessageBox.Show("Lỗi khi tạo hóa đơn: " + ex.Message);
             }
+        }
+
+        //Lưu khi sửa
+        private async  void btnLuu_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var client = await SupabaseHelper.GetClientAsync();
+                if (client == null) return;
+
+                if (!Guid.TryParse(_houseId, out Guid houseGuid)) return;
+
+                var houseResp = await client
+                    .From<HousesData>()
+                    .Select("*")
+                    .Where(h => h.Id == houseGuid)
+                    .Get();
+
+                var house = houseResp.Models.FirstOrDefault();
+                if (house == null) return;
+
+                int newNums = int.Parse(txtNewNums.Text);
+                int oldNums = int.Parse(txtOldNums.Text);
+                int maxMembers = int.Parse(txtMaxMembers.Text);
+                decimal priceRent = decimal.Parse(txtRent.Text);
+                decimal serviceRate = decimal.Parse(txtServiceRate.Text);
+
+                decimal electricRate = house.ElectricityRate ?? 4000;
+                decimal waterRate = house.WaterRate ?? 100000;
+
+                decimal water_rate = maxMembers * waterRate;
+                decimal electric_rate = (newNums - oldNums) * electricRate;
+
+                decimal totalAmount = priceRent + electric_rate + water_rate + serviceRate;
+
+                house.Name = txtRoom.Text;
+                house.PriceRent = priceRent;
+                house.OldNumber = oldNums;
+                house.NewNumber = newNums;
+                house.ServiceRate = serviceRate;
+
+                lblWaterRate.Text = water_rate.ToString("N0") + " đ";
+                lblElectricRate.Text = electric_rate.ToString("N0") + " đ";
+                lblConsume.Text = $"{newNums - oldNums} kWh x {electricRate:N0}đ";
+                lblTotal.Text = totalAmount.ToString("N0") + " đ";
+
+                await client.From<HousesData>().Update(house);
+
+                // Đồng bộ sang bảng Invoices
+                var invoiceResp = await client
+                    .From<InvoicesData>()
+                    .Select("*")
+                    .Where(x => x.HouseId == houseGuid)
+                    .Get();
+
+                var invoice = invoiceResp.Models.FirstOrDefault();
+                if (invoice != null)
+                {
+                    invoice.TotalAmount = totalAmount;
+                    invoice.MonthYear = txtMonth.Text;
+                    await client.From<InvoicesData>().Update(invoice);
+                }
+
+                MessageBox.Show("Cập nhật thành công!");
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
+            catch (Exception ex) { MessageBox.Show("Lỗi: " + ex.Message); }
         }
     }
 }

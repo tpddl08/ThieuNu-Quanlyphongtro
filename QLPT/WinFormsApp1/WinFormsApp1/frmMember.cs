@@ -517,21 +517,23 @@ namespace ThieunuQLPT
                         {
                             existing.IsActive = false;
                             existing.LeftAt = DateTime.Now;
+                            existing.Role = "member";
                             await client.From<HouseMembersData>().Update(existing);
                         }
                     }
                     else if (userId != Guid.Empty)
                     {
-                        //Tìm theo HouseId và UserId
                         var resp2 = await client.From<HouseMembersData>()
-                                                .Select("*")
-                                                .Where(m => m.HouseId == currentHouse.Id && m.UserId == userId)
-                                                .Get();
+                            .Select("*")
+                            .Where(m => m.HouseId == currentHouse.Id && m.UserId == userId)
+                            .Get();
+
                         var existing2 = resp2.Models.FirstOrDefault();
                         if (existing2 != null)
                         {
                             existing2.IsActive = false;
                             existing2.LeftAt = DateTime.Now;
+                            existing2.Role = "member"; // ✅ THÊM DÒNG NÀY
                             await client.From<HouseMembersData>().Update(existing2);
                         }
                     }
@@ -551,7 +553,7 @@ namespace ThieunuQLPT
             }
 
             // Nếu trưởng phòng rời phòng thì chuyển quyền cho người đã ở lâu nhất
-            if (currentUserMarkedLeave && currentHouse != null)
+            if (currentUserMarkedLeave && isLeader && currentHouse != null)
             {
                 try
                 {
@@ -574,6 +576,18 @@ namespace ThieunuQLPT
             }
 
             // Thông báo và tải lại danh sách thành viên
+            if (currentUserMarkedLeave)
+            {
+                currentHouse = null;
+                isLeader = false;
+                btnCreateroom.Visible = true;
+                lblNoti.Text = "HIỆN CHƯA CÓ PHÒNG NÀO!";
+                await LoadProfileOnly();
+
+                MessageBox.Show("Bạn đã rời phòng!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
             if (currentHouse != null)
             {
                 MessageBox.Show("Đã lưu thay đổi!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);

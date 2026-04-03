@@ -75,6 +75,11 @@ namespace ThieunuQLPT
                     .Where(x => x.HouseId == houseGuid)
                     .Get();
 
+                //Tìm hóa đơn mới nhất
+                var latestInvoice = invoiceResp.Models
+                    .OrderByDescending(x => x.CreatedAt)
+                    .FirstOrDefault();
+
                 dgvListinvoices.Rows.Clear();
 
                 foreach (var invoice in invoiceResp.Models)
@@ -86,7 +91,12 @@ namespace ThieunuQLPT
                     row.Cells["colTimeAt"].Value = invoice.MonthYear ?? "";
                     row.Cells["colMoney"].Value = (invoice.TotalAmount ?? 0).ToString("N0") + " đ";
                     row.Cells["colDateCreate"].Value = invoice.CreatedAt.ToString("dd/MM/yyyy");
-                    row.Cells["colDetail"].Value = "Xem";
+
+                    //Chỉ hiện "Xem" cho hóa đơn mới nhất
+                    if (latestInvoice != null && invoice.Id == latestInvoice.Id)
+                        row.Cells["colDetail"].Value = "Xem";
+                    else
+                        row.Cells["colDetail"].Value = "";
 
                     row.Tag = (invoice.HouseId?.ToString() ?? "", invoice.Id.ToString());
                 }
@@ -111,6 +121,10 @@ namespace ThieunuQLPT
                 {
                     await LoadData();
                 }
+            }
+            if (string.IsNullOrEmpty(dgvListinvoices.Rows[e.RowIndex].Cells["colDetail"].Value?.ToString()))
+            {
+                return;
             }
         }
 
