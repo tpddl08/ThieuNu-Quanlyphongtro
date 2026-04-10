@@ -108,7 +108,7 @@
             btnLuu.Name = "btnLuu";
             btnLuu.Size = new Size(106, 36);
             btnLuu.TabIndex = 15;
-            btnLuu.Text = "Sửa";
+            btnLuu.Text = "Lưu";
             btnLuu.UseVisualStyleBackColor = false;
             btnLuu.Click += btnLuu_Click;
             // 
