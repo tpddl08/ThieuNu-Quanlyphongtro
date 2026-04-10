@@ -62,7 +62,9 @@ namespace ThieunuQLPT
                     .Where(x => x.HouseId == houseGuid)
                     .Get();
 
-                var invoice = invoiceResp.Models.FirstOrDefault();
+                var invoice = invoiceResp.Models
+                .OrderByDescending(x => x.CreatedAt)
+                .FirstOrDefault();
 
                 // Tính tiền để hiển thị chi tiết
                 int oldNums = currentHouse.OldNumber ?? 0;
@@ -92,8 +94,30 @@ namespace ThieunuQLPT
 
         private async void btnEdit_Click(object sender, EventArgs e)
         {
-            frmEditBill editForm = new frmEditBill(_houseId);
+            // Lấy invoice mới nhất của phòng để truyền vào form edit
+            var client = await SupabaseHelper.GetClientAsync();
+            if (client == null) return;
 
+            if (!Guid.TryParse(_houseId, out Guid houseGuid)) return;
+
+            var invoiceResp = await client
+                .From<InvoicesData>()
+                .Select("*")
+                .Where(x => x.HouseId == houseGuid)
+                .Get();
+
+            var latestInvoice = invoiceResp.Models
+                .OrderByDescending(x => x.CreatedAt)
+                .FirstOrDefault();
+
+            if (latestInvoice == null)
+            {
+                MessageBox.Show("Phòng này chưa có hóa đơn nào.", "Thông báo",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            frmEditBill editForm = new frmEditBill(_houseId, latestInvoice.Id.ToString());
             if (editForm.ShowDialog() == DialogResult.OK)
             {
                 await LoadHouseData(_houseId);

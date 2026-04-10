@@ -114,6 +114,9 @@ namespace ThieunuQLPT
 
             if (dgvListinvoices.Rows[e.RowIndex].Tag is not (string houseId, string invoiceId)) return;
 
+            var cellVal = dgvListinvoices.Rows[e.RowIndex].Cells["colDetail"].Value?.ToString();
+            if (string.IsNullOrEmpty(cellVal)) return;
+
             if (!string.IsNullOrEmpty(houseId))
             {
                 frmDetail viewForm = new frmDetail(houseId, invoiceId);
@@ -122,16 +125,27 @@ namespace ThieunuQLPT
                     await LoadData();
                 }
             }
-            if (string.IsNullOrEmpty(dgvListinvoices.Rows[e.RowIndex].Cells["colDetail"].Value?.ToString()))
-            {
-                return;
-            }
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            // Truyền _houseId để sửa phòng hiện tại
-            frmEditBill frm = new frmEditBill(_houseId);
+            if (string.IsNullOrEmpty(_houseId))
+            {
+                MessageBox.Show("Bạn chưa có phòng nên không thể chỉnh sửa hóa đơn.", "Thông báo",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            if (dgvListinvoices.CurrentRow == null)
+            {
+                MessageBox.Show("Vui lòng chọn hóa đơn cần sửa.", "Thông báo",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (dgvListinvoices.CurrentRow.Tag is not (string houseId, string invoiceId)) return;
+
+            frmEditBill frm = new frmEditBill(_houseId, invoiceId);
             if (frm.ShowDialog() == DialogResult.OK)
             {
                 _ = LoadData();

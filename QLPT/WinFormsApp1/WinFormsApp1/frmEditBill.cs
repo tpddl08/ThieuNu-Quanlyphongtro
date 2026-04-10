@@ -9,15 +9,17 @@ namespace ThieunuQLPT
     {
         private Guid currentUserId = frmLogin.idLoged;
         private string _houseId = "";
+        private string _invoiceId = ""; // thêm field mới
 
         public frmEditBill()
         {
             InitializeComponent();
         }
 
-        public frmEditBill(string houseId) : this()
+        public frmEditBill(string houseId, string invoiceId) : this()
         {
             this._houseId = houseId;
+            this._invoiceId = invoiceId; // nhận invoiceId
             this.Load += frmEditBill_Load;
         }
 
@@ -62,6 +64,17 @@ namespace ThieunuQLPT
                 txtNewNums.Text = (result.NewNumber ?? 0).ToString();
                 txtMaxMembers.Text = memberResp.Models.Count.ToString();
                 txtServiceRate.Text = (result.ServiceRate ?? 0).ToString();
+
+                if (!Guid.TryParse(_invoiceId, out Guid invoiceGuid)) return;
+
+                var invoiceResp = await client
+                    .From<InvoicesData>()
+                    .Select("*")
+                    .Where(x => x.Id == invoiceGuid) // lấy đúng invoice đang chọn
+                    .Get();
+
+                var invoice = invoiceResp.Models.FirstOrDefault();
+                txtMonth.Text = invoice?.MonthYear ?? "";
             }
         }
 
@@ -77,7 +90,26 @@ namespace ThieunuQLPT
 
                     if (!Guid.TryParse(_houseId, out Guid houseGuid)) return;
 
-                    // Xóa invoice trước rồi mới xóa members và phòng
+                    // Lấy danh sách invoice ids trước
+                    var invoiceResp = await client
+                        .From<InvoicesData>()
+                        .Select("*")
+                        .Where(x => x.HouseId == houseGuid)
+                        .Get();
+
+                    // Xóa invoice_items và invoice_payments theo từng invoice
+                    foreach (var inv in invoiceResp.Models)
+                    {
+                        await client.From<InvoiceItemsData>()
+                            .Where(i => i.InvoiceId == inv.Id)
+                            .Delete();
+
+                        await client.From<InvoicePaymentsData>()
+                            .Where(p => p.InvoiceId == inv.Id)
+                            .Delete();
+                    }
+
+                    // Sau đó mới xóa invoices, members, phòng
                     await client.From<InvoicesData>()
                         .Where(x => x.HouseId == houseGuid)
                         .Delete();
@@ -140,11 +172,23 @@ namespace ThieunuQLPT
                 var house = houseResp.Models.FirstOrDefault();
                 if (house == null) return;
 
-                int oldNums = int.Parse(txtOldNums.Text);
-                int newNums = int.Parse(txtNewNums.Text);
-                decimal priceRent = decimal.Parse(txtRent.Text);
-                decimal serviceRate = decimal.Parse(txtServiceRate.Text);
-                int maxMembers = int.Parse(txtMaxMembers.Text);
+                if (!int.TryParse(txtOldNums.Text, out int oldNums) ||
+                !int.TryParse(txtNewNums.Text, out int newNums) ||
+                !decimal.TryParse(txtRent.Text, out decimal priceRent) ||
+                !decimal.TryParse(txtServiceRate.Text, out decimal serviceRate) ||
+                !int.TryParse(txtMaxMembers.Text, out int maxMembers))
+                {
+                    MessageBox.Show("Vui lòng nhập đúng định dạng số!", "Lỗi nhập liệu",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                if (newNums < oldNums)
+                {
+                    MessageBox.Show("Chỉ số mới không thể nhỏ hơn chỉ số cũ!", "Lỗi nhập liệu",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
                 decimal electricRate = house.ElectricityRate ?? 4000;
                 decimal waterRate = house.WaterRate ?? 100000;
@@ -176,7 +220,7 @@ namespace ThieunuQLPT
         }
 
         //Lưu khi sửa
-        private async  void btnLuu_Click(object sender, EventArgs e)
+        private async void btnLuu_Click(object sender, EventArgs e)
         {
             try
             {
@@ -194,18 +238,29 @@ namespace ThieunuQLPT
                 var house = houseResp.Models.FirstOrDefault();
                 if (house == null) return;
 
-                int newNums = int.Parse(txtNewNums.Text);
-                int oldNums = int.Parse(txtOldNums.Text);
-                int maxMembers = int.Parse(txtMaxMembers.Text);
-                decimal priceRent = decimal.Parse(txtRent.Text);
-                decimal serviceRate = decimal.Parse(txtServiceRate.Text);
+                if (!int.TryParse(txtNewNums.Text, out int newNums) ||
+                    !int.TryParse(txtOldNums.Text, out int oldNums) ||
+                    !int.TryParse(txtMaxMembers.Text, out int maxMembers) ||
+                    !decimal.TryParse(txtRent.Text, out decimal priceRent) ||
+                    !decimal.TryParse(txtServiceRate.Text, out decimal serviceRate))
+                {
+                    MessageBox.Show("Vui lòng nhập đúng định dạng số!", "Lỗi nhập liệu",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                if (newNums < oldNums)
+                {
+                    MessageBox.Show("Chỉ số mới không thể nhỏ hơn chỉ số cũ!", "Lỗi nhập liệu",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
                 decimal electricRate = house.ElectricityRate ?? 4000;
                 decimal waterRate = house.WaterRate ?? 100000;
 
                 decimal water_rate = maxMembers * waterRate;
                 decimal electric_rate = (newNums - oldNums) * electricRate;
-
                 decimal totalAmount = priceRent + electric_rate + water_rate + serviceRate;
 
                 house.Name = txtRoom.Text;
@@ -221,19 +276,21 @@ namespace ThieunuQLPT
 
                 await client.From<HousesData>().Update(house);
 
-                // Đồng bộ sang bảng Invoices
-                var invoiceResp = await client
-                    .From<InvoicesData>()
-                    .Select("*")
-                    .Where(x => x.HouseId == houseGuid)
-                    .Get();
-
-                var invoice = invoiceResp.Models.FirstOrDefault();
-                if (invoice != null)
+                if (Guid.TryParse(_invoiceId, out Guid invoiceGuid))
                 {
-                    invoice.TotalAmount = totalAmount;
-                    invoice.MonthYear = txtMonth.Text;
-                    await client.From<InvoicesData>().Update(invoice);
+                    var invoiceResp = await client
+                        .From<InvoicesData>()
+                        .Select("*")
+                        .Where(x => x.Id == invoiceGuid)
+                        .Get();
+
+                    var invoice = invoiceResp.Models.FirstOrDefault();
+                    if (invoice != null)
+                    {
+                        invoice.TotalAmount = totalAmount;
+                        invoice.MonthYear = txtMonth.Text;
+                        await client.From<InvoicesData>().Update(invoice);
+                    }
                 }
 
                 MessageBox.Show("Cập nhật thành công!");

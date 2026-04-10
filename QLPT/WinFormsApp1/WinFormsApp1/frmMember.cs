@@ -231,6 +231,19 @@ namespace ThieunuQLPT
                 var prof = profileResp.Models.First();
                 Guid userId = prof.Id;
 
+                // Kiểm tra số thành viên đang ở hiện tại (cả trên dgv) so với max_members
+                int maxMembers = currentHouse.MaxMembers ?? 6;
+                int currentActive = dgvMember.Rows
+                    .Cast<DataGridViewRow>()
+                    .Count(r => (r.Cells["colStatus"].Value?.ToString() ?? "").Trim() == "Đang ở");
+
+                if (currentActive >= maxMembers)
+                {
+                    MessageBox.Show($"Phòng đã đủ {maxMembers} người, không thể thêm!", "Thông báo",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
                 //Hiển thị thông tin người muốn thêm lên dgv
                 foreach (DataGridViewRow r in dgvMember.Rows)
                 {
