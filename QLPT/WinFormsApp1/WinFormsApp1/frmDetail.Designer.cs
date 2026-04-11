@@ -139,7 +139,7 @@
             // btnPaid
             // 
             btnPaid.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnPaid.BackColor = Color.ForestGreen;
+            btnPaid.BackColor = Color.DarkOrange;
             btnPaid.FlatStyle = FlatStyle.Flat;
             btnPaid.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnPaid.Location = new Point(774, 214);
@@ -153,7 +153,7 @@
             // btnSubmit
             // 
             btnSubmit.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnSubmit.BackColor = Color.RoyalBlue;
+            btnSubmit.BackColor = Color.DarkOrange;
             btnSubmit.FlatStyle = FlatStyle.Flat;
             btnSubmit.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnSubmit.Location = new Point(774, 142);

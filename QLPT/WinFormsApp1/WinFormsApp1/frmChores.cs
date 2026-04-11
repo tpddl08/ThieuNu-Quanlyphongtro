@@ -13,7 +13,7 @@ namespace ThieunuQLPT
     public partial class frmChores : Form
     {
         private HousesData? currentHouse;
-        private Guid currentUserId = frmLogin.idLoged;
+        private Guid currentUserId = frmLogin.idLoged; // user hiện tại
 
         public frmChores()
         {
@@ -22,14 +22,15 @@ namespace ThieunuQLPT
 
         private async void frmChores_Load(object sender, EventArgs e)
         {
+            // config DataGridView
             dgvChores.AllowUserToAddRows = false;
             dgvChores.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvChores.MultiSelect = false;
             dgvChores.AutoGenerateColumns = false;
 
-            EnsureHiddenColumns();
+            EnsureHiddenColumns(); // đảm bảo có cột ẩn
 
-            await LoadCurrentHouseAsync();
+            await LoadCurrentHouseAsync(); // lấy phòng hiện tại
 
             if (currentHouse == null)
             {
@@ -38,11 +39,12 @@ namespace ThieunuQLPT
                 return;
             }
 
-            await LoadChoresToDGV(currentHouse.Id);
+            await LoadChoresToDGV(currentHouse.Id); // load dữ liệu
         }
 
         private void EnsureHiddenColumns()
         {
+            // cột lưu id chore
             if (!dgvChores.Columns.Contains("colChoreId"))
             {
                 dgvChores.Columns.Add(new DataGridViewTextBoxColumn
@@ -52,6 +54,7 @@ namespace ThieunuQLPT
                 });
             }
 
+            // cột lưu id user được giao
             if (!dgvChores.Columns.Contains("colAssignedToId"))
             {
                 dgvChores.Columns.Add(new DataGridViewTextBoxColumn
@@ -67,6 +70,7 @@ namespace ThieunuQLPT
             var client = await SupabaseHelper.GetClientAsync();
             if (client == null) return;
 
+            // lấy membership hiện tại
             var memberResponse = await client
                 .From<HouseMembersData>()
                 .Select("*")
@@ -79,10 +83,12 @@ namespace ThieunuQLPT
                 return;
             }
 
+            // lấy membership mới nhất
             var currentMember = memberResponse.Models
                 .OrderByDescending(m => m.JoinedAt)
                 .First();
 
+            // lấy thông tin phòng
             var houseResponse = await client
                 .From<HousesData>()
                 .Select("*")
@@ -99,6 +105,7 @@ namespace ThieunuQLPT
             var client = await SupabaseHelper.GetClientAsync();
             if (client == null) return;
 
+            // lấy danh sách công việc
             var choresResp = await client
                 .From<ChoresData>()
                 .Select("*")
@@ -107,6 +114,7 @@ namespace ThieunuQLPT
 
             var chores = choresResp.Models.ToList();
 
+            // lấy danh sách user id để query profile
             var userIds = chores
                 .Where(c => c.AssignedTo.HasValue)
                 .Select(c => c.AssignedTo!.Value)
@@ -114,6 +122,8 @@ namespace ThieunuQLPT
                 .ToList();
 
             var profilesList = new List<ProfilesData>();
+
+            // load profile từng user
             foreach (var uid in userIds)
             {
                 var pr = await client
@@ -126,6 +136,7 @@ namespace ThieunuQLPT
                     profilesList.Add(pr.Models.First());
             }
 
+            // bind dữ liệu vào grid
             foreach (var chore in chores)
             {
                 var prof = chore.AssignedTo.HasValue
@@ -139,11 +150,25 @@ namespace ThieunuQLPT
                 row.Cells["colAssignedToId"].Value = chore.AssignedTo?.ToString() ?? "";
                 row.Cells["colNamework"].Value = chore.TaskName ?? "";
                 row.Cells["colName"].Value = prof?.FullName ?? "";
-                row.Cells["colTime"].Value = chore.DueDate.HasValue? chore.DueDate.Value.ToString("dd/MM/yyyy HH:mm"): "";
+
+                // convert UTC -> local (giờ VN)
+                if (chore.DueDate.HasValue)
+                {
+                    var utc = DateTime.SpecifyKind(chore.DueDate.Value, DateTimeKind.Utc);
+                    var vnTime = utc.ToLocalTime();
+
+                    row.Cells["colTime"].Value = vnTime.ToString("dd/MM/yyyy HH:mm");
+                }
+                else
+                {
+                    row.Cells["colTime"].Value = "";
+                }
+
                 row.Cells["colStatus"].Value = chore.IsCompleted ? "Hoàn thành" : "Chưa xong";
 
-                row.Tag = null;
+                row.Tag = null; // không có thay đổi
 
+                // đổi màu theo trạng thái
                 if (chore.IsCompleted)
                     row.DefaultCellStyle.BackColor = Color.LightGreen;
                 else
@@ -159,13 +184,17 @@ namespace ThieunuQLPT
                 return;
             }
 
+            // nhập tên công việc
             string taskName = Interaction.InputBox("Nhập tên công việc:", "Thêm công việc", "");
             if (string.IsNullOrWhiteSpace(taskName))
                 return;
 
+            // nhập số điện thoại người được giao
             string phone = Interaction.InputBox("Nhập số điện thoại người được giao (để trống = giao cho bạn):", "Thêm công việc", "");
+
             DateTime dueDate = DateTime.Now.Date;
 
+            // nhập hạn làm
             string dueText = Interaction.InputBox("Nhập hạn làm (dd/MM/yyyy HH:mm):", "Thêm công việc", DateTime.Now.ToString("dd/MM/yyyy HH:mm"));
             if (!string.IsNullOrWhiteSpace(dueText))
             {
@@ -182,6 +211,7 @@ namespace ThieunuQLPT
             Guid assignedToId = currentUserId;
             string assignedName = "";
 
+            // tìm user theo phone
             if (!string.IsNullOrWhiteSpace(phone))
             {
                 var profileResp = await client
@@ -199,6 +229,7 @@ namespace ThieunuQLPT
 
                 var prof = profileResp.Models.First();
 
+                // kiểm tra có trong phòng không
                 var memberResp = await client
                     .From<HouseMembersData>()
                     .Select("*")
@@ -217,6 +248,7 @@ namespace ThieunuQLPT
             }
             else
             {
+                // tự giao cho mình
                 var selfResp = await client
                     .From<ProfilesData>()
                     .Select("*")
@@ -226,6 +258,7 @@ namespace ThieunuQLPT
                 assignedName = selfResp.Models.FirstOrDefault()?.FullName ?? "";
             }
 
+            // thêm dòng tạm trên UI
             int idx = dgvChores.Rows.Add();
             var row = dgvChores.Rows[idx];
 
@@ -236,7 +269,7 @@ namespace ThieunuQLPT
             row.Cells["colTime"].Value = dueDate.ToString("dd/MM/yyyy HH:mm");
             row.Cells["colStatus"].Value = "Chưa xong";
 
-            row.Tag = "add";
+            row.Tag = "add"; // đánh dấu thêm mới
             row.DefaultCellStyle.BackColor = Color.LightYellow;
 
             MessageBox.Show("Đã thêm công việc tạm trên giao diện. Nhấn Lưu để ghi xuống database.", "Thông báo",
@@ -252,7 +285,8 @@ namespace ThieunuQLPT
             }
 
             var row = dgvChores.CurrentRow;
-            row.Tag = "delete";
+
+            row.Tag = "delete"; // đánh dấu xóa
             row.DefaultCellStyle.BackColor = Color.LightGray;
             row.Cells["colStatus"].Value = "Đã xóa trên giao diện";
 
@@ -269,9 +303,11 @@ namespace ThieunuQLPT
             }
 
             var row = dgvChores.CurrentRow;
+
             row.Cells["colStatus"].Value = "Hoàn thành";
             row.DefaultCellStyle.BackColor = Color.LightGreen;
 
+            // nếu không phải thêm mới thì đánh dấu sửa
             if ((row.Tag as string) != "add")
                 row.Tag = "edit";
 
@@ -298,12 +334,14 @@ namespace ThieunuQLPT
 
                     string tag = row.Tag as string ?? "";
                     if (string.IsNullOrEmpty(tag)) continue;
+
                     string choreIdStr = row.Cells["colChoreId"].Value?.ToString() ?? "";
                     string taskName = row.Cells["colNamework"].Value?.ToString() ?? "";
                     string assignedToIdStr = row.Cells["colAssignedToId"].Value?.ToString() ?? "";
                     string dueText = row.Cells["colTime"].Value?.ToString() ?? "";
                     string status = row.Cells["colStatus"].Value?.ToString() ?? "";
 
+                    // xử lý xóa
                     if (tag == "delete")
                     {
                         if (Guid.TryParse(choreIdStr, out Guid choreId) && choreId != Guid.Empty)
@@ -317,10 +355,14 @@ namespace ThieunuQLPT
                         continue;
                     }
 
+                    // parse ngày
                     if (!DateTime.TryParseExact(dueText.Trim(), "dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dueDate))
                     {
                         dueDate = DateTime.Now;
                     }
+
+                    // convert local -> UTC để lưu DB
+                    dueDate = DateTime.SpecifyKind(dueDate, DateTimeKind.Local).ToUniversalTime();
 
                     Guid? assignedTo = null;
                     if (Guid.TryParse(assignedToIdStr, out Guid parsedAssignedTo) && parsedAssignedTo != Guid.Empty)
@@ -329,8 +371,11 @@ namespace ThieunuQLPT
                         assignedTo = currentUserId;
 
                     bool isCompleted = string.Equals(status.Trim(), "Hoàn thành", StringComparison.OrdinalIgnoreCase);
-                    DateTime? completedAt = isCompleted ? DateTime.Now : null;
 
+                    // lưu thời gian hoàn thành theo UTC
+                    DateTime? completedAt = isCompleted ? DateTime.UtcNow : null;
+
+                    // thêm mới
                     if (string.IsNullOrWhiteSpace(choreIdStr))
                     {
                         var newChore = new ChoresData
@@ -347,6 +392,7 @@ namespace ThieunuQLPT
 
                         row.Tag = null;
                     }
+                    // cập nhật
                     else if (Guid.TryParse(choreIdStr, out Guid existingId) && existingId != Guid.Empty)
                     {
                         var resp = await client
@@ -374,7 +420,7 @@ namespace ThieunuQLPT
                 MessageBox.Show("Đã lưu thay đổi công việc trực nhật!", "Thành công",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                await LoadChoresToDGV(currentHouse.Id);
+                await LoadChoresToDGV(currentHouse.Id); // reload dữ liệu
             }
             catch (Exception ex)
             {

@@ -60,7 +60,7 @@
             // btnDelete
             // 
             btnDelete.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnDelete.BackColor = Color.Red;
+            btnDelete.BackColor = Color.DarkOrange;
             btnDelete.FlatStyle = FlatStyle.Flat;
             btnDelete.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnDelete.Location = new Point(767, 268);
@@ -74,7 +74,7 @@
             // btnSubmit
             // 
             btnSubmit.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnSubmit.BackColor = Color.RoyalBlue;
+            btnSubmit.BackColor = Color.DarkOrange;
             btnSubmit.FlatStyle = FlatStyle.Flat;
             btnSubmit.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnSubmit.Location = new Point(767, 123);
@@ -88,7 +88,7 @@
             // btnAdd
             // 
             btnAdd.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnAdd.BackColor = Color.ForestGreen;
+            btnAdd.BackColor = Color.DarkOrange;
             btnAdd.FlatStyle = FlatStyle.Flat;
             btnAdd.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnAdd.Location = new Point(767, 195);
@@ -177,7 +177,7 @@
             // btnDone
             // 
             btnDone.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnDone.BackColor = Color.ForestGreen;
+            btnDone.BackColor = Color.DarkOrange;
             btnDone.FlatStyle = FlatStyle.Flat;
             btnDone.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnDone.Location = new Point(767, 346);
@@ -192,6 +192,7 @@
             // 
             AutoScaleDimensions = new SizeF(144F, 144F);
             AutoScaleMode = AutoScaleMode.Dpi;
+            BackColor = SystemColors.GradientActiveCaption;
             ClientSize = new Size(938, 484);
             Controls.Add(btnDone);
             Controls.Add(btnDelete);

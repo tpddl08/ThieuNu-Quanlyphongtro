@@ -70,7 +70,7 @@
             // btnInsert
             // 
             btnInsert.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnInsert.BackColor = Color.ForestGreen;
+            btnInsert.BackColor = Color.DarkOrange;
             btnInsert.FlatStyle = FlatStyle.Flat;
             btnInsert.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btnInsert.Location = new Point(575, 27);
@@ -85,7 +85,7 @@
             // btnDelete
             // 
             btnDelete.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnDelete.BackColor = Color.Red;
+            btnDelete.BackColor = Color.DarkOrange;
             btnDelete.FlatStyle = FlatStyle.Flat;
             btnDelete.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btnDelete.Location = new Point(699, 27);
@@ -100,7 +100,7 @@
             // btnLuu
             // 
             btnLuu.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnLuu.BackColor = Color.MediumTurquoise;
+            btnLuu.BackColor = Color.DarkOrange;
             btnLuu.FlatStyle = FlatStyle.Flat;
             btnLuu.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btnLuu.Location = new Point(825, 27);
@@ -132,6 +132,7 @@
             // 
             // txtMaxMembers
             // 
+            txtMaxMembers.BorderStyle = BorderStyle.FixedSingle;
             txtMaxMembers.Dock = DockStyle.Fill;
             txtMaxMembers.Font = new Font("Segoe UI", 10F);
             txtMaxMembers.Location = new Point(149, 5);
@@ -208,9 +209,9 @@
             // 
             tableLayoutPanel4.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
             tableLayoutPanel4.ColumnCount = 3;
-            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 69.3617F));
-            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30.638298F));
-            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 195F));
+            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30F));
+            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30F));
+            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40F));
             tableLayoutPanel4.Controls.Add(txtOldNums, 2, 1);
             tableLayoutPanel4.Controls.Add(txtNewNums, 2, 0);
             tableLayoutPanel4.Controls.Add(lblConsume, 0, 1);
@@ -224,28 +225,29 @@
             tableLayoutPanel4.RowCount = 2;
             tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Absolute, 25F));
             tableLayoutPanel4.Size = new Size(455, 108);
             tableLayoutPanel4.TabIndex = 8;
             // 
             // txtOldNums
             // 
+            txtOldNums.BorderStyle = BorderStyle.FixedSingle;
             txtOldNums.Dock = DockStyle.Fill;
             txtOldNums.Font = new Font("Segoe UI", 10F);
-            txtOldNums.Location = new Point(262, 58);
+            txtOldNums.Location = new Point(277, 58);
             txtOldNums.Margin = new Padding(4);
             txtOldNums.Name = "txtOldNums";
-            txtOldNums.Size = new Size(188, 34);
+            txtOldNums.Size = new Size(173, 34);
             txtOldNums.TabIndex = 19;
             // 
             // txtNewNums
             // 
+            txtNewNums.BorderStyle = BorderStyle.FixedSingle;
             txtNewNums.Dock = DockStyle.Fill;
             txtNewNums.Font = new Font("Segoe UI", 10F);
-            txtNewNums.Location = new Point(262, 5);
+            txtNewNums.Location = new Point(277, 5);
             txtNewNums.Margin = new Padding(4);
             txtNewNums.Name = "txtNewNums";
-            txtNewNums.Size = new Size(188, 34);
+            txtNewNums.Size = new Size(173, 34);
             txtNewNums.TabIndex = 18;
             // 
             // lblConsume
@@ -255,7 +257,7 @@
             lblConsume.Location = new Point(5, 54);
             lblConsume.Margin = new Padding(4, 0, 4, 0);
             lblConsume.Name = "lblConsume";
-            lblConsume.Size = new Size(169, 53);
+            lblConsume.Size = new Size(127, 53);
             lblConsume.TabIndex = 17;
             lblConsume.Text = "Tiêu thụ:";
             lblConsume.TextAlign = ContentAlignment.MiddleLeft;
@@ -264,10 +266,10 @@
             // 
             label12.Dock = DockStyle.Fill;
             label12.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            label12.Location = new Point(183, 1);
+            label12.Location = new Point(141, 1);
             label12.Margin = new Padding(4, 0, 4, 0);
             label12.Name = "label12";
-            label12.Size = new Size(70, 52);
+            label12.Size = new Size(127, 52);
             label12.TabIndex = 13;
             label12.Text = "Số mới";
             label12.TextAlign = ContentAlignment.MiddleLeft;
@@ -279,7 +281,7 @@
             label4.Location = new Point(5, 1);
             label4.Margin = new Padding(4, 0, 4, 0);
             label4.Name = "label4";
-            label4.Size = new Size(169, 52);
+            label4.Size = new Size(127, 52);
             label4.TabIndex = 12;
             label4.Text = "ĐIỆN";
             label4.TextAlign = ContentAlignment.MiddleLeft;
@@ -288,10 +290,10 @@
             // 
             label13.Dock = DockStyle.Fill;
             label13.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            label13.Location = new Point(183, 54);
+            label13.Location = new Point(141, 54);
             label13.Margin = new Padding(4, 0, 4, 0);
             label13.Name = "label13";
-            label13.Size = new Size(70, 53);
+            label13.Size = new Size(127, 53);
             label13.TabIndex = 14;
             label13.Text = "Số cũ";
             label13.TextAlign = ContentAlignment.MiddleLeft;
@@ -368,6 +370,7 @@
             // 
             // txtRent
             // 
+            txtRent.BorderStyle = BorderStyle.FixedSingle;
             txtRent.Dock = DockStyle.Fill;
             txtRent.Font = new Font("Segoe UI", 10F);
             txtRent.Location = new Point(469, 5);
@@ -378,6 +381,7 @@
             // 
             // txtServiceRate
             // 
+            txtServiceRate.BorderStyle = BorderStyle.FixedSingle;
             txtServiceRate.Dock = DockStyle.Fill;
             txtServiceRate.Font = new Font("Segoe UI", 10F);
             txtServiceRate.Location = new Point(469, 93);
@@ -418,6 +422,7 @@
             // 
             // txtMonth
             // 
+            txtMonth.BorderStyle = BorderStyle.FixedSingle;
             txtMonth.Dock = DockStyle.Fill;
             txtMonth.Font = new Font("Segoe UI", 10F);
             txtMonth.Location = new Point(112, 5);
@@ -452,6 +457,7 @@
             // 
             // txtRoom
             // 
+            txtRoom.BorderStyle = BorderStyle.FixedSingle;
             txtRoom.Dock = DockStyle.Fill;
             txtRoom.Font = new Font("Segoe UI", 10F);
             txtRoom.Location = new Point(112, 44);
