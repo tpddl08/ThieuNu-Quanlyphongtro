@@ -105,5 +105,30 @@ namespace WinFormsApp1
                 MessageBox.Show("Vui lòng đăng nhập để sử dụng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
+
+        private void btnExpenses_Click(object sender, EventArgs e)
+        {
+            if (isLogin)
+            {
+                
+            }
+            else
+            {
+                MessageBox.Show("Vui lòng đăng nhập để sử dụng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void btnNote_Click(object sender, EventArgs e)
+        {
+            if (isLogin)
+            {
+                frmNoteslist frm = new frmNoteslist();
+                frm.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Vui lòng đăng nhập để sử dụng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
     }
 }

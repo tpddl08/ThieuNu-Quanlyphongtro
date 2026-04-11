@@ -119,7 +119,7 @@
             // btnEdit
             // 
             btnEdit.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnEdit.BackColor = Color.Gold;
+            btnEdit.BackColor = Color.DarkOrange;
             btnEdit.FlatStyle = FlatStyle.Flat;
             btnEdit.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btnEdit.Location = new Point(771, 101);
@@ -144,7 +144,7 @@
             // btnReload
             // 
             btnReload.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnReload.BackColor = Color.LightSeaGreen;
+            btnReload.BackColor = Color.DarkOrange;
             btnReload.FlatStyle = FlatStyle.Flat;
             btnReload.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnReload.Location = new Point(771, 193);
