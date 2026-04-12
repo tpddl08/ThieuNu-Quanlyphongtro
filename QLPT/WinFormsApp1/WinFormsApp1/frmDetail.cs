@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -13,6 +14,7 @@ namespace ThieunuQLPT
         private HousesData? _house;
         private int _totalMembers = 0;
         private int _daysInMonth = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month);
+        private List<HouseMembersData> _allMembers = new();
 
         public frmDetail(string houseId, string invoiceId)
         {
@@ -26,6 +28,8 @@ namespace ThieunuQLPT
         {
             dgvSplitBill.AllowUserToAddRows = false;
             dgvSplitBill.EditMode = DataGridViewEditMode.EditOnKeystroke;
+            dgvSplitBill.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvSplitBill.MultiSelect = false;
 
             // Chỉ cho sửa cột colNumabsent
             foreach (DataGridViewColumn col in dgvSplitBill.Columns)
@@ -70,7 +74,9 @@ namespace ThieunuQLPT
                     .Where(m => m.HouseId == houseGuid && m.IsActive == true)
                     .Get();
 
-                _totalMembers = membersResp.Models.Count;
+                _allMembers = membersResp.Models;
+                _totalMembers = _allMembers.Count;
+
                 if (_totalMembers == 0)
                 {
                     MessageBox.Show("Nhà này chưa có thành viên nào!");
@@ -85,12 +91,12 @@ namespace ThieunuQLPT
                     .Get();
 
                 var paidUserIds = paymentsResp.Models
-                    .Where(p => p.UserId.HasValue)
+                    .Where(p => p.UserId.HasValue && p.Status == "paid")
                     .Select(p => p.UserId!.Value)
                     .ToHashSet();
 
                 // Lấy profile của tất cả thành viên
-                var userIds = membersResp.Models.Select(m => m.UserId).ToList();
+                var userIds = _allMembers.Select(m => m.UserId).ToList();
                 var profilesResp = await client
                     .From<ProfilesData>()
                     .Select("*")
@@ -99,9 +105,12 @@ namespace ThieunuQLPT
 
                 var profileDict = profilesResp.Models.ToDictionary(p => p.Id, p => p);
 
+                // Tính totalRatio từ dữ liệu gốc trước khi add row
+                decimal totalRatio = CalcTotalRatio(_allMembers);
+
                 dgvSplitBill.Rows.Clear();
 
-                foreach (var m in membersResp.Models)
+                foreach (var m in _allMembers)
                 {
                     var prof = profileDict.GetValueOrDefault(m.UserId);
 
@@ -111,8 +120,6 @@ namespace ThieunuQLPT
                     row.Tag = m;
 
                     int numAbsent = m.NumAbsent ?? 0;
-
-                    // Kiểm tra đã đóng tiền theo invoice_payments
                     bool isPaid = paidUserIds.Contains(m.UserId);
 
                     row.Cells["colUsername"].Value = prof?.FullName ?? "Không tên";
@@ -122,7 +129,8 @@ namespace ThieunuQLPT
                     if (isPaid)
                         row.DefaultCellStyle.BackColor = System.Drawing.Color.LightGreen;
 
-                    CalculateAndFillRow(row, numAbsent);
+                    // Truyền totalRatio đã tính sẵn để tránh tính sai khi row chưa đủ
+                    CalculateAndFillRow(row, numAbsent, totalRatio);
                 }
             }
             catch (Exception ex)
@@ -131,9 +139,33 @@ namespace ThieunuQLPT
             }
         }
 
-        private void CalculateAndFillRow(DataGridViewRow row, int numAbsent)
+        // Tính tổng tỉ lệ có mặt từ danh sách thành viên
+        private decimal CalcTotalRatio(List<HouseMembersData> members)
         {
-            if (_house == null || _totalMembers == 0) return;
+            return members.Sum(m =>
+            {
+                int absent = Math.Max(0, Math.Min(m.NumAbsent ?? 0, _daysInMonth));
+                return (_daysInMonth - absent) / (decimal)_daysInMonth;
+            });
+        }
+
+        // Tính tổng tỉ lệ có mặt từ UI (dùng khi người dùng sửa số ngày vắng)
+        private decimal CalcTotalRatioFromUI()
+        {
+            decimal total = 0;
+            foreach (DataGridViewRow r in dgvSplitBill.Rows)
+            {
+                if (r.IsNewRow) continue;
+                int absent = int.TryParse(r.Cells["colNumabsent"].Value?.ToString(), out int a) ? a : 0;
+                absent = Math.Max(0, Math.Min(absent, _daysInMonth));
+                total += (_daysInMonth - absent) / (decimal)_daysInMonth;
+            }
+            return total;
+        }
+
+        private void CalculateAndFillRow(DataGridViewRow row, int numAbsent, decimal totalRatio)
+        {
+            if (_house == null || _totalMembers == 0 || totalRatio == 0) return;
 
             int oldNums = _house.OldNumber ?? 0;
             int newNums = _house.NewNumber ?? 0;
@@ -143,14 +175,18 @@ namespace ThieunuQLPT
             decimal serviceRate = _house.ServiceRate ?? 0;
 
             // Tỉ lệ có mặt của người này
-            int absent = Math.Max(0, Math.Min(numAbsent, _daysInMonth));
-            decimal ratio = (_daysInMonth - absent) / (decimal)_daysInMonth;
+            int absentClamped = Math.Max(0, Math.Min(numAbsent, _daysInMonth));
+            decimal myRatio = (_daysInMonth - absentClamped) / (decimal)_daysInMonth;
 
-            // Điện/nước tính theo tỉ lệ có mặt
-            decimal electricPerPerson = (newNums - oldNums) * electricRate / _totalMembers * ratio;
-            decimal waterPerPerson = waterRate * ratio;
+            // Tổng tiền điện và nước
+            decimal totalElectric = (newNums - oldNums) * electricRate;
+            decimal totalWater = waterRate * _totalMembers;
 
-            // Tiền thuê và dịch vụ chia đều không đổi
+            // Chia theo tỉ lệ có mặt — tổng thu luôn đủ
+            decimal electricPerPerson = totalElectric * (myRatio / totalRatio);
+            decimal waterPerPerson = totalWater * (myRatio / totalRatio);
+
+            // Thuê và dịch vụ chia đều, không tính ngày vắng
             decimal rentPerPerson = priceRent / _totalMembers;
             decimal servicePerPerson = serviceRate / _totalMembers;
 
@@ -169,44 +205,23 @@ namespace ThieunuQLPT
             if (!int.TryParse(row.Cells["colNumabsent"].Value?.ToString(), out int numAbsent))
                 numAbsent = 0;
 
-            // Giới hạn hợp lệ
             numAbsent = Math.Max(0, Math.Min(numAbsent, _daysInMonth));
             row.Cells["colNumabsent"].Value = numAbsent;
 
-            // Tính lại tiền ngay khi sửa số ngày vắng
-            CalculateAndFillRow(row, numAbsent);
-        }
+            // Tính lại totalRatio từ UI sau khi người dùng sửa
+            decimal totalRatio = CalcTotalRatioFromUI();
 
-        private async void btnSubmit_Click(object sender, EventArgs e)
-        {
-            try
+            // Tính lại tiền cho tất cả các row vì totalRatio đã thay đổi
+            foreach (DataGridViewRow r in dgvSplitBill.Rows)
             {
-                var client = await SupabaseHelper.GetClientAsync();
-                if (client == null) return;
-
-                foreach (DataGridViewRow row in dgvSplitBill.Rows)
-                {
-                    if (row.IsNewRow) continue;
-
-                    var member = row.Tag as HouseMembersData;
-                    if (member == null) continue;
-
-                    if (!int.TryParse(row.Cells["colNumabsent"].Value?.ToString(), out int numAbsent))
-                        numAbsent = 0;
-
-                    member.NumAbsent = numAbsent;
-                    await client.From<HouseMembersData>().Update(member);
-                }
-
-                MessageBox.Show("Đã lưu!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Lỗi khi lưu: " + ex.Message);
+                if (r.IsNewRow) continue;
+                int absent = int.TryParse(r.Cells["colNumabsent"].Value?.ToString(), out int a) ? a : 0;
+                CalculateAndFillRow(r, absent, totalRatio);
             }
         }
 
-        private async void btnPaid_Click(object sender, EventArgs e)
+        // Chỉ cập nhật UI, chưa lưu DB
+        private void btnPaid_Click(object sender, EventArgs e)
         {
             if (dgvSplitBill.CurrentRow == null)
             {
@@ -215,67 +230,101 @@ namespace ThieunuQLPT
                 return;
             }
 
+            var row = dgvSplitBill.CurrentRow;
+
+            if (row.Cells["colIspaid"].Value?.ToString() == "Đã đóng")
+            {
+                MessageBox.Show("Thành viên này đã đóng tiền rồi!", "Thông báo",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            row.Cells["colIspaid"].Value = "Đã đóng";
+            row.DefaultCellStyle.BackColor = System.Drawing.Color.LightGreen;
+        }
+
+        // Lưu tất cả vào DB: số ngày vắng + trạng thái đóng tiền
+        private async void btnSubmit_Click(object sender, EventArgs e)
+        {
             try
             {
                 var client = await SupabaseHelper.GetClientAsync();
                 if (client == null) return;
 
-                var row = dgvSplitBill.CurrentRow;
-                var member = row.Tag as HouseMembersData;
-                if (member == null) return;
-
                 if (!Guid.TryParse(_invoiceId, out Guid invoiceGuid)) return;
 
-                // Kiểm tra đã đóng chưa
-                var existResp = await client
-                    .From<InvoicePaymentsData>()
-                    .Select("*")
-                    .Where(p => p.InvoiceId == invoiceGuid && p.UserId == member.UserId)
-                    .Get();
-
-                if (existResp.Models.Any())
+                foreach (DataGridViewRow row in dgvSplitBill.Rows)
                 {
-                    MessageBox.Show("Thành viên này đã đóng tiền hóa đơn này rồi!", "Thông báo",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
+                    if (row.IsNewRow) continue;
+
+                    var member = row.Tag as HouseMembersData;
+                    if (member == null) continue;
+
+                    // Lưu số ngày vắng vào house_members
+                    if (!int.TryParse(row.Cells["colNumabsent"].Value?.ToString(), out int numAbsent))
+                        numAbsent = 0;
+
+                    member.NumAbsent = numAbsent;
+                    await client.From<HouseMembersData>().Update(member);
+
+                    // Lấy trạng thái đóng tiền từ UI
+                    bool isPaid = row.Cells["colIspaid"].Value?.ToString() == "Đã đóng";
+
+                    // Tính tổng tiền từ các cột trong row
+                    decimal electric = decimal.TryParse(
+                        row.Cells["colElectric"].Value?.ToString()?.Replace(" đ", "").Replace(",", ""),
+                        out decimal e1) ? e1 : 0;
+                    decimal water = decimal.TryParse(
+                        row.Cells["colWater"].Value?.ToString()?.Replace(" đ", "").Replace(",", ""),
+                        out decimal w1) ? w1 : 0;
+                    decimal rent = decimal.TryParse(
+                        row.Cells["colRent"].Value?.ToString()?.Replace(" đ", "").Replace(",", ""),
+                        out decimal r1) ? r1 : 0;
+                    decimal service = decimal.TryParse(
+                        row.Cells["colService"].Value?.ToString()?.Replace(" đ", "").Replace(",", ""),
+                        out decimal s1) ? s1 : 0;
+
+                    decimal totalAmount = electric + water + rent + service;
+
+                    // Tìm bản ghi có sẵn trong invoice_payments
+                    var paymentResp = await client
+                        .From<InvoicePaymentsData>()
+                        .Select("*")
+                        .Filter("invoice_id", Operator.Equals, invoiceGuid.ToString())
+                        .Filter("user_id", Operator.Equals, member.UserId.ToString())
+                        .Get();
+
+                    var payment = paymentResp.Models.FirstOrDefault();
+
+                    if (payment != null)
+                    {
+                        // Update bản ghi có sẵn
+                        payment.Amount = totalAmount;
+                        payment.PaidAt = isPaid ? DateTime.Now : null;
+                        payment.Status = isPaid ? "paid" : "unpaid";
+                        await client.From<InvoicePaymentsData>().Update(payment);
+                    }
+                    else
+                    {
+                        // Không có thì insert mới (fallback)
+                        await client.From<InvoicePaymentsData>().Insert(new InvoicePaymentsData
+                        {
+                            InvoiceId = invoiceGuid,
+                            UserId = member.UserId,
+                            Amount = isPaid ? totalAmount : null,
+                            PaidAt = isPaid ? DateTime.Now : null,
+                            Status = isPaid ? "paid" : "unpaid"
+                        });
+                    }
                 }
 
-                // Tính tổng tiền của người này
-                decimal electric = decimal.TryParse(
-                    row.Cells["colElectric"].Value?.ToString()?.Replace(" đ", "").Replace(",", ""),
-                    out decimal e1) ? e1 : 0;
-                decimal water = decimal.TryParse(
-                    row.Cells["colWater"].Value?.ToString()?.Replace(" đ", "").Replace(",", ""),
-                    out decimal w1) ? w1 : 0;
-                decimal rent = decimal.TryParse(
-                    row.Cells["colRent"].Value?.ToString()?.Replace(" đ", "").Replace(",", ""),
-                    out decimal r1) ? r1 : 0;
-                decimal service = decimal.TryParse(
-                    row.Cells["colService"].Value?.ToString()?.Replace(" đ", "").Replace(",", ""),
-                    out decimal s1) ? s1 : 0;
-
-                decimal totalAmount = electric + water + rent + service;
-
-                // Lưu vào invoice_payments
-                var payment = new InvoicePaymentsData
-                {
-                    InvoiceId = invoiceGuid,
-                    UserId = member.UserId,
-                    Amount = totalAmount,
-                    PaidAt = DateTime.Now,
-                    Status = "paid"
-                };
-                await client.From<InvoicePaymentsData>().Insert(payment);
-
-                row.Cells["colIspaid"].Value = "Đã đóng";
-                row.DefaultCellStyle.BackColor = System.Drawing.Color.LightGreen;
-
-                MessageBox.Show("Đã đánh dấu đóng tiền!", "Thành công",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Đã lưu!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.DialogResult = DialogResult.OK;
+                this.Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi: " + ex.Message);
+                MessageBox.Show("Lỗi khi lưu: " + ex.Message);
             }
         }
     }
