@@ -136,15 +136,19 @@ namespace ThieunuQLPT
                 return;
             }
 
+            //Mở tạo form mới
             if (dgvListinvoices.CurrentRow == null)
             {
-                MessageBox.Show("Vui lòng chọn hóa đơn cần sửa.", "Thông báo",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                frmEditBill frmeb = new frmEditBill(_houseId, ""); // invoiceId rỗng = tạo mới
+                if (frmeb.ShowDialog() == DialogResult.OK)
+                    _ = LoadData();
                 return;
             }
 
-            if (dgvListinvoices.CurrentRow.Tag is not (string houseId, string invoiceId)) return;
 
+            //Chỉnh sửa form đã có
+            if (dgvListinvoices.CurrentRow.Tag is not (string houseId, string invoiceId)) return;
+            
             frmEditBill frm = new frmEditBill(_houseId, invoiceId);
             if (frm.ShowDialog() == DialogResult.OK)
             {
