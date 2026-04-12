@@ -140,7 +140,7 @@ namespace ThieunuQLPT
 
                 if (!Guid.TryParse(_houseId, out Guid houseGuid)) return;
 
-                // Kiểm tra tháng nhập vào
+                // Validate tháng/năm
                 if (string.IsNullOrWhiteSpace(txtMonth.Text))
                 {
                     MessageBox.Show("Vui lòng nhập tháng/năm cho hóa đơn!", "Thông báo",
@@ -148,7 +148,7 @@ namespace ThieunuQLPT
                     return;
                 }
 
-                // Kiểm tra hóa đơn tháng này đã tồn tại chưa
+                // Kiểm tra trùng tháng
                 var existResp = await client
                     .From<InvoicesData>()
                     .Select("*")
@@ -162,21 +162,12 @@ namespace ThieunuQLPT
                     return;
                 }
 
-                // Lấy thông tin phòng
-                var houseResp = await client
-                    .From<HousesData>()
-                    .Select("*")
-                    .Where(h => h.Id == houseGuid)
-                    .Get();
-
-                var house = houseResp.Models.FirstOrDefault();
-                if (house == null) return;
-
+                // Validate định dạng số
                 if (!int.TryParse(txtOldNums.Text, out int oldNums) ||
-                !int.TryParse(txtNewNums.Text, out int newNums) ||
-                !decimal.TryParse(txtRent.Text, out decimal priceRent) ||
-                !decimal.TryParse(txtServiceRate.Text, out decimal serviceRate) ||
-                !int.TryParse(txtMaxMembers.Text, out int maxMembers))
+                    !int.TryParse(txtNewNums.Text, out int newNums) ||
+                    !decimal.TryParse(txtRent.Text, out decimal priceRent) ||
+                    !decimal.TryParse(txtServiceRate.Text, out decimal serviceRate) ||
+                    !int.TryParse(txtMaxMembers.Text, out int maxMembers))
                 {
                     MessageBox.Show("Vui lòng nhập đúng định dạng số!", "Lỗi nhập liệu",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -190,22 +181,92 @@ namespace ThieunuQLPT
                     return;
                 }
 
+                // Lấy thông tin phòng để lấy giá điện/nước
+                var houseResp = await client
+                    .From<HousesData>()
+                    .Select("*")
+                    .Where(h => h.Id == houseGuid)
+                    .Get();
+
+                var house = houseResp.Models.FirstOrDefault();
+                if (house == null) return;
+
                 decimal electricRate = house.ElectricityRate ?? 4000;
                 decimal waterRate = house.WaterRate ?? 100000;
 
+                // Tính từng khoản
                 decimal electricTotal = (newNums - oldNums) * electricRate;
                 decimal waterTotal = maxMembers * waterRate;
                 decimal totalAmount = priceRent + electricTotal + waterTotal + serviceRate;
 
-                // Tạo hóa đơn mới
+                // Bước 1: Update chỉ số điện và thông tin phòng vào houses
+                // Để frmDetail đọc đúng old_number, new_number khi tính tiền
+                house.OldNumber = oldNums;
+                house.NewNumber = newNums;
+                house.PriceRent = priceRent;
+                house.ServiceRate = serviceRate;
+                await client.From<HousesData>().Update(house);
+
+                // Bước 2: Insert hóa đơn vào invoices
                 var newInvoice = new InvoicesData
                 {
                     HouseId = houseGuid,
                     MonthYear = txtMonth.Text,
                     TotalAmount = totalAmount,
+                    Status = "draft",
                     CreatedAt = DateTime.Now
                 };
                 await client.From<InvoicesData>().Insert(newInvoice);
+
+                // Lấy lại invoice vừa tạo để có Id
+                var createdInvoiceResp = await client
+                    .From<InvoicesData>()
+                    .Select("*")
+                    .Where(x => x.HouseId == houseGuid && x.MonthYear == txtMonth.Text)
+                    .Get();
+
+                var createdInvoice = createdInvoiceResp.Models.FirstOrDefault();
+                if (createdInvoice == null)
+                {
+                    MessageBox.Show("Không tìm thấy hóa đơn vừa tạo!", "Lỗi",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                Guid invoiceGuid = createdInvoice.Id;
+
+                // Bước 3: Insert chi tiết từng khoản vào invoice_items
+                var items = new List<InvoiceItemsData>
+        {
+            new InvoiceItemsData { InvoiceId = invoiceGuid, Name = "Tiền thuê", Amount = priceRent, Type = "rent" },
+            new InvoiceItemsData { InvoiceId = invoiceGuid, Name = "Tiền điện", Amount = electricTotal, Type = "electric" },
+            new InvoiceItemsData { InvoiceId = invoiceGuid, Name = "Tiền nước", Amount = waterTotal, Type = "water" },
+            new InvoiceItemsData { InvoiceId = invoiceGuid, Name = "Phí dịch vụ", Amount = serviceRate, Type = "service" },
+        };
+
+                foreach (var item in items)
+                    await client.From<InvoiceItemsData>().Insert(item);
+
+                // Bước 4: Insert trạng thái thanh toán cho từng thành viên vào invoice_payments
+                // Status mặc định "unpaid", chờ xác nhận trong frmDetail
+                var membersResp = await client
+                    .From<HouseMembersData>()
+                    .Select("*")
+                    .Where(m => m.HouseId == houseGuid && m.IsActive == true)
+                    .Get();
+
+                foreach (var member in membersResp.Models)
+                {
+                    var payment = new InvoicePaymentsData
+                    {
+                        InvoiceId = invoiceGuid,
+                        UserId = member.UserId,
+                        Amount = null, // frmDetail sẽ tính chính xác theo số ngày vắng
+                        Status = "unpaid",
+                        PaidAt = null
+                    };
+                    await client.From<InvoicePaymentsData>().Insert(payment);
+                }
 
                 MessageBox.Show($"Đã tạo hóa đơn tháng {txtMonth.Text} thành công!", "Thành công",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
