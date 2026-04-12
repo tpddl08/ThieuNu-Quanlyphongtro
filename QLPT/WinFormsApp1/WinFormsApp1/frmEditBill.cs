@@ -79,54 +79,55 @@ namespace ThieunuQLPT
         }
 
         // xóa
+        // Xóa hóa đơn đang chọn
+        // - Xóa invoice_items → invoice_payments → invoices
+        // - Không xóa phòng và thành viên
         private async void btnDelete_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Bạn có chắc chắn muốn xóa?", "Xác nhận", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (string.IsNullOrEmpty(_invoiceId))
             {
-                try
-                {
-                    var client = await SupabaseHelper.GetClientAsync();
-                    if (client == null) return;
+                MessageBox.Show("Không có hóa đơn nào để xóa!", "Thông báo",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
-                    if (!Guid.TryParse(_houseId, out Guid houseGuid)) return;
+            if (MessageBox.Show(
+                "Bạn có chắc chắn muốn xóa hóa đơn này?",
+                "Xác nhận xóa",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning) != DialogResult.Yes) return;
 
-                    // Lấy danh sách invoice ids trước
-                    var invoiceResp = await client
-                        .From<InvoicesData>()
-                        .Select("*")
-                        .Where(x => x.HouseId == houseGuid)
-                        .Get();
+            try
+            {
+                var client = await SupabaseHelper.GetClientAsync();
+                if (client == null) return;
 
-                    // Xóa invoice_items và invoice_payments theo từng invoice
-                    foreach (var inv in invoiceResp.Models)
-                    {
-                        await client.From<InvoiceItemsData>()
-                            .Where(i => i.InvoiceId == inv.Id)
-                            .Delete();
+                if (!Guid.TryParse(_invoiceId, out Guid invoiceGuid)) return;
 
-                        await client.From<InvoicePaymentsData>()
-                            .Where(p => p.InvoiceId == inv.Id)
-                            .Delete();
-                    }
+                // Bước 1: Xóa chi tiết hóa đơn
+                await client.From<InvoiceItemsData>()
+                    .Where(i => i.InvoiceId == invoiceGuid)
+                    .Delete();
 
-                    // Sau đó mới xóa invoices, members, phòng
-                    await client.From<InvoicesData>()
-                        .Where(x => x.HouseId == houseGuid)
-                        .Delete();
+                // Bước 2: Xóa trạng thái thanh toán
+                await client.From<InvoicePaymentsData>()
+                    .Where(p => p.InvoiceId == invoiceGuid)
+                    .Delete();
 
-                    await client.From<HouseMembersData>()
-                        .Where(m => m.HouseId == houseGuid)
-                        .Delete();
+                // Bước 3: Xóa hóa đơn
+                await client.From<InvoicesData>()
+                    .Where(x => x.Id == invoiceGuid)
+                    .Delete();
 
-                    await client.From<HousesData>()
-                        .Where(h => h.Id == houseGuid)
-                        .Delete();
+                MessageBox.Show("Đã xóa hóa đơn thành công!", "Thành công",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    MessageBox.Show("Đã xóa!");
-                    this.DialogResult = DialogResult.OK;
-                    this.Close();
-                }
-                catch (Exception ex) { MessageBox.Show("Lỗi: " + ex.Message); }
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi xóa hóa đơn: " + ex.Message);
             }
         }
 
@@ -237,12 +238,12 @@ namespace ThieunuQLPT
 
                 // Bước 3: Insert chi tiết từng khoản vào invoice_items
                 var items = new List<InvoiceItemsData>
-        {
-            new InvoiceItemsData { InvoiceId = invoiceGuid, Name = "Tiền thuê", Amount = priceRent, Type = "rent" },
-            new InvoiceItemsData { InvoiceId = invoiceGuid, Name = "Tiền điện", Amount = electricTotal, Type = "electric" },
-            new InvoiceItemsData { InvoiceId = invoiceGuid, Name = "Tiền nước", Amount = waterTotal, Type = "water" },
-            new InvoiceItemsData { InvoiceId = invoiceGuid, Name = "Phí dịch vụ", Amount = serviceRate, Type = "service" },
-        };
+                {
+                    new InvoiceItemsData { InvoiceId = invoiceGuid, Name = "Tiền thuê", Amount = priceRent, Type = "rent" },
+                    new InvoiceItemsData { InvoiceId = invoiceGuid, Name = "Tiền điện", Amount = electricTotal, Type = "electric" },
+                    new InvoiceItemsData { InvoiceId = invoiceGuid, Name = "Tiền nước", Amount = waterTotal, Type = "water" },
+                    new InvoiceItemsData { InvoiceId = invoiceGuid, Name = "Phí dịch vụ", Amount = serviceRate, Type = "service" },
+                };
 
                 foreach (var item in items)
                     await client.From<InvoiceItemsData>().Insert(item);

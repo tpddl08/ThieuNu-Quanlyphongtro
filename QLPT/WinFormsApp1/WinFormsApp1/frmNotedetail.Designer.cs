@@ -42,7 +42,7 @@
             // 
             lblTitle.AutoSize = true;
             lblTitle.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            lblTitle.Location = new Point(27, 26);
+            lblTitle.Location = new Point(27, 95);
             lblTitle.Name = "lblTitle";
             lblTitle.Size = new Size(157, 32);
             lblTitle.TabIndex = 1;
@@ -52,7 +52,7 @@
             // 
             lblAuthor.AutoSize = true;
             lblAuthor.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            lblAuthor.Location = new Point(27, 81);
+            lblAuthor.Location = new Point(27, 26);
             lblAuthor.Name = "lblAuthor";
             lblAuthor.Size = new Size(93, 32);
             lblAuthor.TabIndex = 6;
