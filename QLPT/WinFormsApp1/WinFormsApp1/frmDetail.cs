@@ -57,6 +57,24 @@ namespace ThieunuQLPT
                 if (!Guid.TryParse(_houseId, out Guid houseGuid)) return;
                 if (!Guid.TryParse(_invoiceId, out Guid invoiceGuid)) return;
 
+                // Lấy thông tin hóa đơn để xác định số ngày trong tháng đúng
+                var invoiceResp = await client
+                    .From<InvoicesData>()
+                    .Select("*")
+                    .Where(x => x.Id == invoiceGuid)
+                    .Get();
+
+                var invoice = invoiceResp.Models.FirstOrDefault();
+                if (invoice != null && !string.IsNullOrEmpty(invoice.MonthYear))
+                {
+                    // MonthYear dạng "MM/yyyy" ví dụ "07/2025"
+                    if (DateTime.TryParseExact(invoice.MonthYear, "MM/yyyy",
+                        null, System.Globalization.DateTimeStyles.None, out DateTime invoiceDate))
+                    {
+                        _daysInMonth = DateTime.DaysInMonth(invoiceDate.Year, invoiceDate.Month);
+                    }
+                }
+
                 // Lấy thông tin phòng
                 var houseResp = await client
                     .From<HousesData>()
@@ -129,7 +147,6 @@ namespace ThieunuQLPT
                     if (isPaid)
                         row.DefaultCellStyle.BackColor = System.Drawing.Color.LightGreen;
 
-                    // Truyền totalRatio đã tính sẵn để tránh tính sai khi row chưa đủ
                     CalculateAndFillRow(row, numAbsent, totalRatio);
                 }
             }
