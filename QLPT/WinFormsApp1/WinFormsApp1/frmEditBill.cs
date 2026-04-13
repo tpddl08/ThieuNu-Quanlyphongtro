@@ -43,6 +43,7 @@ namespace ThieunuQLPT
 
             if (!Guid.TryParse(_houseId, out Guid houseGuid)) return;
 
+            // Lấy thông tin phòng
             var houseResp = await client
                 .From<HousesData>()
                 .Select("*")
@@ -50,38 +51,58 @@ namespace ThieunuQLPT
                 .Get();
 
             var result = houseResp.Models.FirstOrDefault();
-            if (result != null)
+            if (result == null) return;
+
+            // Lấy số thành viên đang ở
+            var memberResp = await client
+                .From<HouseMembersData>()
+                .Select("*")
+                .Where(m => m.HouseId == houseGuid && m.IsActive == true)
+                .Get();
+
+            // Thông tin phòng không đổi dù tạo mới hay chỉnh sửa
+            txtRoom.Text = result.Name;
+            txtRent.Text = (result.PriceRent ?? 0).ToString();
+            txtMaxMembers.Text = memberResp.Models.Count.ToString();
+            txtServiceRate.Text = (result.ServiceRate ?? 0).ToString();
+
+            if (Guid.TryParse(_invoiceId, out Guid invoiceGuid))
             {
-                var memberResp = await client
-                    .From<HouseMembersData>()
-                    .Select("*")
-                    .Where(m => m.HouseId == houseGuid && m.IsActive == true)
-                    .Get();
-
-                txtRoom.Text = result.Name;
-                txtRent.Text = (result.PriceRent ?? 0).ToString();
-                txtOldNums.Text = (result.OldNumber ?? 0).ToString();
-                txtNewNums.Text = (result.NewNumber ?? 0).ToString();
-                txtMaxMembers.Text = memberResp.Models.Count.ToString();
-                txtServiceRate.Text = (result.ServiceRate ?? 0).ToString();
-
-                if (!Guid.TryParse(_invoiceId, out Guid invoiceGuid)) return;
-
+                // Chỉnh sửa hóa đơn có sẵn → lấy old/new từ invoices
                 var invoiceResp = await client
                     .From<InvoicesData>()
                     .Select("*")
-                    .Where(x => x.Id == invoiceGuid) // lấy đúng invoice đang chọn
+                    .Where(x => x.Id == invoiceGuid)
                     .Get();
 
                 var invoice = invoiceResp.Models.FirstOrDefault();
                 txtMonth.Text = invoice?.MonthYear ?? "";
+                txtOldNums.Text = (invoice?.OldNumber ?? 0).ToString();
+                txtNewNums.Text = (invoice?.NewNumber ?? 0).ToString();
+            }
+            else
+            {
+                // Tạo mới → lấy chỉ số từ hóa đơn mới nhất
+                txtMonth.Text = "";
+
+                var latestInvoiceResp = await client
+                    .From<InvoicesData>()
+                    .Select("*")
+                    .Where(x => x.HouseId == houseGuid)
+                    .Get();
+
+                var latestInvoice = latestInvoiceResp.Models
+                    .OrderByDescending(x => x.CreatedAt)
+                    .FirstOrDefault();
+
+                // Chỉ số cũ tháng mới = chỉ số mới của hóa đơn trước
+                // Chỉ số mới để trống cho người dùng nhập
+                txtOldNums.Text = (latestInvoice?.NewNumber ?? 0).ToString();
+                txtNewNums.Text = (latestInvoice?.NewNumber ?? 0).ToString();
             }
         }
 
         // xóa
-        // Xóa hóa đơn đang chọn
-        // - Xóa invoice_items → invoice_payments → invoices
-        // - Không xóa phòng và thành viên
         private async void btnDelete_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(_invoiceId))
@@ -109,12 +130,12 @@ namespace ThieunuQLPT
                     .Where(i => i.InvoiceId == invoiceGuid)
                     .Delete();
 
-                // Bước 2: Xóa trạng thái thanh toán
+                // Xóa trạng thái thanh toán
                 await client.From<InvoicePaymentsData>()
                     .Where(p => p.InvoiceId == invoiceGuid)
                     .Delete();
 
-                // Bước 3: Xóa hóa đơn
+                //Xóa hóa đơn
                 await client.From<InvoicesData>()
                     .Where(x => x.Id == invoiceGuid)
                     .Delete();
@@ -200,21 +221,21 @@ namespace ThieunuQLPT
                 decimal waterTotal = maxMembers * waterRate;
                 decimal totalAmount = priceRent + electricTotal + waterTotal + serviceRate;
 
-                // Bước 1: Update chỉ số điện và thông tin phòng vào houses
-                house.OldNumber = oldNums;
-                house.NewNumber = newNums;
+                //Update chỉ số điện và thông tin phòng vào houses
                 house.PriceRent = priceRent;
                 house.ServiceRate = serviceRate;
                 await client.From<HousesData>().Update(house);
 
-                // Bước 2: Insert hóa đơn vào invoices
+                // Insert hóa đơn vào invoices
                 var newInvoice = new InvoicesData
                 {
                     HouseId = houseGuid,
                     MonthYear = txtMonth.Text,
                     TotalAmount = totalAmount,
                     Status = "draft",
-                    CreatedAt = DateTime.Now
+                    CreatedAt = DateTime.Now,
+                    OldNumber = oldNums, // lưu chỉ số điện vào invoices
+                    NewNumber = newNums
                 };
                 await client.From<InvoicesData>().Insert(newInvoice);
 
@@ -235,26 +256,26 @@ namespace ThieunuQLPT
 
                 Guid invoiceGuid = createdInvoice.Id;
 
-                // Bước 3: Insert chi tiết từng khoản vào invoice_items
+                //Insert chi tiết từng khoản vào invoice_items
                 var items = new List<InvoiceItemsData>
-        {
-            new InvoiceItemsData { InvoiceId = invoiceGuid, Name = "Tiền thuê", Amount = priceRent, Type = "rent" },
-            new InvoiceItemsData { InvoiceId = invoiceGuid, Name = "Tiền điện", Amount = electricTotal, Type = "electric" },
-            new InvoiceItemsData { InvoiceId = invoiceGuid, Name = "Tiền nước", Amount = waterTotal, Type = "water" },
-            new InvoiceItemsData { InvoiceId = invoiceGuid, Name = "Phí dịch vụ", Amount = serviceRate, Type = "service" },
-        };
+                {
+                    new InvoiceItemsData { InvoiceId = invoiceGuid, Name = "Tiền thuê", Amount = priceRent, Type = "rent" },
+                    new InvoiceItemsData { InvoiceId = invoiceGuid, Name = "Tiền điện", Amount = electricTotal, Type = "electric" },
+                    new InvoiceItemsData { InvoiceId = invoiceGuid, Name = "Tiền nước", Amount = waterTotal, Type = "water" },
+                    new InvoiceItemsData { InvoiceId = invoiceGuid, Name = "Phí dịch vụ", Amount = serviceRate, Type = "service" },
+                };
 
                 foreach (var item in items)
                     await client.From<InvoiceItemsData>().Insert(item);
 
-                // Bước 4: Lấy danh sách thành viên
+                //Lấy danh sách thành viên
                 var membersResp = await client
                     .From<HouseMembersData>()
                     .Select("*")
                     .Where(m => m.HouseId == houseGuid && m.IsActive == true)
                     .Get();
 
-                // Bước 5: Insert invoice_payments cho từng thành viên
+                //Insert invoice_payments cho từng thành viên
                 foreach (var member in membersResp.Models)
                 {
                     await client.From<InvoicePaymentsData>().Insert(new InvoicePaymentsData
@@ -332,8 +353,6 @@ namespace ThieunuQLPT
 
                 house.Name = txtRoom.Text;
                 house.PriceRent = priceRent;
-                house.OldNumber = oldNums;
-                house.NewNumber = newNums;
                 house.ServiceRate = serviceRate;
 
                 lblWaterRate.Text = water_rate.ToString("N0") + " đ";
@@ -356,6 +375,8 @@ namespace ThieunuQLPT
                     {
                         invoice.TotalAmount = totalAmount;
                         invoice.MonthYear = txtMonth.Text;
+                        invoice.OldNumber = oldNums; // cập nhật chỉ số điện vào invoices
+                        invoice.NewNumber = newNums;
                         await client.From<InvoicesData>().Update(invoice);
                     }
                 }

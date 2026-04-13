@@ -57,11 +57,6 @@ namespace ThieunuQLPT
 
         [Column("service_rate")]
         public decimal? ServiceRate { get; set; }
-        [Column("old_number")]
-        public int? OldNumber { get; set; }
-
-        [Column("new_number")]
-        public int? NewNumber { get; set; }
     }
 
     [Table("house_members")]
@@ -165,6 +160,12 @@ namespace ThieunuQLPT
 
         [Column("created_at")]
         public DateTime CreatedAt { get; set; } = DateTime.Now;
+
+        [Column("old_number")]
+        public int? OldNumber { get; set; }
+
+        [Column("new_number")]
+        public int? NewNumber { get; set; }
     }
 
     [Table("invoice_items")]

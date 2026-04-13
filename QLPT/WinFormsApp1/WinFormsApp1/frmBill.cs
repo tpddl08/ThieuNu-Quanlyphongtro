@@ -67,8 +67,8 @@ namespace ThieunuQLPT
                 .FirstOrDefault();
 
                 // Tính tiền để hiển thị chi tiết
-                int oldNums = currentHouse.OldNumber ?? 0;
-                int newNums = currentHouse.NewNumber ?? 0;
+                int oldNums = invoice?.OldNumber ?? 0;
+                int newNums = invoice?.NewNumber ?? 0;
                 decimal electricTotal = (newNums - oldNums) * (currentHouse.ElectricityRate ?? 4000);
                 decimal waterTotal = totalMembers * (currentHouse.WaterRate ?? 100000);
 
