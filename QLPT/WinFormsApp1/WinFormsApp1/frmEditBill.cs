@@ -182,7 +182,7 @@ namespace ThieunuQLPT
                     return;
                 }
 
-                // Lấy thông tin phòng để lấy giá điện/nước
+                // Lấy thông tin phòng
                 var houseResp = await client
                     .From<HousesData>()
                     .Select("*")
@@ -201,7 +201,6 @@ namespace ThieunuQLPT
                 decimal totalAmount = priceRent + electricTotal + waterTotal + serviceRate;
 
                 // Bước 1: Update chỉ số điện và thông tin phòng vào houses
-                // Để frmDetail đọc đúng old_number, new_number khi tính tiền
                 house.OldNumber = oldNums;
                 house.NewNumber = newNums;
                 house.PriceRent = priceRent;
@@ -238,35 +237,41 @@ namespace ThieunuQLPT
 
                 // Bước 3: Insert chi tiết từng khoản vào invoice_items
                 var items = new List<InvoiceItemsData>
-                {
-                    new InvoiceItemsData { InvoiceId = invoiceGuid, Name = "Tiền thuê", Amount = priceRent, Type = "rent" },
-                    new InvoiceItemsData { InvoiceId = invoiceGuid, Name = "Tiền điện", Amount = electricTotal, Type = "electric" },
-                    new InvoiceItemsData { InvoiceId = invoiceGuid, Name = "Tiền nước", Amount = waterTotal, Type = "water" },
-                    new InvoiceItemsData { InvoiceId = invoiceGuid, Name = "Phí dịch vụ", Amount = serviceRate, Type = "service" },
-                };
+        {
+            new InvoiceItemsData { InvoiceId = invoiceGuid, Name = "Tiền thuê", Amount = priceRent, Type = "rent" },
+            new InvoiceItemsData { InvoiceId = invoiceGuid, Name = "Tiền điện", Amount = electricTotal, Type = "electric" },
+            new InvoiceItemsData { InvoiceId = invoiceGuid, Name = "Tiền nước", Amount = waterTotal, Type = "water" },
+            new InvoiceItemsData { InvoiceId = invoiceGuid, Name = "Phí dịch vụ", Amount = serviceRate, Type = "service" },
+        };
 
                 foreach (var item in items)
                     await client.From<InvoiceItemsData>().Insert(item);
 
-                // Bước 4: Insert trạng thái thanh toán cho từng thành viên vào invoice_payments
-                // Status mặc định "unpaid", chờ xác nhận trong frmDetail
+                // Bước 4: Lấy danh sách thành viên
                 var membersResp = await client
                     .From<HouseMembersData>()
                     .Select("*")
                     .Where(m => m.HouseId == houseGuid && m.IsActive == true)
                     .Get();
 
+                // Bước 5: Insert invoice_payments cho từng thành viên
                 foreach (var member in membersResp.Models)
                 {
-                    var payment = new InvoicePaymentsData
+                    await client.From<InvoicePaymentsData>().Insert(new InvoicePaymentsData
                     {
                         InvoiceId = invoiceGuid,
                         UserId = member.UserId,
-                        Amount = null, // frmDetail sẽ tính chính xác theo số ngày vắng
+                        Amount = null,
                         Status = "unpaid",
                         PaidAt = null
-                    };
-                    await client.From<InvoicePaymentsData>().Insert(payment);
+                    });
+                }
+
+                // Bước 6: Reset NumAbsent về 0 cho tháng mới
+                foreach (var member in membersResp.Models)
+                {
+                    member.NumAbsent = 0;
+                    await client.From<HouseMembersData>().Update(member);
                 }
 
                 MessageBox.Show($"Đã tạo hóa đơn tháng {txtMonth.Text} thành công!", "Thành công",
