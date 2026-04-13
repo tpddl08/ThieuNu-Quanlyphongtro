@@ -14,6 +14,8 @@ namespace ThieunuQLPT
         private HousesData? _house;
         private int _totalMembers = 0;
         private int _daysInMonth = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month);
+        private int _oldNumber = 0;
+        private int _newNumber = 0;
         private List<HouseMembersData> _allMembers = new();
 
         public frmDetail(string houseId, string invoiceId)
@@ -67,12 +69,15 @@ namespace ThieunuQLPT
                 var invoice = invoiceResp.Models.FirstOrDefault();
                 if (invoice != null && !string.IsNullOrEmpty(invoice.MonthYear))
                 {
-                    // MonthYear dạng "MM/yyyy" ví dụ "07/2025"
                     if (DateTime.TryParseExact(invoice.MonthYear, "MM/yyyy",
                         null, System.Globalization.DateTimeStyles.None, out DateTime invoiceDate))
                     {
                         _daysInMonth = DateTime.DaysInMonth(invoiceDate.Year, invoiceDate.Month);
                     }
+
+                    // Lấy chỉ số điện từ invoices thay vì houses
+                    _oldNumber = invoice.OldNumber ?? 0;
+                    _newNumber = invoice.NewNumber ?? 0;
                 }
 
                 // Lấy thông tin phòng
@@ -184,26 +189,21 @@ namespace ThieunuQLPT
         {
             if (_house == null || _totalMembers == 0 || totalRatio == 0) return;
 
-            int oldNums = _house.OldNumber ?? 0;
-            int newNums = _house.NewNumber ?? 0;
+            // Dùng chỉ số điện từ invoices
             decimal electricRate = _house.ElectricityRate ?? 4000;
             decimal waterRate = _house.WaterRate ?? 100000;
             decimal priceRent = _house.PriceRent ?? 0;
             decimal serviceRate = _house.ServiceRate ?? 0;
 
-            // Tỉ lệ có mặt của người này
             int absentClamped = Math.Max(0, Math.Min(numAbsent, _daysInMonth));
             decimal myRatio = (_daysInMonth - absentClamped) / (decimal)_daysInMonth;
 
-            // Tổng tiền điện và nước
-            decimal totalElectric = (newNums - oldNums) * electricRate;
+            decimal totalElectric = (_newNumber - _oldNumber) * electricRate;
             decimal totalWater = waterRate * _totalMembers;
 
-            // Chia theo tỉ lệ có mặt — tổng thu luôn đủ
             decimal electricPerPerson = totalElectric * (myRatio / totalRatio);
             decimal waterPerPerson = totalWater * (myRatio / totalRatio);
 
-            // Thuê và dịch vụ chia đều, không tính ngày vắng
             decimal rentPerPerson = priceRent / _totalMembers;
             decimal servicePerPerson = serviceRate / _totalMembers;
 
