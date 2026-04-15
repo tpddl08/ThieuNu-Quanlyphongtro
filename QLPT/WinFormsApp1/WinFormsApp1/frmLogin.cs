@@ -22,8 +22,8 @@ namespace ThieunuQLPT
         private DateTime? lastOpenTime;
         private bool isLock= false;
         private int count = 0;
-        public static string? loggedPhone; 
-        public frmLogin()
+        public static Guid idLoged;
+         public frmLogin()
         {
             InitializeComponent();
         }
@@ -33,6 +33,7 @@ namespace ThieunuQLPT
 
         }
 
+        //Đăng nhập
         private async void btnSubmit_Click(object sender, EventArgs e)
         {
             numberphone = txtNumberphone.Text;
@@ -44,6 +45,7 @@ namespace ThieunuQLPT
                 return;
             }
 
+            //Bị tạm khóa đăng nhập
             if (isLock)
             {
                 if (lastOpenTime != null && DateTime.Now.Subtract(lastOpenTime.Value).TotalMinutes >= 10)
@@ -65,9 +67,10 @@ namespace ThieunuQLPT
                 .Where(p => p.Phone == numberphone && p.Password == password)
                 .Get();
 
+            //Không tìm thấy số điện thoại và mật khẩu tương ứng
             if (!response.Models.Any())
             {
-                count++;
+                count++; //Tăng số lần nhập sai
                 MessageBox.Show("Số điện thoại hoặc mật khẩu không chính xác!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 if (count >= 3)
@@ -81,13 +84,15 @@ namespace ThieunuQLPT
             {
                 MessageBox.Show("Đăng nhập thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 frmMain.isLogin = true;
-                loggedPhone = numberphone;
+                var profile = response.Models.First();
+                idLoged = profile.Id; //Lấy id của tài khoản đã đăng nhập
                 DialogResult = DialogResult.OK;
 
                 this.Close();
             }
         }
 
+        //Chuyển sang form Đăng kí
         private void llbSignin_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             frmSignin frm = new frmSignin();

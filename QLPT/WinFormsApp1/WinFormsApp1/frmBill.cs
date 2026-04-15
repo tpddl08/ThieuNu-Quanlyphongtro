@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Supabase;
-using ThieunuQLPT.Models;
+
 namespace ThieunuQLPT
 {
     public partial class frmBill : Form
     {
-        private Supabase.Client client = null!;
+        private Guid currentUserId = frmLogin.idLoged;
+        private HousesData? currentHouse;
         private string _houseId = "";
 
         public frmBill()
@@ -23,13 +23,7 @@ namespace ThieunuQLPT
 
         private async void frmBill_Load(object? sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(_houseId)) return; // Chặn lỗi UUID rỗng
-
-            client = new Supabase.Client(
-                 "https://unkegkyxftsxkusheabr.supabase.co",
-                 "sb_publishable_KNYJJ23Wts1x0zkc-ifPbg_f04atwSl"
-            );
-            await client.InitializeAsync();
+            if (string.IsNullOrEmpty(_houseId)) return;
             await LoadHouseData(_houseId);
         }
 
@@ -37,33 +31,60 @@ namespace ThieunuQLPT
         {
             try
             {
-                //lấy chi tiết chỉ số (điện, nước) từ DetailBill
-                var result = await client.From<DetailBill>().Where(x => x.id == houseId).Single();
+                var client = await SupabaseHelper.GetClientAsync();
+                if (client == null) return;
 
-                //lấy Tổng tiền và Tháng từ ListBills (Cái này mới là cái đã cập nhật đúng)
-                var invoice = await client.From<ListBills>().Where(x => x.house_id == houseId).Single();
+                if (!Guid.TryParse(houseId, out Guid houseGuid)) return;
 
-                if (result != null && invoice != null)
-                {
-                    // Các chỉ số phụ vẫn tính để hiện thị cho người dùng xem
-                    decimal electricTotal = (result.newNums - result.oldNums) * 4000; // fix cứng 4000  giống bên Edit
-                    decimal waterTotal = result.maxMembers * 100000;
+                // Lấy thông tin phòng
+                var houseResp = await client
+                    .From<HousesData>()
+                    .Select("*")
+                    .Where(h => h.Id == houseGuid)
+                    .Get();
 
-                    // gán dữ liệu lên form
-                    lblRoom.Text = result.Name;
-                    lblRent.Text = result.totalRent.ToString("N0") + " đ";
-                    lblOldNums.Text = result.oldNums.ToString();
-                    lblNewNums.Text = result.newNums.ToString();
-                    lblConsume.Text = $"{result.newNums - result.oldNums} kWh x 4,000đ";
-                    lblElectricRate.Text = electricTotal.ToString("N0") + " đ";
-                    lblWaterRate.Text = waterTotal.ToString("N0") + " đ";
-                    lblServiceRate.Text = result.serviceRate.ToString("N0") + " đ";
-                    lblMembers.Text = result.maxMembers.ToString() + " người";
+                currentHouse = houseResp.Models.FirstOrDefault();
+                if (currentHouse == null) return;
 
-                  
-                    lblMonthYear.Text = invoice.month_year;
-                    lblTotal.Text = invoice.total_amount.ToString("N0") + " đ";
-                }
+                // Lấy số thành viên đang ở
+                var memberResp = await client
+                    .From<HouseMembersData>()
+                    .Select("*")
+                    .Where(m => m.HouseId == houseGuid && m.IsActive == true)
+                    .Get();
+
+                int totalMembers = memberResp.Models.Count;
+
+                // Lấy hóa đơn
+                var invoiceResp = await client
+                    .From<InvoicesData>()
+                    .Select("*")
+                    .Where(x => x.HouseId == houseGuid)
+                    .Get();
+
+                var invoice = invoiceResp.Models
+                .OrderByDescending(x => x.CreatedAt)
+                .FirstOrDefault();
+
+                // Tính tiền để hiển thị chi tiết
+                int oldNums = invoice?.OldNumber ?? 0;
+                int newNums = invoice?.NewNumber ?? 0;
+                decimal electricTotal = (newNums - oldNums) * (currentHouse.ElectricityRate ?? 4000);
+                decimal waterTotal = totalMembers * (currentHouse.WaterRate ?? 100000);
+
+                // Hiển thị
+                lblRoom.Text = currentHouse.Name;
+                lblRent.Text = (currentHouse.PriceRent ?? 0).ToString("N0") + " đ";
+                lblOldNums.Text = oldNums.ToString();
+                lblNewNums.Text = newNums.ToString();
+                lblConsume.Text = $"{newNums - oldNums} kWh x {(currentHouse.ElectricityRate ?? 4000):N0}đ";
+                lblElectricRate.Text = electricTotal.ToString("N0") + " đ";
+                lblWaterRate.Text = waterTotal.ToString("N0") + " đ";
+                lblServiceRate.Text = (currentHouse.ServiceRate ?? 0).ToString("N0") + " đ";
+                lblMembers.Text = totalMembers.ToString() + " người";
+
+                // Lấy tổng từ invoices thay vì tự tính
+                lblTotal.Text = (invoice?.TotalAmount ?? 0).ToString("N0") + " đ";
             }
             catch (Exception ex)
             {
@@ -73,14 +94,33 @@ namespace ThieunuQLPT
 
         private async void btnEdit_Click(object sender, EventArgs e)
         {
-            // Mở form Edit và truyền ID
-            frmEditBill editForm = new frmEditBill(_houseId);
+            // Lấy invoice mới nhất của phòng để truyền vào form edit
+            var client = await SupabaseHelper.GetClientAsync();
+            if (client == null) return;
 
+            if (!Guid.TryParse(_houseId, out Guid houseGuid)) return;
+
+            var invoiceResp = await client
+                .From<InvoicesData>()
+                .Select("*")
+                .Where(x => x.HouseId == houseGuid)
+                .Get();
+
+            var latestInvoice = invoiceResp.Models
+                .OrderByDescending(x => x.CreatedAt)
+                .FirstOrDefault();
+
+            if (latestInvoice == null)
+            {
+                MessageBox.Show("Phòng này chưa có hóa đơn nào.", "Thông báo",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            frmEditBill editForm = new frmEditBill(_houseId, latestInvoice.Id.ToString());
             if (editForm.ShowDialog() == DialogResult.OK)
             {
-                
                 await LoadHouseData(_houseId);
-
                 this.DialogResult = DialogResult.OK;
             }
         }

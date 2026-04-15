@@ -9,63 +9,46 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
+using Supabase;
 
 namespace ThieunuQLPT
 {
     public partial class frmCreateroom : Form
     {
-        private string? housename, houseaddress;
+        private string? housename;
         private int? housemaxmember;
-        private decimal? houseelectric, housewatter, houseservice;
+        private decimal? houseservice, housePriceRent;
         private Guid currentUserId;
-        private string? currentPhone;
+
         public frmCreateroom()
         {
             InitializeComponent();
         }
 
+        //Tạo phòng
         private async void btnSubmit_Click(object sender, EventArgs e)
         {
             housename = txtNameroom.Text;
-            houseaddress = txtAddress.Text;
             housemaxmember = int.TryParse(txtNumbermember.Text, out var max) ? max : null;
-            houseelectric = decimal.TryParse(txtElectric.Text, out var elec) ? elec : null;
-            housewatter = decimal.TryParse(txtWatter.Text, out var wat) ? wat : null;
+            housePriceRent = decimal.TryParse(txtPriceRent.Text, out var rent) ? rent : null;
             houseservice = decimal.TryParse(txtService.Text, out var serv) ? serv : null;
 
-            if (housename == null || houseaddress == null || housemaxmember == null || houseelectric==null || housewatter==null || houseservice==null)
+            if (housename == null || housemaxmember == null || housePriceRent == null || houseservice==null)
             {
                 MessageBox.Show("Vui lòng điền đầy đủ thông tin!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
                 var client = await SupabaseHelper.GetClientAsync();
-
-                if (string.IsNullOrEmpty(frmLogin.loggedPhone))
-                {
-                    MessageBox.Show("Bạn cần đăng nhập trước khi tạo phòng!");
-                    return;
-                }
-                currentPhone = frmLogin.loggedPhone;
-                var profileResponse = await client.From<ProfilesData>()
-                    .Where(p => p.Phone == currentPhone)
-                    .Get();
-
-                if (!profileResponse.Models.Any())
-                {
-                    MessageBox.Show("Không tìm thấy người dùng hiện tại!");
-                    return;
-                }
-
-                var profile = profileResponse.Models.First();
-                currentUserId = profile.Id;
+                currentUserId = frmLogin.idLoged; //Lấy id của người dùng đã đăng nhập
+                //Tạo phòng mới
                 var newHouse = new HousesData
                 {
                     Name = housename,
-                    Address = houseaddress,
                     MaxMembers = housemaxmember,
-                    ElectricityRate = houseelectric,
-                    WaterRate = housewatter,
+                    ElectricityRate = 4000,
+                    WaterRate = 100000,
+                    PriceRent = housePriceRent,
                     ServiceRate = houseservice,
                 };
 
@@ -75,6 +58,7 @@ namespace ThieunuQLPT
                 {
                     var houseId = response.Models.First().Id;
 
+                    //Gán người tạo là trưởng phòng
                     var newMember = new HouseMembersData
                     {
                         HouseId = houseId,
@@ -85,12 +69,6 @@ namespace ThieunuQLPT
                     };
 
                     var memberResponse = await client.From<HouseMembersData>().Insert(newMember);
-
-                    if (!memberResponse.Models.Any())
-                    {
-                        MessageBox.Show("Phòng đã tạo nhưng chưa gắn chủ phòng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-
                     MessageBox.Show("Tạo phòng thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.Hide();
                     frmMember frm = new frmMember();

@@ -2,13 +2,13 @@
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Supabase;
-using ThieunuQLPT.Models;
 
 namespace ThieunuQLPT
 {
     public partial class frmListBills : Form
     {
-        private Client client = null!;
+        private Guid currentUserId = frmLogin.idLoged;
+        private string _houseId = "";
 
         public frmListBills()
         {
@@ -18,76 +18,137 @@ namespace ThieunuQLPT
 
         private async void frmListBills_Load(object? sender, EventArgs e)
         {
-            client = new Client(
-                 "https://unkegkyxftsxkusheabr.supabase.co",
-                 "sb_publishable_KNYJJ23Wts1x0zkc-ifPbg_f04atwSl"
-             );
-            await client.InitializeAsync();
-            await LoadData(); // load dữ liệu
+            await LoadCurrentHouseAsync();
+
+            if (string.IsNullOrEmpty(_houseId))
+            {
+                MessageBox.Show("Bạn chưa có phòng nên không thể xem hóa đơn.", "Thông báo",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            await LoadData();
+        }
+
+        private async Task LoadCurrentHouseAsync()
+        {
+            var client = await SupabaseHelper.GetClientAsync();
+            if (client == null) return;
+
+            var memberResp = await client
+                .From<HouseMembersData>()
+                .Select("*")
+                .Where(m => m.UserId == currentUserId && m.IsActive == true)
+                .Get();
+
+            if (!memberResp.Models.Any()) return;
+
+            var currentMember = memberResp.Models
+                .OrderByDescending(m => m.JoinedAt)
+                .First();
+
+            _houseId = currentMember.HouseId.ToString();
         }
 
         private async Task LoadData()
         {
             try
             {
-                var result = await client.From<invoices_with_room>()
-                              
-                                 .Get();
-                dataGridView1.DataSource = result.Models;
+                var client = await SupabaseHelper.GetClientAsync();
+                if (client == null) return;
 
-                // Ẩn cột thừa an toàn
-                string[] hideCols = { "house_id", "id", "BaseUrl", "RequestClientOptions", "TableName", "PrimaryKey", "House"};
-                foreach (var col in hideCols)
+                if (!Guid.TryParse(_houseId, out Guid houseGuid)) return;
+
+                // Lấy thông tin phòng
+                var houseResp = await client
+                    .From<HousesData>()
+                    .Select("*")
+                    .Where(h => h.Id == houseGuid)
+                    .Get();
+
+                var house = houseResp.Models.FirstOrDefault();
+
+                // Lấy hóa đơn của phòng, sắp xếp mới nhất lên đầu
+                var invoiceResp = await client
+                    .From<InvoicesData>()
+                    .Select("*")
+                    .Where(x => x.HouseId == houseGuid)
+                    .Get();
+
+                dgvListinvoices.Rows.Clear();
+
+                foreach (var invoice in invoiceResp.Models.OrderByDescending(x => x.CreatedAt))
                 {
-                    if (dataGridView1.Columns.Contains(col)) dataGridView1.Columns[col].Visible = false;
-                    if (dataGridView1.Columns.Contains("total_amount"))
-                    {
-                        dataGridView1.Columns["total_amount"].HeaderText = "Tổng Tiền";
-                        dataGridView1.Columns["total_amount"].DefaultCellStyle.Format = "N0";
-                        dataGridView1.Columns["total_amount"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-                    }
-                    dataGridView1.Columns["month_year"].HeaderText = "Tháng";
-                    dataGridView1.Columns["status"].HeaderText = "Trạng thái";
+                    int idx = dgvListinvoices.Rows.Add();
+                    var row = dgvListinvoices.Rows[idx];
 
+                    row.Cells["colName"].Value = house?.Name ?? "";
+                    row.Cells["colTimeAt"].Value = invoice.MonthYear ?? "";
+                    row.Cells["colMoney"].Value = (invoice.TotalAmount ?? 0).ToString("N0") + " đ";
+                    row.Cells["colDateCreate"].Value = invoice.CreatedAt.ToString("dd/MM/yyyy");
+                    row.Cells["colDetail"].Value = "Xem"; // Hiện "Xem" cho tất cả các dòng
+
+                    row.Tag = (invoice.HouseId?.ToString() ?? "", invoice.Id.ToString());
                 }
             }
             catch (Exception ex)
             {
-               
                 MessageBox.Show("Lỗi LoadData: " + ex.Message);
             }
         }
 
-        private async void btnAll_Click(object sender, EventArgs e)
+        private async void dgvListinvoices_CellContentClick(object? sender, DataGridViewCellEventArgs e)
         {
-            await LoadData();
-        }
+            if (e.RowIndex < 0) return;
+            if (dgvListinvoices.Columns[e.ColumnIndex].Name != "colDetail") return;
 
-        private async void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0)
+            if (dgvListinvoices.Rows[e.RowIndex].Tag is not (string houseId, string invoiceId)) return;
+
+            var cellVal = dgvListinvoices.Rows[e.RowIndex].Cells["colDetail"].Value?.ToString();
+            if (string.IsNullOrEmpty(cellVal)) return;
+
+            if (!string.IsNullOrEmpty(houseId))
             {
-                var id = dataGridView1.Rows[e.RowIndex].Cells["house_id"].Value?.ToString();
-                if (!string.IsNullOrEmpty(id))
+                frmDetail viewForm = new frmDetail(houseId, invoiceId);
+                if (viewForm.ShowDialog() == DialogResult.OK)
                 {
-                    frmBill viewForm = new frmBill(id);
-                    // nếu ở các Form con có thay đổi (Sửa/Xóa), load lại danh sách
-                    if (viewForm.ShowDialog() == DialogResult.OK)
-                    {
-                        await LoadData();
-                    }
+                    await LoadData();
                 }
             }
         }
 
-        private void btnAdd_Click(object sender, EventArgs e)
+        private void btnEdit_Click(object sender, EventArgs e)
         {
-            frmEditBill frm = new frmEditBill(); //ko có ID → thêm mới
+            if (string.IsNullOrEmpty(_houseId))
+            {
+                MessageBox.Show("Bạn chưa có phòng nên không thể chỉnh sửa hóa đơn.", "Thông báo",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
 
+            //Mở tạo form mới
+            if (dgvListinvoices.CurrentRow == null)
+            {
+                frmEditBill frmeb = new frmEditBill(_houseId, ""); // invoiceId rỗng = tạo mới
+                if (frmeb.ShowDialog() == DialogResult.OK)
+                    _ = LoadData();
+                return;
+            }
+
+
+            //Chỉnh sửa form đã có
+            if (dgvListinvoices.CurrentRow.Tag is not (string houseId, string invoiceId)) return;
+            
+            frmEditBill frm = new frmEditBill(_houseId, invoiceId);
             if (frm.ShowDialog() == DialogResult.OK)
             {
                 _ = LoadData();
             }
+        }
+
+        private async void btnReload_Click(object sender, EventArgs e)
+        {
+            await LoadData();
         }
     }
 }

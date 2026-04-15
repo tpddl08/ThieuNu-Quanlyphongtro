@@ -38,6 +38,7 @@
             colName = new DataGridViewTextBoxColumn();
             colNumberphone = new DataGridViewTextBoxColumn();
             colEmail = new DataGridViewTextBoxColumn();
+            colStatus = new DataGridViewTextBoxColumn();
             colEdit = new DataGridViewButtonColumn();
             lblNoti = new Label();
             btnSubmit = new Button();
@@ -49,6 +50,8 @@
             // 
             // dgvMember
             // 
+            dgvMember.AllowUserToAddRows = false;
+            dgvMember.AllowUserToDeleteRows = false;
             dataGridViewCellStyle1.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dgvMember.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             dgvMember.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
@@ -63,7 +66,7 @@
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
             dgvMember.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvMember.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvMember.Columns.AddRange(new DataGridViewColumn[] { colName, colNumberphone, colEmail, colEdit });
+            dgvMember.Columns.AddRange(new DataGridViewColumn[] { colName, colNumberphone, colEmail, colStatus, colEdit });
             dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle4.BackColor = SystemColors.Window;
             dataGridViewCellStyle4.Font = new Font("Segoe UI", 14F);
@@ -74,7 +77,6 @@
             dgvMember.DefaultCellStyle = dataGridViewCellStyle4;
             dgvMember.Location = new Point(47, 125);
             dgvMember.Name = "dgvMember";
-            dgvMember.ReadOnly = true;
             dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle5.BackColor = SystemColors.Control;
             dataGridViewCellStyle5.Font = new Font("Segoe UI", 12F);
@@ -99,7 +101,6 @@
             colName.HeaderText = "Tên";
             colName.MinimumWidth = 8;
             colName.Name = "colName";
-            colName.ReadOnly = true;
             // 
             // colNumberphone
             // 
@@ -107,7 +108,6 @@
             colNumberphone.HeaderText = "Số điện thoại";
             colNumberphone.MinimumWidth = 8;
             colNumberphone.Name = "colNumberphone";
-            colNumberphone.ReadOnly = true;
             // 
             // colEmail
             // 
@@ -115,22 +115,27 @@
             colEmail.HeaderText = "Email";
             colEmail.MinimumWidth = 8;
             colEmail.Name = "colEmail";
-            colEmail.ReadOnly = true;
+            // 
+            // colStatus
+            // 
+            colStatus.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            colStatus.HeaderText = "Trạng thái";
+            colStatus.MinimumWidth = 8;
+            colStatus.Name = "colStatus";
             // 
             // colEdit
             // 
             colEdit.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            colEdit.HeaderText = "Sửa";
+            colEdit.HeaderText = "Chỉnh sửa";
             colEdit.MinimumWidth = 8;
             colEdit.Name = "colEdit";
-            colEdit.ReadOnly = true;
-            colEdit.Width = 82;
+            colEdit.Width = 173;
             // 
             // lblNoti
             // 
             lblNoti.AutoSize = true;
             lblNoti.Font = new Font("Segoe UI", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblNoti.Location = new Point(47, 35);
+            lblNoti.Location = new Point(47, 38);
             lblNoti.Name = "lblNoti";
             lblNoti.Size = new Size(205, 54);
             lblNoti.TabIndex = 7;
@@ -139,7 +144,7 @@
             // btnSubmit
             // 
             btnSubmit.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnSubmit.BackColor = Color.CornflowerBlue;
+            btnSubmit.BackColor = Color.DarkOrange;
             btnSubmit.FlatStyle = FlatStyle.Flat;
             btnSubmit.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnSubmit.Location = new Point(770, 125);
@@ -152,20 +157,22 @@
             // 
             // btnCreateroom
             // 
-            btnCreateroom.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            btnCreateroom.Font = new Font("Segoe UI", 30F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnCreateroom.Location = new Point(309, 12);
+            btnCreateroom.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnCreateroom.BackColor = Color.ForestGreen;
+            btnCreateroom.FlatStyle = FlatStyle.Flat;
+            btnCreateroom.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnCreateroom.Location = new Point(511, 35);
             btnCreateroom.Name = "btnCreateroom";
-            btnCreateroom.Size = new Size(391, 98);
+            btnCreateroom.Size = new Size(235, 64);
             btnCreateroom.TabIndex = 10;
             btnCreateroom.Text = "Tạo phòng";
-            btnCreateroom.UseVisualStyleBackColor = true;
+            btnCreateroom.UseVisualStyleBackColor = false;
             btnCreateroom.Click += btnCreateroom_Click;
             // 
             // btnAdd
             // 
             btnAdd.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnAdd.BackColor = Color.ForestGreen;
+            btnAdd.BackColor = Color.DarkOrange;
             btnAdd.FlatStyle = FlatStyle.Flat;
             btnAdd.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnAdd.Location = new Point(770, 197);
@@ -179,10 +186,10 @@
             // btnDelete
             // 
             btnDelete.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnDelete.BackColor = Color.Red;
+            btnDelete.BackColor = Color.DarkOrange;
             btnDelete.FlatStyle = FlatStyle.Flat;
             btnDelete.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnDelete.Location = new Point(770, 287);
+            btnDelete.Location = new Point(770, 270);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(128, 46);
             btnDelete.TabIndex = 12;
@@ -206,6 +213,7 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Danh sách thành viên";
             WindowState = FormWindowState.Maximized;
+            Load += frmMember_Load;
             ((System.ComponentModel.ISupportInitialize)dgvMember).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -222,6 +230,7 @@
         private DataGridViewTextBoxColumn colName;
         private DataGridViewTextBoxColumn colNumberphone;
         private DataGridViewTextBoxColumn colEmail;
+        private DataGridViewTextBoxColumn colStatus;
         private DataGridViewButtonColumn colEdit;
     }
 }

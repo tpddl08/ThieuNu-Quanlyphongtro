@@ -25,6 +25,7 @@ namespace ThieunuQLPT
             
         }
 
+        //Tạo tài khoản
         private async void btnSubmit_Click(object sender, EventArgs e)
         {
             name = txtName.Text;
@@ -39,6 +40,7 @@ namespace ThieunuQLPT
             }
             else
             {
+                //Tạo các thông tin
                 var newProfile = new ProfilesData
                 {
                     FullName = name,
@@ -62,6 +64,7 @@ namespace ThieunuQLPT
             }
         }
 
+        //Chuyển sang Đăng nhập
         private void llbLogin_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             frmLogin frm = new frmLogin();
