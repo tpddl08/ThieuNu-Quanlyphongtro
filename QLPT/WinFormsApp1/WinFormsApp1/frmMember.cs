@@ -22,8 +22,6 @@ namespace ThieunuQLPT
 
         private async void frmMember_Load(object sender, EventArgs e)
         {
-
-
             //Tạo cột id của phòng ẩn
             if (!dgvMember.Columns.Contains("colHouseMemberId"))
             {
@@ -42,16 +40,6 @@ namespace ThieunuQLPT
                 {
                     Name = "colUserId",
                     Visible = false
-                };
-                dgvMember.Columns.Add(c);
-            }
-
-            if (!dgvMember.Columns.Contains("colPaidStatus"))
-            {
-                var c = new DataGridViewCheckBoxColumn
-                {
-                    Name = "colPaidStatus",
-                    HeaderText = "Đã đóng tiền"
                 };
                 dgvMember.Columns.Add(c);
             }
@@ -105,7 +93,6 @@ namespace ThieunuQLPT
             lblNoti.Text = $"PHÒNG: {currentHouse.Name}";
 
             await LoadMembersToDGV(currentHouse.Id); //Hiển thị thành viên nếu có phòng
-
         }
 
         //Tạo phòng
@@ -145,7 +132,6 @@ namespace ThieunuQLPT
             r.Cells["colStatus"].Value = "Đang ở";
             r.Cells["colHouseMemberId"].Value = "";
             r.Cells["colUserId"].Value = prof.Id.ToString();
-            r.Cells["colPaidStatus"].Value = false; 
         }
 
         //Tải thành viên của phòng
@@ -186,7 +172,6 @@ namespace ThieunuQLPT
 
                 int idx = dgvMember.Rows.Add();
                 var row = dgvMember.Rows[idx];
-                bool isPaid = hm.IsPaid ?? false;
 
                 row.Cells["colName"].Value = prof?.FullName ?? "";
                 row.Cells["colNumberphone"].Value = prof?.Phone ?? "";
@@ -194,7 +179,6 @@ namespace ThieunuQLPT
                 row.Cells["colStatus"].Value = hm.IsActive ? "Đang ở" : "Rời đi";
                 row.Cells["colHouseMemberId"].Value = hm.Id.ToString();
                 row.Cells["colUserId"].Value = hm.UserId.ToString();
-                row.Cells["colPaidStatus"].Value = isPaid;
 
                 if (hm.UserId == currentUserId)
                 {
@@ -246,6 +230,19 @@ namespace ThieunuQLPT
 
                 var prof = profileResp.Models.First();
                 Guid userId = prof.Id;
+
+                // Kiểm tra số thành viên đang ở hiện tại (cả trên dgv) so với max_members
+                int maxMembers = currentHouse.MaxMembers ?? 6;
+                int currentActive = dgvMember.Rows
+                    .Cast<DataGridViewRow>()
+                    .Count(r => (r.Cells["colStatus"].Value?.ToString() ?? "").Trim() == "Đang ở");
+
+                if (currentActive >= maxMembers)
+                {
+                    MessageBox.Show($"Phòng đã đủ {maxMembers} người, không thể thêm!", "Thông báo",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
                 //Hiển thị thông tin người muốn thêm lên dgv
                 foreach (DataGridViewRow r in dgvMember.Rows)
@@ -342,7 +339,7 @@ namespace ThieunuQLPT
             //Chỉ được phép tự chỉnh sửa thông tin cá nhân
             if (currentHouse == null)
             {
-                if (rowUserId == currentUserId) 
+                if (rowUserId == currentUserId)
                 {
                     EditProfileRow(row);
                 }
@@ -533,21 +530,23 @@ namespace ThieunuQLPT
                         {
                             existing.IsActive = false;
                             existing.LeftAt = DateTime.Now;
+                            existing.Role = "member";
                             await client.From<HouseMembersData>().Update(existing);
                         }
                     }
                     else if (userId != Guid.Empty)
                     {
-                        //Tìm theo HouseId và UserId
                         var resp2 = await client.From<HouseMembersData>()
-                                                .Select("*")
-                                                .Where(m => m.HouseId == currentHouse.Id && m.UserId == userId)
-                                                .Get();
+                            .Select("*")
+                            .Where(m => m.HouseId == currentHouse.Id && m.UserId == userId)
+                            .Get();
+
                         var existing2 = resp2.Models.FirstOrDefault();
                         if (existing2 != null)
                         {
                             existing2.IsActive = false;
                             existing2.LeftAt = DateTime.Now;
+                            existing2.Role = "member"; // ✅ THÊM DÒNG NÀY
                             await client.From<HouseMembersData>().Update(existing2);
                         }
                     }
@@ -567,7 +566,7 @@ namespace ThieunuQLPT
             }
 
             // Nếu trưởng phòng rời phòng thì chuyển quyền cho người đã ở lâu nhất
-            if (currentUserMarkedLeave && currentHouse != null)
+            if (currentUserMarkedLeave && isLeader && currentHouse != null)
             {
                 try
                 {
@@ -590,6 +589,18 @@ namespace ThieunuQLPT
             }
 
             // Thông báo và tải lại danh sách thành viên
+            if (currentUserMarkedLeave)
+            {
+                currentHouse = null;
+                isLeader = false;
+                btnCreateroom.Visible = true;
+                lblNoti.Text = "HIỆN CHƯA CÓ PHÒNG NÀO!";
+                await LoadProfileOnly();
+
+                MessageBox.Show("Bạn đã rời phòng!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
             if (currentHouse != null)
             {
                 MessageBox.Show("Đã lưu thay đổi!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);

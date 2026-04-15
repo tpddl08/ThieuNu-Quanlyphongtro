@@ -13,7 +13,7 @@ public class DetailBill : BaseModel
 
 
     [Column("total_rent")]
-    public decimal totalRent { get; set; }
+    public decimal PriceRent { get; set; }
 
     [Column("electricity_rate")]
     public decimal electricRate { get; set; }

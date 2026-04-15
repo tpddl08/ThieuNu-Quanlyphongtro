@@ -2,13 +2,16 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
-    <Compile Update="frmDetail.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="frmBill.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="frmChores.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="frmCreateroom.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="frmDetail.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="frmEditBill.cs">
@@ -25,6 +28,18 @@
     </Compile>
     <Compile Update="frmMember.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="frmNotecreate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="frmNotedetail.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="frmNoteslist.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="ucNoteitemcard.cs">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="frmSignin.cs">
       <SubType>Form</SubType>

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
+using Supabase;
 
 namespace ThieunuQLPT
 {
@@ -16,7 +17,7 @@ namespace ThieunuQLPT
     {
         private string? housename;
         private int? housemaxmember;
-        private decimal? houseelectric, housewatter, houseservice;
+        private decimal? houseservice, housePriceRent;
         private Guid currentUserId;
 
         public frmCreateroom()
@@ -29,9 +30,10 @@ namespace ThieunuQLPT
         {
             housename = txtNameroom.Text;
             housemaxmember = int.TryParse(txtNumbermember.Text, out var max) ? max : null;
+            housePriceRent = decimal.TryParse(txtPriceRent.Text, out var rent) ? rent : null;
             houseservice = decimal.TryParse(txtService.Text, out var serv) ? serv : null;
 
-            if (housename == null || housemaxmember == null || houseservice==null)
+            if (housename == null || housemaxmember == null || housePriceRent == null || houseservice==null)
             {
                 MessageBox.Show("Vui lòng điền đầy đủ thông tin!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -46,7 +48,8 @@ namespace ThieunuQLPT
                     MaxMembers = housemaxmember,
                     ElectricityRate = 4000,
                     WaterRate = 100000,
-                    ServiceRate = houseservice,                   
+                    PriceRent = housePriceRent,
+                    ServiceRate = houseservice,
                 };
 
                 var response = await client.From<HousesData>().Insert(newHouse);
