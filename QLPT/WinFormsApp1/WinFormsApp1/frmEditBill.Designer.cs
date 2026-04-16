@@ -138,7 +138,7 @@
             txtMaxMembers.Location = new Point(149, 5);
             txtMaxMembers.Margin = new Padding(4);
             txtMaxMembers.Name = "txtMaxMembers";
-            txtMaxMembers.Size = new Size(135, 34);
+            txtMaxMembers.Size = new Size(135, 30);
             txtMaxMembers.TabIndex = 16;
             // 
             // label11
@@ -236,7 +236,7 @@
             txtOldNums.Location = new Point(277, 58);
             txtOldNums.Margin = new Padding(4);
             txtOldNums.Name = "txtOldNums";
-            txtOldNums.Size = new Size(173, 34);
+            txtOldNums.Size = new Size(173, 30);
             txtOldNums.TabIndex = 19;
             // 
             // txtNewNums
@@ -247,7 +247,7 @@
             txtNewNums.Location = new Point(277, 5);
             txtNewNums.Margin = new Padding(4);
             txtNewNums.Name = "txtNewNums";
-            txtNewNums.Size = new Size(173, 34);
+            txtNewNums.Size = new Size(173, 30);
             txtNewNums.TabIndex = 18;
             // 
             // lblConsume
@@ -376,7 +376,7 @@
             txtRent.Location = new Point(469, 5);
             txtRent.Margin = new Padding(4);
             txtRent.Name = "txtRent";
-            txtRent.Size = new Size(456, 34);
+            txtRent.Size = new Size(456, 30);
             txtRent.TabIndex = 13;
             // 
             // txtServiceRate
@@ -387,7 +387,7 @@
             txtServiceRate.Location = new Point(469, 93);
             txtServiceRate.Margin = new Padding(4);
             txtServiceRate.Name = "txtServiceRate";
-            txtServiceRate.Size = new Size(456, 34);
+            txtServiceRate.Size = new Size(456, 30);
             txtServiceRate.TabIndex = 14;
             // 
             // tlpContent
@@ -428,7 +428,7 @@
             txtMonth.Location = new Point(112, 5);
             txtMonth.Margin = new Padding(4);
             txtMonth.Name = "txtMonth";
-            txtMonth.Size = new Size(99, 34);
+            txtMonth.Size = new Size(99, 30);
             txtMonth.TabIndex = 9;
             // 
             // label9
@@ -463,7 +463,7 @@
             txtRoom.Location = new Point(112, 44);
             txtRoom.Margin = new Padding(4);
             txtRoom.Name = "txtRoom";
-            txtRoom.Size = new Size(99, 34);
+            txtRoom.Size = new Size(99, 30);
             txtRoom.TabIndex = 10;
             // 
             // tableLayoutPanel2
@@ -499,7 +499,7 @@
             // 
             // frmEditBill
             // 
-            AutoScaleDimensions = new SizeF(144F, 144F);
+            AutoScaleDimensions = new SizeF(120F, 120F);
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = SystemColors.GradientInactiveCaption;
             ClientSize = new Size(938, 484);

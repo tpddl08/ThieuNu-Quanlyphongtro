@@ -30,6 +30,8 @@
         {
             label1 = new Label();
             panel1 = new Panel();
+            txtPriceRent = new TextBox();
+            label3 = new Label();
             btnSubmit = new Button();
             txtService = new TextBox();
             label4 = new Label();
@@ -40,8 +42,6 @@
             tableLayoutPanel1 = new TableLayoutPanel();
             panel2 = new Panel();
             panel3 = new Panel();
-            label3 = new Label();
-            txtPriceRent = new TextBox();
             panel1.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
@@ -51,9 +51,10 @@
             label1.AutoSize = true;
             label1.Dock = DockStyle.Fill;
             label1.Font = new Font("Segoe UI", 26F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(96, 0);
+            label1.Location = new Point(80, 0);
+            label1.Margin = new Padding(2, 0, 2, 0);
             label1.Name = "label1";
-            label1.Size = new Size(744, 96);
+            label1.Size = new Size(621, 80);
             label1.TabIndex = 6;
             label1.Text = "TẠO PHÒNG";
             label1.TextAlign = ContentAlignment.MiddleLeft;
@@ -71,10 +72,34 @@
             panel1.Controls.Add(txtNameroom);
             panel1.Controls.Add(label5);
             panel1.Dock = DockStyle.Fill;
-            panel1.Location = new Point(96, 99);
+            panel1.Location = new Point(80, 82);
+            panel1.Margin = new Padding(2, 2, 2, 2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(744, 284);
+            panel1.Size = new Size(621, 237);
             panel1.TabIndex = 5;
+            // 
+            // txtPriceRent
+            // 
+            txtPriceRent.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtPriceRent.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtPriceRent.Location = new Point(203, 104);
+            txtPriceRent.Margin = new Padding(2, 2, 2, 2);
+            txtPriceRent.Name = "txtPriceRent";
+            txtPriceRent.Size = new Size(403, 43);
+            txtPriceRent.TabIndex = 18;
+            // 
+            // label3
+            // 
+            label3.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
+            label3.ForeColor = Color.Black;
+            label3.Location = new Point(12, 151);
+            label3.Margin = new Padding(2, 0, 2, 0);
+            label3.Name = "label3";
+            label3.Size = new Size(157, 37);
+            label3.TabIndex = 17;
+            label3.Text = "Phí dịch vụ";
             // 
             // btnSubmit
             // 
@@ -83,9 +108,10 @@
             btnSubmit.FlatStyle = FlatStyle.Flat;
             btnSubmit.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnSubmit.ForeColor = SystemColors.ActiveCaptionText;
-            btnSubmit.Location = new Point(474, 237);
+            btnSubmit.Location = new Point(396, 198);
+            btnSubmit.Margin = new Padding(2, 2, 2, 2);
             btnSubmit.Name = "btnSubmit";
-            btnSubmit.Size = new Size(252, 44);
+            btnSubmit.Size = new Size(210, 37);
             btnSubmit.TabIndex = 4;
             btnSubmit.Text = "Tạo";
             btnSubmit.UseVisualStyleBackColor = false;
@@ -95,9 +121,10 @@
             // 
             txtService.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtService.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtService.Location = new Point(209, 181);
+            txtService.Location = new Point(174, 151);
+            txtService.Margin = new Padding(2, 2, 2, 2);
             txtService.Name = "txtService";
-            txtService.Size = new Size(517, 50);
+            txtService.Size = new Size(433, 43);
             txtService.TabIndex = 16;
             // 
             // label4
@@ -106,9 +133,10 @@
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
             label4.ForeColor = Color.Black;
-            label4.Location = new Point(14, 69);
+            label4.Location = new Point(12, 58);
+            label4.Margin = new Padding(2, 0, 2, 0);
             label4.Name = "label4";
-            label4.Size = new Size(224, 45);
+            label4.Size = new Size(191, 37);
             label4.TabIndex = 10;
             label4.Text = "Số thành viên";
             // 
@@ -118,9 +146,10 @@
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
             label2.ForeColor = Color.Black;
-            label2.Location = new Point(14, 16);
+            label2.Location = new Point(12, 13);
+            label2.Margin = new Padding(2, 0, 2, 0);
             label2.Name = "label2";
-            label2.Size = new Size(179, 45);
+            label2.Size = new Size(152, 37);
             label2.TabIndex = 8;
             label2.Text = "Tên phòng";
             // 
@@ -128,18 +157,20 @@
             // 
             txtNumbermember.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtNumbermember.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtNumbermember.Location = new Point(244, 72);
+            txtNumbermember.Location = new Point(203, 60);
+            txtNumbermember.Margin = new Padding(2, 2, 2, 2);
             txtNumbermember.Name = "txtNumbermember";
-            txtNumbermember.Size = new Size(482, 50);
+            txtNumbermember.Size = new Size(403, 43);
             txtNumbermember.TabIndex = 7;
             // 
             // txtNameroom
             // 
             txtNameroom.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtNameroom.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtNameroom.Location = new Point(219, 16);
+            txtNameroom.Location = new Point(182, 13);
+            txtNameroom.Margin = new Padding(2, 2, 2, 2);
             txtNameroom.Name = "txtNameroom";
-            txtNameroom.Size = new Size(507, 50);
+            txtNameroom.Size = new Size(424, 43);
             txtNameroom.TabIndex = 5;
             // 
             // label5
@@ -148,9 +179,10 @@
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
             label5.ForeColor = Color.Black;
-            label5.Location = new Point(14, 122);
+            label5.Location = new Point(12, 102);
+            label5.Margin = new Padding(2, 0, 2, 0);
             label5.Name = "label5";
-            label5.Size = new Size(208, 45);
+            label5.Size = new Size(177, 37);
             label5.TabIndex = 13;
             label5.Text = "Phí thuê nhà";
             // 
@@ -168,58 +200,41 @@
             tableLayoutPanel1.Controls.Add(panel1, 1, 1);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
+            tableLayoutPanel1.Margin = new Padding(2, 2, 2, 2);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 3;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 60F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
-            tableLayoutPanel1.Size = new Size(938, 484);
+            tableLayoutPanel1.Size = new Size(782, 403);
             tableLayoutPanel1.TabIndex = 7;
             // 
             // panel2
             // 
-            panel2.Location = new Point(3, 3);
+            panel2.Location = new Point(2, 2);
+            panel2.Margin = new Padding(2, 2, 2, 2);
             panel2.Name = "panel2";
-            panel2.Size = new Size(87, 90);
+            panel2.Size = new Size(72, 75);
             panel2.TabIndex = 0;
             // 
             // panel3
             // 
             panel3.BackColor = SystemColors.GradientActiveCaption;
             panel3.Dock = DockStyle.Fill;
-            panel3.Location = new Point(846, 99);
+            panel3.Location = new Point(705, 82);
+            panel3.Margin = new Padding(2, 2, 2, 2);
             panel3.Name = "panel3";
-            panel3.Size = new Size(1, 284);
+            panel3.Size = new Size(1, 237);
             panel3.TabIndex = 7;
-            // 
-            // label3
-            // 
-            label3.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
-            label3.ForeColor = Color.Black;
-            label3.Location = new Point(14, 181);
-            label3.Name = "label3";
-            label3.Size = new Size(185, 45);
-            label3.TabIndex = 17;
-            label3.Text = "Phí dịch vụ";
-            // 
-            // txtPriceRent
-            // 
-            txtPriceRent.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtPriceRent.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtPriceRent.Location = new Point(244, 125);
-            txtPriceRent.Name = "txtPriceRent";
-            txtPriceRent.Size = new Size(482, 50);
-            txtPriceRent.TabIndex = 18;
             // 
             // frmCreateroom
             // 
-            AutoScaleDimensions = new SizeF(144F, 144F);
+            AutoScaleDimensions = new SizeF(120F, 120F);
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = SystemColors.GradientInactiveCaption;
-            ClientSize = new Size(938, 484);
+            ClientSize = new Size(782, 403);
             Controls.Add(tableLayoutPanel1);
+            Margin = new Padding(2, 2, 2, 2);
             Name = "frmCreateroom";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Tạo phòng";

@@ -17,7 +17,13 @@
     <Compile Update="frmEditBill.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="frmExpenses.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="frmListBills.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="frmListExpense.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="frmLogin.cs">
