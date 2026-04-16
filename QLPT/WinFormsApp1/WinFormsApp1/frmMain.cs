@@ -131,5 +131,18 @@ namespace WinFormsApp1
                 MessageBox.Show("Vui lòng đăng nhập để sử dụng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            if (isLogin)
+            {
+                var f = new frmExpenses("houseId", "userId");
+                f.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Vui lòng đăng nhập để sử dụng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
     }
 }
