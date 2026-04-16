@@ -47,7 +47,8 @@
             label1.BackColor = Color.Transparent;
             label1.Font = new Font("Segoe UI", 30F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = SystemColors.Control;
-            label1.Location = new Point(12, 9);
+            label1.Location = new Point(12, 10);
+            label1.Margin = new Padding(2, 0, 2, 0);
             label1.Name = "label1";
             label1.Size = new Size(664, 81);
             label1.TabIndex = 0;
@@ -60,8 +61,9 @@
             panel1.Controls.Add(label1);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
+            panel1.Margin = new Padding(2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(938, 111);
+            panel1.Size = new Size(938, 110);
             panel1.TabIndex = 1;
             // 
             // btnAccount
@@ -72,6 +74,7 @@
             btnAccount.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnAccount.ForeColor = Color.Black;
             btnAccount.Location = new Point(703, 25);
+            btnAccount.Margin = new Padding(2);
             btnAccount.Name = "btnAccount";
             btnAccount.Size = new Size(211, 65);
             btnAccount.TabIndex = 1;
@@ -85,9 +88,10 @@
             btnRoom.Dock = DockStyle.Fill;
             btnRoom.FlatStyle = FlatStyle.Flat;
             btnRoom.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
-            btnRoom.Location = new Point(40, 39);
+            btnRoom.Location = new Point(39, 38);
+            btnRoom.Margin = new Padding(2);
             btnRoom.Name = "btnRoom";
-            btnRoom.Size = new Size(181, 122);
+            btnRoom.Size = new Size(183, 124);
             btnRoom.TabIndex = 2;
             btnRoom.Text = "Phòng";
             btnRoom.UseVisualStyleBackColor = false;
@@ -99,9 +103,10 @@
             btnBill.Dock = DockStyle.Fill;
             btnBill.FlatStyle = FlatStyle.Flat;
             btnBill.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
-            btnBill.Location = new Point(264, 39);
+            btnBill.Location = new Point(263, 38);
+            btnBill.Margin = new Padding(2);
             btnBill.Name = "btnBill";
-            btnBill.Size = new Size(181, 122);
+            btnBill.Size = new Size(183, 124);
             btnBill.TabIndex = 3;
             btnBill.Text = "Hóa đơn";
             btnBill.UseVisualStyleBackColor = false;
@@ -125,7 +130,8 @@
             tableLayoutPanel1.Controls.Add(btnChores, 5, 1);
             tableLayoutPanel1.Controls.Add(btnExpenses, 7, 1);
             tableLayoutPanel1.Controls.Add(btnNote, 1, 3);
-            tableLayoutPanel1.Location = new Point(0, 117);
+            tableLayoutPanel1.Location = new Point(0, 118);
+            tableLayoutPanel1.Margin = new Padding(2);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 5;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
@@ -142,9 +148,10 @@
             btnChores.Dock = DockStyle.Fill;
             btnChores.FlatStyle = FlatStyle.Flat;
             btnChores.Font = new Font("Segoe UI", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnChores.Location = new Point(488, 39);
+            btnChores.Location = new Point(487, 38);
+            btnChores.Margin = new Padding(2);
             btnChores.Name = "btnChores";
-            btnChores.Size = new Size(181, 122);
+            btnChores.Size = new Size(183, 124);
             btnChores.TabIndex = 4;
             btnChores.Text = "Trực nhật";
             btnChores.UseVisualStyleBackColor = false;
@@ -156,9 +163,10 @@
             btnExpenses.Dock = DockStyle.Fill;
             btnExpenses.FlatStyle = FlatStyle.Flat;
             btnExpenses.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
-            btnExpenses.Location = new Point(712, 39);
+            btnExpenses.Location = new Point(711, 38);
+            btnExpenses.Margin = new Padding(2);
             btnExpenses.Name = "btnExpenses";
-            btnExpenses.Size = new Size(181, 122);
+            btnExpenses.Size = new Size(183, 124);
             btnExpenses.TabIndex = 5;
             btnExpenses.Text = "Quỹ chung";
             btnExpenses.UseVisualStyleBackColor = false;
@@ -170,9 +178,10 @@
             btnNote.Dock = DockStyle.Fill;
             btnNote.FlatStyle = FlatStyle.Flat;
             btnNote.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
-            btnNote.Location = new Point(40, 203);
+            btnNote.Location = new Point(39, 202);
+            btnNote.Margin = new Padding(2);
             btnNote.Name = "btnNote";
-            btnNote.Size = new Size(181, 122);
+            btnNote.Size = new Size(183, 124);
             btnNote.TabIndex = 6;
             btnNote.Text = "Bảng tin";
             btnNote.UseVisualStyleBackColor = false;
@@ -186,6 +195,7 @@
             ClientSize = new Size(938, 484);
             Controls.Add(tableLayoutPanel1);
             Controls.Add(panel1);
+            Margin = new Padding(2);
             Name = "frmMain";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Quản lý phòng trọ";

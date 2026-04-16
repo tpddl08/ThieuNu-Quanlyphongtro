@@ -138,6 +138,8 @@ namespace ThieunuQLPT
 
         [Column("note")]
         public string? Note { get; set; }
+        [Column("type")]
+        public string? Type { get; set; } // "INCOME" hoặc "EXPENSE"
     }
 
     [Table("invoices")]
