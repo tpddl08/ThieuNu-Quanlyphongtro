@@ -28,63 +28,108 @@
         /// </summary>
         private void InitializeComponent()
         {
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             dgvExpenses = new DataGridView();
             date = new DataGridViewTextBoxColumn();
             title = new DataGridViewTextBoxColumn();
             amount = new DataGridViewTextBoxColumn();
             name = new DataGridViewTextBoxColumn();
+            label1 = new Label();
+            btnAdd = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvExpenses).BeginInit();
             SuspendLayout();
             // 
             // dgvExpenses
             // 
+            dgvExpenses.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = SystemColors.Control;
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            dgvExpenses.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dgvExpenses.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvExpenses.Columns.AddRange(new DataGridViewColumn[] { date, title, amount, name });
-            dgvExpenses.Location = new Point(19, 82);
+            dgvExpenses.Location = new Point(30, 147);
+            dgvExpenses.Margin = new Padding(4);
             dgvExpenses.Name = "dgvExpenses";
             dgvExpenses.RowHeadersWidth = 51;
-            dgvExpenses.Size = new Size(630, 359);
+            dgvExpenses.Size = new Size(873, 312);
             dgvExpenses.TabIndex = 0;
             // 
             // date
             // 
+            date.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             date.HeaderText = "Ngày";
             date.MinimumWidth = 6;
             date.Name = "date";
-            date.Width = 125;
             // 
             // title
             // 
+            title.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             title.HeaderText = "Nội dung";
             title.MinimumWidth = 6;
             title.Name = "title";
             title.ReadOnly = true;
-            title.Width = 125;
             // 
             // amount
             // 
+            amount.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             amount.HeaderText = "Số tiền";
             amount.MinimumWidth = 6;
             amount.Name = "amount";
-            amount.Width = 125;
             // 
             // name
             // 
-            name.HeaderText = "Tên";
+            name.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            name.HeaderText = "Tên người chi";
             name.MinimumWidth = 6;
             name.Name = "name";
-            name.Width = 125;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Location = new Point(30, 54);
+            label1.Name = "label1";
+            label1.Size = new Size(366, 54);
+            label1.TabIndex = 1;
+            label1.Text = "Danh sách chi tiêu";
+            // 
+            // btnAdd
+            // 
+            btnAdd.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnAdd.BackColor = Color.DarkOrange;
+            btnAdd.FlatStyle = FlatStyle.Flat;
+            btnAdd.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnAdd.Location = new Point(740, 54);
+            btnAdd.Name = "btnAdd";
+            btnAdd.Size = new Size(163, 54);
+            btnAdd.TabIndex = 2;
+            btnAdd.Text = "Thêm chi tiêu";
+            btnAdd.UseVisualStyleBackColor = false;
+            btnAdd.Click += btnAdd_Click;
             // 
             // frmListExpense
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            AutoScaleDimensions = new SizeF(144F, 144F);
+            AutoScaleMode = AutoScaleMode.Dpi;
+            BackColor = SystemColors.GradientInactiveCaption;
+            ClientSize = new Size(938, 484);
+            Controls.Add(btnAdd);
+            Controls.Add(label1);
             Controls.Add(dgvExpenses);
+            Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Margin = new Padding(4);
             Name = "frmListExpense";
-            Text = "frmListExpense";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Danh sách chi tiêu";
+            WindowState = FormWindowState.Maximized;
             ((System.ComponentModel.ISupportInitialize)dgvExpenses).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -94,5 +139,7 @@
         private DataGridViewTextBoxColumn title;
         private DataGridViewTextBoxColumn amount;
         private DataGridViewTextBoxColumn name;
+        private Label label1;
+        private Button btnAdd;
     }
 }

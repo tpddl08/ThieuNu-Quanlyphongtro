@@ -15,7 +15,7 @@ namespace ThieunuQLPT
     public partial class frmListExpense : Form
     {
         private string _houseId = "";
-     
+
 
         public frmListExpense(string houseId)
         {
@@ -66,7 +66,7 @@ namespace ThieunuQLPT
                         return;
                     }
 
-                    var currentMember = memberResp.Models.OrderByDescending(m => m.JoinedAt).First();
+                    var currentMember = memberResp.Models.OrderByDescending(m => m.JoinedAt).First();                    
                     houseGuid = currentMember.HouseId;
                 }
 
@@ -82,7 +82,7 @@ namespace ThieunuQLPT
                 // Lấy userId list
                 var userIds = expenses
                     .Where(x => x.PaidBy.HasValue)
-                    .Select(x => x.PaidBy.Value)
+                    .Select(x => x.PaidBy!.Value)
                     .Distinct()
                     .ToList();
 
@@ -119,6 +119,14 @@ namespace ThieunuQLPT
             {
                 MessageBox.Show("Lỗi load dữ liệu: " + ex.Message);
             }
+        }
+
+        private async void btnAdd_Click(object sender, EventArgs e)
+        {
+            frmExpenses f = new frmExpenses("houseId", "userId");
+            f.ShowDialog();
+
+            await LoadExpenses();
         }
     }
 }

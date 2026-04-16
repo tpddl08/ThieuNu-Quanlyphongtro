@@ -102,7 +102,7 @@ namespace ThieunuQLPT
 
                 MessageBox.Show("Thêm khoản chi thành công!", "OK",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                this.Close();
                 // Reset form
                 txtTitle.Clear();
                 txtAmount.Clear();
