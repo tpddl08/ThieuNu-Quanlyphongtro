@@ -44,8 +44,7 @@ namespace WinFormsApp1
         {
             if (isLogin)
             {
-                frmMember frm = new frmMember();
-                frm.ShowDialog();
+                
             }
             else
             {
@@ -110,7 +109,9 @@ namespace WinFormsApp1
         {
             if (isLogin)
             {
-                
+               var f = new frmListExpense("houseId");
+                f.ShowDialog();
+
             }
             else
             {
@@ -124,6 +125,19 @@ namespace WinFormsApp1
             {
                 frmNoteslist frm = new frmNoteslist();
                 frm.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Vui lòng đăng nhập để sử dụng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            if (isLogin)
+            {
+                var f = new frmExpenses("houseId", "userId");
+                f.ShowDialog();
             }
             else
             {
