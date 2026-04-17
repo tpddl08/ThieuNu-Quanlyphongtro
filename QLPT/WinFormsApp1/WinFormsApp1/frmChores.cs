@@ -22,12 +22,6 @@ namespace ThieunuQLPT
 
         private async void frmChores_Load(object sender, EventArgs e)
         {
-            // config DataGridView
-            dgvChores.AllowUserToAddRows = false;
-            dgvChores.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvChores.MultiSelect = false;
-            dgvChores.AutoGenerateColumns = false;
-
             EnsureHiddenColumns(); // đảm bảo có cột ẩn
 
             await LoadCurrentHouseAsync(); // lấy phòng hiện tại
@@ -427,10 +421,6 @@ namespace ThieunuQLPT
                 MessageBox.Show($"Lỗi khi lưu công việc: {ex.Message}", "Lỗi",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
-        private void dgvChores_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
         }
     }
 }

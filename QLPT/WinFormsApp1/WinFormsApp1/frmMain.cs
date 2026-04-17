@@ -44,7 +44,8 @@ namespace WinFormsApp1
         {
             if (isLogin)
             {
-                
+                frmMember frm = new frmMember();
+                frm.ShowDialog();
             }
             else
             {
@@ -109,7 +110,7 @@ namespace WinFormsApp1
         {
             if (isLogin)
             {
-               var f = new frmListExpense("houseId");
+                var f = new frmCommonfund();
                 f.ShowDialog();
 
             }
