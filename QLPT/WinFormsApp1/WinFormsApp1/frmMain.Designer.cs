@@ -168,7 +168,7 @@
             btnExpenses.Name = "btnExpenses";
             btnExpenses.Size = new Size(183, 124);
             btnExpenses.TabIndex = 5;
-            btnExpenses.Text = "Quỹ chung";
+            btnExpenses.Text = "Tài chính";
             btnExpenses.UseVisualStyleBackColor = false;
             btnExpenses.Click += btnExpenses_Click;
             // 

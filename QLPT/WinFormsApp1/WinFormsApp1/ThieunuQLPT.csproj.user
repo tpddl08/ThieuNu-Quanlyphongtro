@@ -8,6 +8,9 @@
     <Compile Update="frmChores.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="frmCommonfund.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="frmCreateroom.cs">
       <SubType>Form</SubType>
     </Compile>

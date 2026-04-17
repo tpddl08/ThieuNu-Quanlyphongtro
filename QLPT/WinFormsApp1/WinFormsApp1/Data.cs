@@ -140,6 +140,8 @@ namespace ThieunuQLPT
         public string? Note { get; set; }
         [Column("type")]
         public string? Type { get; set; } // "INCOME" hoặc "EXPENSE"
+        [Column("is_paid")]
+        public bool? IsPaid { get; set; } = true;
     }
 
     [Table("invoices")]
