@@ -28,17 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle11 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle12 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
             btnDone = new Button();
             btnDelete = new Button();
             btnAdd = new Button();
             btnSubmit = new Button();
-            lblNoti = new Label();
+            lblFundhave = new Label();
             dgvCommonfund = new DataGridView();
             colNamemem = new DataGridViewTextBoxColumn();
             colMoney = new DataGridViewTextBoxColumn();
@@ -104,56 +104,56 @@
             btnSubmit.UseVisualStyleBackColor = false;
             btnSubmit.Click += btnSubmit_Click;
             // 
-            // lblNoti
+            // lblFundhave
             // 
-            lblNoti.AutoSize = true;
-            lblNoti.Font = new Font("Segoe UI", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblNoti.Location = new Point(44, 35);
-            lblNoti.Name = "lblNoti";
-            lblNoti.Size = new Size(226, 54);
-            lblNoti.TabIndex = 21;
-            lblNoti.Text = "Quỹ chung";
+            lblFundhave.AutoSize = true;
+            lblFundhave.Font = new Font("Segoe UI", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblFundhave.Location = new Point(44, 35);
+            lblFundhave.Name = "lblFundhave";
+            lblFundhave.Size = new Size(226, 54);
+            lblFundhave.TabIndex = 21;
+            lblFundhave.Text = "Quỹ chung";
             // 
             // dgvCommonfund
             // 
             dgvCommonfund.AllowUserToAddRows = false;
             dgvCommonfund.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dgvCommonfund.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle7.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dgvCommonfund.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle7;
             dgvCommonfund.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvCommonfund.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             dgvCommonfund.BackgroundColor = Color.LightGray;
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
-            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            dgvCommonfund.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = SystemColors.Control;
+            dataGridViewCellStyle8.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
+            dataGridViewCellStyle8.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle8.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.True;
+            dgvCommonfund.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle8;
             dgvCommonfund.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvCommonfund.Columns.AddRange(new DataGridViewColumn[] { colNamemem, colMoney, colTime, colStatus });
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = SystemColors.Window;
-            dataGridViewCellStyle4.Font = new Font("Segoe UI", 14F);
-            dataGridViewCellStyle4.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
-            dgvCommonfund.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle10.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle10.BackColor = SystemColors.Window;
+            dataGridViewCellStyle10.Font = new Font("Segoe UI", 14F);
+            dataGridViewCellStyle10.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle10.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle10.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle10.WrapMode = DataGridViewTriState.False;
+            dgvCommonfund.DefaultCellStyle = dataGridViewCellStyle10;
             dgvCommonfund.Location = new Point(44, 122);
             dgvCommonfund.Name = "dgvCommonfund";
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = SystemColors.Control;
-            dataGridViewCellStyle5.Font = new Font("Segoe UI", 12F);
-            dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
-            dgvCommonfund.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle11.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle11.BackColor = SystemColors.Control;
+            dataGridViewCellStyle11.Font = new Font("Segoe UI", 12F);
+            dataGridViewCellStyle11.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle11.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle11.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle11.WrapMode = DataGridViewTriState.True;
+            dgvCommonfund.RowHeadersDefaultCellStyle = dataGridViewCellStyle11;
             dgvCommonfund.RowHeadersWidth = 62;
-            dataGridViewCellStyle6.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dgvCommonfund.RowsDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle12.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dgvCommonfund.RowsDefaultCellStyle = dataGridViewCellStyle12;
             dgvCommonfund.RowTemplate.Height = 100;
             dgvCommonfund.Size = new Size(699, 328);
             dgvCommonfund.TabIndex = 20;
@@ -161,8 +161,8 @@
             // colNamemem
             // 
             colNamemem.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle3.Font = new Font("Microsoft Sans Serif", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            colNamemem.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle9.Font = new Font("Microsoft Sans Serif", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            colNamemem.DefaultCellStyle = dataGridViewCellStyle9;
             colNamemem.HeaderText = "Tên thành viên";
             colNamemem.MinimumWidth = 8;
             colNamemem.Name = "colNamemem";
@@ -213,7 +213,7 @@
             Controls.Add(btnDelete);
             Controls.Add(btnAdd);
             Controls.Add(btnSubmit);
-            Controls.Add(lblNoti);
+            Controls.Add(lblFundhave);
             Controls.Add(dgvCommonfund);
             Name = "frmCommonfund";
             StartPosition = FormStartPosition.CenterScreen;
@@ -231,7 +231,7 @@
         private Button btnDelete;
         private Button btnAdd;
         private Button btnSubmit;
-        private Label lblNoti;
+        private Label lblFundhave;
         private DataGridView dgvCommonfund;
         private DataGridViewTextBoxColumn colNamemem;
         private DataGridViewTextBoxColumn colMoney;

@@ -82,6 +82,26 @@ namespace ThieunuQLPT
                     houseGuid = currentMember.HouseId;
                 }
 
+                var fundResp = await client
+                    .From<ExpensesData>()
+                    .Select("*")
+                    .Where(x => x.HouseId == houseGuid && x.Category == "Quỹ chung")
+                    .Get();
+
+                decimal fund = fundResp.Models.Sum(x =>
+                {
+                    decimal a = x.Amount ?? 0;
+                    if (x.Type == "INCOME") return a;
+                    if (x.Type == "EXPENSE") return -a;
+                    return 0;
+                });
+
+                if (fund < amount)
+                {
+                    MessageBox.Show("Quỹ không đủ tiền!");
+                    return;
+                }
+
                 // Tạo object
                 var expense = new ExpensesData
                 {
@@ -92,6 +112,7 @@ namespace ThieunuQLPT
                     PaidBy = userGuid,
                     ExpenseDate = dtpDate.Value,
                     Type = "EXPENSE",
+                    Category = "Quỹ chung", 
                     Note = ""
                 };
 

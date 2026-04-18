@@ -37,7 +37,6 @@
             btnChores = new Button();
             btnExpenses = new Button();
             btnNote = new Button();
-            btnAdd = new Button();
             panel1.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
@@ -51,7 +50,7 @@
             label1.Location = new Point(12, 10);
             label1.Margin = new Padding(2, 0, 2, 0);
             label1.Name = "label1";
-            label1.Size = new Size(557, 67);
+            label1.Size = new Size(664, 81);
             label1.TabIndex = 0;
             label1.Text = "QUẢN LÝ PHÒNG TRỌ";
             // 
@@ -77,7 +76,7 @@
             btnAccount.Location = new Point(703, 25);
             btnAccount.Margin = new Padding(2);
             btnAccount.Name = "btnAccount";
-            btnAccount.Size = new Size(176, 54);
+            btnAccount.Size = new Size(211, 65);
             btnAccount.TabIndex = 1;
             btnAccount.Text = "Đăng nhập";
             btnAccount.UseVisualStyleBackColor = false;
@@ -140,7 +139,7 @@
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 35F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            tableLayoutPanel1.Size = new Size(782, 305);
+            tableLayoutPanel1.Size = new Size(938, 366);
             tableLayoutPanel1.TabIndex = 4;
             // 
             // btnChores
@@ -188,24 +187,12 @@
             btnNote.UseVisualStyleBackColor = false;
             btnNote.Click += btnNote_Click;
             // 
-            // btnAdd
-            // 
-            btnAdd.Dock = DockStyle.Fill;
-            btnAdd.Font = new Font("Segoe UI", 19.8000011F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
-            btnAdd.Location = new Point(595, 139);
-            btnAdd.Name = "btnAdd";
-            btnAdd.Size = new Size(150, 24);
-            btnAdd.TabIndex = 7;
-            btnAdd.Text = "Thêm";
-            btnAdd.UseVisualStyleBackColor = true;
-            btnAdd.Click += btnAdd_Click;
-            // 
             // frmMain
             // 
-            AutoScaleDimensions = new SizeF(120F, 120F);
+            AutoScaleDimensions = new SizeF(144F, 144F);
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = SystemColors.GradientInactiveCaption;
-            ClientSize = new Size(782, 403);
+            ClientSize = new Size(938, 484);
             Controls.Add(tableLayoutPanel1);
             Controls.Add(panel1);
             Margin = new Padding(2);
@@ -231,6 +218,5 @@
         private Button btnChores;
         private Button btnExpenses;
         private Button btnNote;
-        private Button btnAdd;
     }
 }
