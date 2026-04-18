@@ -133,7 +133,7 @@ namespace ThieunuQLPT
             var expensesResp = await client
                 .From<ExpensesData>()
                 .Select("*")
-                .Where(ex => ex.HouseId == houseId && ex.Category == "Quỹ chung")
+                .Where(ex => ex.HouseId == houseId && ex.Category == "Quỹ chung" && ex.Type=="INCOME")
                 .Get();
 
             var expenses = expensesResp.Models.ToList();
