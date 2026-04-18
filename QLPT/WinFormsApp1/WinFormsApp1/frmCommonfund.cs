@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Supabase;
 using Microsoft.VisualBasic;
 
 namespace ThieunuQLPT
@@ -21,8 +22,10 @@ namespace ThieunuQLPT
 
         private async void frmCommonfund_Load(object sender, EventArgs e)
         {
-
             EnsureHiddenColumns();
+
+            if (dgvCommonfund.Columns.Contains("colTime"))
+                dgvCommonfund.Columns["colTime"].ValueType = typeof(string);
 
             await LoadCurrentHouseAsync();
 
@@ -30,10 +33,12 @@ namespace ThieunuQLPT
             {
                 MessageBox.Show("Bạn chưa có phòng nên chưa thể xem quỹ chung.", "Thông báo",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
+                lblFundhave.Text = "Quỹ còn: 0 đ";
                 return;
             }
 
             await LoadFundToDGV(currentHouse.Id);
+            await UpdateFundHaveAsync(currentHouse.Id);
         }
 
         private void EnsureHiddenColumns()
@@ -87,6 +92,37 @@ namespace ThieunuQLPT
             currentHouse = houseResponse.Models.FirstOrDefault();
         }
 
+        private async Task UpdateFundHaveAsync(Guid houseId)
+        {
+            var client = await SupabaseHelper.GetClientAsync();
+            if (client == null)
+            {
+                lblFundhave.Text = "Quỹ còn: 0 đ";
+                return;
+            }
+
+            var resp = await client
+                .From<ExpensesData>()
+                .Select("*")
+                .Where(x => x.HouseId == houseId && x.Category == "Quỹ chung")
+                .Get();
+
+            decimal balance = resp.Models.Sum(x =>
+            {
+                decimal amount = x.Amount ?? 0;
+
+                if (x.Type == "INCOME")
+                    return amount;
+
+                if (x.Type == "EXPENSE")
+                    return -amount;
+
+                return 0;
+            });
+
+            lblFundhave.Text = $"Quỹ còn: {balance:N0} đ";
+        }
+
         private async Task LoadFundToDGV(Guid houseId)
         {
             dgvCommonfund.Rows.Clear();
@@ -94,7 +130,6 @@ namespace ThieunuQLPT
             var client = await SupabaseHelper.GetClientAsync();
             if (client == null) return;
 
-            // Lấy các khoản thuộc quỹ chung (category = "Quỹ chung")
             var expensesResp = await client
                 .From<ExpensesData>()
                 .Select("*")
@@ -103,7 +138,6 @@ namespace ThieunuQLPT
 
             var expenses = expensesResp.Models.ToList();
 
-            // Lấy profile của những người liên quan
             var userIds = expenses
                 .Where(ex => ex.PaidBy.HasValue)
                 .Select(ex => ex.PaidBy!.Value)
@@ -142,15 +176,16 @@ namespace ThieunuQLPT
 
                 if (ex.ExpenseDate.HasValue)
                 {
-                    var fixedDate = ex.ExpenseDate.Value.ToLocalTime();
-                    row.Cells["colTime"].Value = fixedDate.ToString("dd/MM/yyyy");
+                    var utc = DateTime.SpecifyKind(ex.ExpenseDate.Value, DateTimeKind.Utc);
+                    var vnTime = utc.ToLocalTime();
+                    row.Cells["colTime"].Value = vnTime.ToString("dd/MM/yyyy HH:mm");
                 }
                 else
                 {
                     row.Cells["colTime"].Value = "";
                 }
 
-                bool isPaid = ex.IsPaid ?? false;
+                bool isPaid = ex.IsPaid == true;
 
                 row.Cells["colStatus"].Value = isPaid ? "Đã đóng" : "Chưa đóng";
 
@@ -170,13 +205,14 @@ namespace ThieunuQLPT
                 return;
             }
 
-            // Nhập số điện thoại thành viên
             string phone = Interaction.InputBox(
                 "Nhập số điện thoại thành viên đóng quỹ (để trống = bạn):",
                 "Thêm khoản quỹ", "");
 
-            // Nhập số tiền
-            string amountText = Interaction.InputBox("Nhập số tiền (VD: 200000):", "Thêm khoản quỹ", "");
+            string amountText = Interaction.InputBox(
+                "Nhập số tiền (VD: 200000):",
+                "Thêm khoản quỹ", "");
+
             if (string.IsNullOrWhiteSpace(amountText) ||
                 !decimal.TryParse(amountText.Trim(), out decimal amount) || amount <= 0)
             {
@@ -184,18 +220,19 @@ namespace ThieunuQLPT
                 return;
             }
 
-            // Nhập ngày
-            string dateText = Interaction.InputBox("Nhập ngày (dd/MM/yyyy):", "Thêm khoản quỹ",
-                DateTime.Now.ToString("dd/MM/yyyy"));
-            if (!DateTime.TryParseExact(dateText.Trim(), "dd/MM/yyyy", CultureInfo.InvariantCulture,
-                DateTimeStyles.None, out DateTime expDate))
+            string dateText = Interaction.InputBox(
+                "Nhập ngày giờ (dd/MM/yyyy HH:mm):",
+                "Thêm khoản quỹ",
+                DateTime.Now.ToString("dd/MM/yyyy HH:mm"));
+
+            if (!DateTime.TryParseExact(dateText.Trim(), "dd/MM/yyyy HH:mm",
+                CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime expDate))
             {
-                MessageBox.Show("Ngày không hợp lệ. Ví dụ đúng: 17/04/2026", "Lỗi",
+                MessageBox.Show("Ngày không hợp lệ. Ví dụ đúng: 17/04/2026 08:30", "Lỗi",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            //string type = "INCOME";
             string typeLabel = "Chưa đóng";
 
             var client = await SupabaseHelper.GetClientAsync();
@@ -255,7 +292,7 @@ namespace ThieunuQLPT
             row.Cells["colPaidById"].Value = paidById.ToString();
             row.Cells["colNamemem"].Value = memberName;
             row.Cells["colMoney"].Value = amount.ToString("N0") + " đ";
-            row.Cells["colTime"].Value = expDate.ToString("dd/MM/yyyy");
+            row.Cells["colTime"].Value = expDate.ToString("dd/MM/yyyy HH:mm");
             row.Cells["colStatus"].Value = typeLabel;
 
             row.Tag = "add";
@@ -330,7 +367,6 @@ namespace ThieunuQLPT
                     string status = row.Cells["colStatus"].Value?.ToString() ?? "";
                     bool isPaid = status == "Đã đóng";
 
-                    // Xóa
                     if (tag == "delete")
                     {
                         if (Guid.TryParse(expenseIdStr, out Guid expId) && expId != Guid.Empty)
@@ -343,19 +379,18 @@ namespace ThieunuQLPT
                         continue;
                     }
 
-                    // Parse tiền (bỏ " đ" và dấu phân cách)
                     string cleanMoney = moneyStr.Replace(" đ", "").Replace(",", "").Trim();
                     if (!decimal.TryParse(cleanMoney, out decimal amount))
                         amount = 0;
 
-                    // Parse ngày -> UTC
-                    if (!DateTime.TryParseExact(dateStr.Trim(), "dd/MM/yyyy", CultureInfo.InvariantCulture,
-                        DateTimeStyles.None, out DateTime expDate))
-                        expDate = DateTime.Now.Date;
+                    if (!DateTime.TryParseExact(dateStr.Trim(), "dd/MM/yyyy HH:mm",
+                        CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime expDate))
+                    {
+                        expDate = DateTime.Now;
+                    }
 
-                    expDate = expDate.Date;
+                    expDate = DateTime.SpecifyKind(expDate, DateTimeKind.Local).ToUniversalTime();
 
-                    // Xác định type
                     string type = "INCOME";
 
                     Guid? paidBy = null;
@@ -364,7 +399,6 @@ namespace ThieunuQLPT
                     else
                         paidBy = currentUserId;
 
-                    // Thêm mới
                     if (string.IsNullOrWhiteSpace(expenseIdStr))
                     {
                         var newExp = new ExpensesData
@@ -383,7 +417,6 @@ namespace ThieunuQLPT
                         await client.From<ExpensesData>().Insert(newExp);
                         row.Tag = null;
                     }
-                    // Cập nhật
                     else if (Guid.TryParse(expenseIdStr, out Guid existingId) && existingId != Guid.Empty)
                     {
                         var resp = await client
@@ -412,6 +445,7 @@ namespace ThieunuQLPT
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 await LoadFundToDGV(currentHouse.Id);
+                await UpdateFundHaveAsync(currentHouse.Id);
             }
             catch (Exception ex)
             {

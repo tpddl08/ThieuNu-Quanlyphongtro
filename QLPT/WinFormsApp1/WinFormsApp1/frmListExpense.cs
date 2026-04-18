@@ -35,6 +35,29 @@ namespace ThieunuQLPT
             await LoadExpenses();
         }
 
+        private async Task LoadFundBalance(Guid houseId)
+        {
+            var client = await SupabaseHelper.GetClientAsync();
+            if (client == null) return;
+
+            var resp = await client
+                .From<ExpensesData>()
+                .Select("*")
+                .Where(x => x.HouseId == houseId && x.Category == "Quỹ chung")
+                .Get();
+
+            decimal total = resp.Models.Sum(x =>
+            {
+                decimal amount = x.Amount ?? 0;
+
+                if (x.Type == "INCOME") return amount;
+                if (x.Type == "EXPENSE") return -amount;
+
+                return 0;
+            });
+
+            lblFundhave.Text = $"Quỹ còn: {total:N0} đ";
+        }
 
         private async Task LoadExpenses()
         {
@@ -74,7 +97,7 @@ namespace ThieunuQLPT
                 var resp = await client
                     .From<ExpensesData>()
                     .Select("*")
-                    .Where(x => x.HouseId == houseGuid)
+                    .Where(x => x.HouseId == houseGuid && x.Type == "EXPENSE")
                     .Get();
 
                 var expenses = resp.Models;
@@ -96,6 +119,8 @@ namespace ThieunuQLPT
                 var profileDict = profileResp.Models.ToDictionary(p => p.Id, p => p);
 
                 dgvExpenses.Rows.Clear();
+
+                await LoadFundBalance(houseGuid);
 
                 foreach (var e in expenses.OrderByDescending(x => x.ExpenseDate))
                 {
@@ -123,7 +148,7 @@ namespace ThieunuQLPT
 
         private async void btnAdd_Click(object sender, EventArgs e)
         {
-            frmExpenses f = new frmExpenses("houseId", "userId");
+            frmExpenses f = new frmExpenses(_houseId, frmLogin.idLoged.ToString());
             f.ShowDialog();
 
             await LoadExpenses();
