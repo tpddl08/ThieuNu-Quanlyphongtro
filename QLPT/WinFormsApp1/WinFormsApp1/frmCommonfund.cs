@@ -135,7 +135,7 @@ namespace ThieunuQLPT
                     .Select("*")
                     .Where(ex => ex.HouseId == houseId)
                     .Where(ex => ex.Category == "Quỹ chung")
-                    .Where(ex => ex.Type == "INCOME") // 🔥 thêm dòng này
+                    .Where(ex => ex.Type == "INCOME")
                     .Get();
 
             var expenses = expensesResp.Models.ToList();
