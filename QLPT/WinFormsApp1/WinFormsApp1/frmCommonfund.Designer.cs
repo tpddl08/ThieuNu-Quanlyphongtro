@@ -28,12 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle11 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle12 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCommonfund));
             btnDone = new Button();
             btnDelete = new Button();
             btnAdd = new Button();
@@ -45,7 +46,9 @@
             colTime = new DataGridViewTextBoxColumn();
             colStatus = new DataGridViewTextBoxColumn();
             btnExpenses = new Button();
+            pictureBox1 = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)dgvCommonfund).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // btnDone
@@ -54,9 +57,10 @@
             btnDone.BackColor = Color.DarkOrange;
             btnDone.FlatStyle = FlatStyle.Flat;
             btnDone.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnDone.Location = new Point(767, 345);
+            btnDone.Location = new Point(639, 288);
+            btnDone.Margin = new Padding(2);
             btnDone.Name = "btnDone";
-            btnDone.Size = new Size(128, 46);
+            btnDone.Size = new Size(107, 38);
             btnDone.TabIndex = 25;
             btnDone.Text = "Đã đóng";
             btnDone.UseVisualStyleBackColor = false;
@@ -68,9 +72,10 @@
             btnDelete.BackColor = Color.DarkOrange;
             btnDelete.FlatStyle = FlatStyle.Flat;
             btnDelete.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnDelete.Location = new Point(767, 267);
+            btnDelete.Location = new Point(639, 222);
+            btnDelete.Margin = new Padding(2);
             btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(128, 46);
+            btnDelete.Size = new Size(107, 38);
             btnDelete.TabIndex = 24;
             btnDelete.Text = "Xóa";
             btnDelete.UseVisualStyleBackColor = false;
@@ -82,9 +87,10 @@
             btnAdd.BackColor = Color.DarkOrange;
             btnAdd.FlatStyle = FlatStyle.Flat;
             btnAdd.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnAdd.Location = new Point(767, 194);
+            btnAdd.Location = new Point(639, 162);
+            btnAdd.Margin = new Padding(2);
             btnAdd.Name = "btnAdd";
-            btnAdd.Size = new Size(128, 46);
+            btnAdd.Size = new Size(107, 38);
             btnAdd.TabIndex = 23;
             btnAdd.Text = "Tạo";
             btnAdd.UseVisualStyleBackColor = false;
@@ -96,9 +102,10 @@
             btnSubmit.BackColor = Color.DarkOrange;
             btnSubmit.FlatStyle = FlatStyle.Flat;
             btnSubmit.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnSubmit.Location = new Point(767, 122);
+            btnSubmit.Location = new Point(639, 102);
+            btnSubmit.Margin = new Padding(2);
             btnSubmit.Name = "btnSubmit";
-            btnSubmit.Size = new Size(128, 46);
+            btnSubmit.Size = new Size(107, 38);
             btnSubmit.TabIndex = 22;
             btnSubmit.Text = "Lưu";
             btnSubmit.UseVisualStyleBackColor = false;
@@ -108,9 +115,10 @@
             // 
             lblFundhave.AutoSize = true;
             lblFundhave.Font = new Font("Segoe UI", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblFundhave.Location = new Point(44, 35);
+            lblFundhave.Location = new Point(37, 29);
+            lblFundhave.Margin = new Padding(2, 0, 2, 0);
             lblFundhave.Name = "lblFundhave";
-            lblFundhave.Size = new Size(226, 54);
+            lblFundhave.Size = new Size(193, 46);
             lblFundhave.TabIndex = 21;
             lblFundhave.Text = "Quỹ chung";
             // 
@@ -118,51 +126,52 @@
             // 
             dgvCommonfund.AllowUserToAddRows = false;
             dgvCommonfund.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle7.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dgvCommonfund.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle1.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dgvCommonfund.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             dgvCommonfund.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvCommonfund.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             dgvCommonfund.BackgroundColor = Color.LightGray;
-            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = SystemColors.Control;
-            dataGridViewCellStyle8.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
-            dataGridViewCellStyle8.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle8.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.True;
-            dgvCommonfund.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = SystemColors.Control;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
+            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            dgvCommonfund.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvCommonfund.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvCommonfund.Columns.AddRange(new DataGridViewColumn[] { colNamemem, colMoney, colTime, colStatus });
-            dataGridViewCellStyle10.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle10.BackColor = SystemColors.Window;
-            dataGridViewCellStyle10.Font = new Font("Segoe UI", 14F);
-            dataGridViewCellStyle10.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle10.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle10.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle10.WrapMode = DataGridViewTriState.False;
-            dgvCommonfund.DefaultCellStyle = dataGridViewCellStyle10;
-            dgvCommonfund.Location = new Point(44, 122);
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = SystemColors.Window;
+            dataGridViewCellStyle4.Font = new Font("Segoe UI", 14F);
+            dataGridViewCellStyle4.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
+            dgvCommonfund.DefaultCellStyle = dataGridViewCellStyle4;
+            dgvCommonfund.Location = new Point(37, 102);
+            dgvCommonfund.Margin = new Padding(2);
             dgvCommonfund.Name = "dgvCommonfund";
-            dataGridViewCellStyle11.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle11.BackColor = SystemColors.Control;
-            dataGridViewCellStyle11.Font = new Font("Segoe UI", 12F);
-            dataGridViewCellStyle11.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle11.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle11.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle11.WrapMode = DataGridViewTriState.True;
-            dgvCommonfund.RowHeadersDefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = SystemColors.Control;
+            dataGridViewCellStyle5.Font = new Font("Segoe UI", 12F);
+            dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
+            dgvCommonfund.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
             dgvCommonfund.RowHeadersWidth = 62;
-            dataGridViewCellStyle12.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dgvCommonfund.RowsDefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle6.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dgvCommonfund.RowsDefaultCellStyle = dataGridViewCellStyle6;
             dgvCommonfund.RowTemplate.Height = 100;
-            dgvCommonfund.Size = new Size(699, 328);
+            dgvCommonfund.Size = new Size(582, 273);
             dgvCommonfund.TabIndex = 20;
             // 
             // colNamemem
             // 
             colNamemem.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle9.Font = new Font("Microsoft Sans Serif", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            colNamemem.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle3.Font = new Font("Microsoft Sans Serif", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            colNamemem.DefaultCellStyle = dataGridViewCellStyle3;
             colNamemem.HeaderText = "Tên thành viên";
             colNamemem.MinimumWidth = 8;
             colNamemem.Name = "colNamemem";
@@ -194,20 +203,33 @@
             btnExpenses.BackColor = Color.DarkOrange;
             btnExpenses.FlatStyle = FlatStyle.Flat;
             btnExpenses.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnExpenses.Location = new Point(767, 44);
+            btnExpenses.Location = new Point(639, 37);
+            btnExpenses.Margin = new Padding(2);
             btnExpenses.Name = "btnExpenses";
-            btnExpenses.Size = new Size(128, 52);
+            btnExpenses.Size = new Size(107, 43);
             btnExpenses.TabIndex = 26;
             btnExpenses.Text = "Chi tiêu";
             btnExpenses.UseVisualStyleBackColor = false;
             btnExpenses.Click += btnExpenses_Click;
             // 
+            // pictureBox1
+            // 
+            pictureBox1.Anchor = AnchorStyles.Right;
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(650, 331);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(120, 78);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 27;
+            pictureBox1.TabStop = false;
+            // 
             // frmCommonfund
             // 
-            AutoScaleDimensions = new SizeF(144F, 144F);
+            AutoScaleDimensions = new SizeF(120F, 120F);
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = SystemColors.GradientActiveCaption;
-            ClientSize = new Size(938, 484);
+            ClientSize = new Size(782, 403);
+            Controls.Add(pictureBox1);
             Controls.Add(btnExpenses);
             Controls.Add(btnDone);
             Controls.Add(btnDelete);
@@ -215,12 +237,14 @@
             Controls.Add(btnSubmit);
             Controls.Add(lblFundhave);
             Controls.Add(dgvCommonfund);
+            Margin = new Padding(2);
             Name = "frmCommonfund";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Quỹ chung";
             WindowState = FormWindowState.Maximized;
             Load += frmCommonfund_Load;
             ((System.ComponentModel.ISupportInitialize)dgvCommonfund).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -238,5 +262,6 @@
         private DataGridViewTextBoxColumn colTime;
         private DataGridViewTextBoxColumn colStatus;
         private Button btnExpenses;
+        private PictureBox pictureBox1;
     }
 }

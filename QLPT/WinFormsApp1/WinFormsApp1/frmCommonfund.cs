@@ -131,10 +131,12 @@ namespace ThieunuQLPT
             if (client == null) return;
 
             var expensesResp = await client
-                .From<ExpensesData>()
-                .Select("*")
-                .Where(ex => ex.HouseId == houseId && ex.Category == "Quỹ chung" && ex.Type=="INCOME")
-                .Get();
+                    .From<ExpensesData>()
+                    .Select("*")
+                    .Where(ex => ex.HouseId == houseId)
+                    .Where(ex => ex.Category == "Quỹ chung")
+                    .Where(ex => ex.Type == "INCOME")
+                    .Get();
 
             var expenses = expensesResp.Models.ToList();
 
@@ -205,9 +207,7 @@ namespace ThieunuQLPT
                 return;
             }
 
-            string phone = Interaction.InputBox(
-                "Nhập số điện thoại thành viên đóng quỹ (để trống = bạn):",
-                "Thêm khoản quỹ", "");
+           
 
             string amountText = Interaction.InputBox(
                 "Nhập số tiền (VD: 200000):",
@@ -241,49 +241,17 @@ namespace ThieunuQLPT
             Guid paidById = currentUserId;
             string memberName = "";
 
-            if (!string.IsNullOrWhiteSpace(phone))
-            {
-                var profileResp = await client
-                    .From<ProfilesData>()
-                    .Select("*")
-                    .Where(p => p.Phone == phone)
-                    .Get();
+           
+            var selfResp = await client
+                .From<ProfilesData>()
+                .Select("*")
+                .Where(p => p.Id == currentUserId)
+                .Get();
 
-                if (!profileResp.Models.Any())
-                {
-                    MessageBox.Show("Không tìm thấy người dùng theo số điện thoại này.", "Lỗi",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
+            memberName = selfResp.Models.FirstOrDefault()?.FullName ?? "";
 
-                var prof = profileResp.Models.First();
-
-                var memberResp = await client
-                    .From<HouseMembersData>()
-                    .Select("*")
-                    .Where(m => m.HouseId == currentHouse.Id && m.UserId == prof.Id && m.IsActive == true)
-                    .Get();
-
-                if (!memberResp.Models.Any())
-                {
-                    MessageBox.Show("Người này không phải thành viên đang ở trong phòng.", "Lỗi",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
-                paidById = prof.Id;
-                memberName = prof.FullName ?? "";
-            }
-            else
-            {
-                var selfResp = await client
-                    .From<ProfilesData>()
-                    .Select("*")
-                    .Where(p => p.Id == currentUserId)
-                    .Get();
-
-                memberName = selfResp.Models.FirstOrDefault()?.FullName ?? "";
-            }
+            
+            
 
             int idx = dgvCommonfund.Rows.Add();
             var row = dgvCommonfund.Rows[idx];
