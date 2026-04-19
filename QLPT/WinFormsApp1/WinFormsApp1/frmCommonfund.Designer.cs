@@ -57,10 +57,10 @@
             btnDone.BackColor = Color.DarkOrange;
             btnDone.FlatStyle = FlatStyle.Flat;
             btnDone.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnDone.Location = new Point(639, 288);
+            btnDone.Location = new Point(767, 308);
             btnDone.Margin = new Padding(2);
             btnDone.Name = "btnDone";
-            btnDone.Size = new Size(107, 38);
+            btnDone.Size = new Size(128, 46);
             btnDone.TabIndex = 25;
             btnDone.Text = "Đã đóng";
             btnDone.UseVisualStyleBackColor = false;
@@ -72,10 +72,10 @@
             btnDelete.BackColor = Color.DarkOrange;
             btnDelete.FlatStyle = FlatStyle.Flat;
             btnDelete.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnDelete.Location = new Point(639, 222);
+            btnDelete.Location = new Point(767, 246);
             btnDelete.Margin = new Padding(2);
             btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(107, 38);
+            btnDelete.Size = new Size(128, 46);
             btnDelete.TabIndex = 24;
             btnDelete.Text = "Xóa";
             btnDelete.UseVisualStyleBackColor = false;
@@ -87,10 +87,10 @@
             btnAdd.BackColor = Color.DarkOrange;
             btnAdd.FlatStyle = FlatStyle.Flat;
             btnAdd.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnAdd.Location = new Point(639, 162);
+            btnAdd.Location = new Point(767, 184);
             btnAdd.Margin = new Padding(2);
             btnAdd.Name = "btnAdd";
-            btnAdd.Size = new Size(107, 38);
+            btnAdd.Size = new Size(128, 46);
             btnAdd.TabIndex = 23;
             btnAdd.Text = "Tạo";
             btnAdd.UseVisualStyleBackColor = false;
@@ -102,10 +102,10 @@
             btnSubmit.BackColor = Color.DarkOrange;
             btnSubmit.FlatStyle = FlatStyle.Flat;
             btnSubmit.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnSubmit.Location = new Point(639, 102);
+            btnSubmit.Location = new Point(767, 122);
             btnSubmit.Margin = new Padding(2);
             btnSubmit.Name = "btnSubmit";
-            btnSubmit.Size = new Size(107, 38);
+            btnSubmit.Size = new Size(128, 46);
             btnSubmit.TabIndex = 22;
             btnSubmit.Text = "Lưu";
             btnSubmit.UseVisualStyleBackColor = false;
@@ -115,10 +115,10 @@
             // 
             lblFundhave.AutoSize = true;
             lblFundhave.Font = new Font("Segoe UI", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblFundhave.Location = new Point(37, 29);
+            lblFundhave.Location = new Point(44, 35);
             lblFundhave.Margin = new Padding(2, 0, 2, 0);
             lblFundhave.Name = "lblFundhave";
-            lblFundhave.Size = new Size(193, 46);
+            lblFundhave.Size = new Size(226, 54);
             lblFundhave.TabIndex = 21;
             lblFundhave.Text = "Quỹ chung";
             // 
@@ -149,7 +149,7 @@
             dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
             dgvCommonfund.DefaultCellStyle = dataGridViewCellStyle4;
-            dgvCommonfund.Location = new Point(37, 102);
+            dgvCommonfund.Location = new Point(44, 122);
             dgvCommonfund.Margin = new Padding(2);
             dgvCommonfund.Name = "dgvCommonfund";
             dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
@@ -164,7 +164,7 @@
             dataGridViewCellStyle6.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dgvCommonfund.RowsDefaultCellStyle = dataGridViewCellStyle6;
             dgvCommonfund.RowTemplate.Height = 100;
-            dgvCommonfund.Size = new Size(582, 273);
+            dgvCommonfund.Size = new Size(698, 328);
             dgvCommonfund.TabIndex = 20;
             // 
             // colNamemem
@@ -203,10 +203,10 @@
             btnExpenses.BackColor = Color.DarkOrange;
             btnExpenses.FlatStyle = FlatStyle.Flat;
             btnExpenses.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnExpenses.Location = new Point(639, 37);
+            btnExpenses.Location = new Point(767, 44);
             btnExpenses.Margin = new Padding(2);
             btnExpenses.Name = "btnExpenses";
-            btnExpenses.Size = new Size(107, 43);
+            btnExpenses.Size = new Size(128, 52);
             btnExpenses.TabIndex = 26;
             btnExpenses.Text = "Chi tiêu";
             btnExpenses.UseVisualStyleBackColor = false;
@@ -216,19 +216,20 @@
             // 
             pictureBox1.Anchor = AnchorStyles.Right;
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(650, 331);
+            pictureBox1.Location = new Point(767, 360);
+            pictureBox1.Margin = new Padding(4);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(120, 78);
+            pictureBox1.Size = new Size(120, 120);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 27;
             pictureBox1.TabStop = false;
             // 
             // frmCommonfund
             // 
-            AutoScaleDimensions = new SizeF(120F, 120F);
+            AutoScaleDimensions = new SizeF(144F, 144F);
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = SystemColors.GradientActiveCaption;
-            ClientSize = new Size(782, 403);
+            ClientSize = new Size(938, 484);
             Controls.Add(pictureBox1);
             Controls.Add(btnExpenses);
             Controls.Add(btnDone);

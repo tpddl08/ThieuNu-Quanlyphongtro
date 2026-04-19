@@ -422,11 +422,16 @@ namespace ThieunuQLPT
             }
         }
 
-        private void btnExpenses_Click(object sender, EventArgs e)
+        private async void btnExpenses_Click(object sender, EventArgs e)
         {
             string houseId = "";
             var frm = new frmListExpense(houseId);
             frm.ShowDialog();
+            if (currentHouse != null)
+            {
+                await LoadFundToDGV(currentHouse.Id);
+                await UpdateFundHaveAsync(currentHouse.Id);
+            }
         }
     }
 }
